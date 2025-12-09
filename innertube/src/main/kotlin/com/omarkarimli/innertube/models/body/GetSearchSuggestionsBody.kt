@@ -1,0 +1,10 @@
+package com.omarkarimli.innertube.models.body
+
+import com.omarkarimli.innertube.models.Context
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class GetSearchSuggestionsBody(
+    val context: Context,
+    val input: String,
+)

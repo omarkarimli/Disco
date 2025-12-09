@@ -9,11 +9,11 @@ plugins {
 }
 
 android {
-    namespace = "com.metrolist.music"
+    namespace = "com.omarkarimli.disco"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.metrolist.music"
+        applicationId = "com.omarkarimli.disco"
         minSdk = 26
         targetSdk = 36
         versionCode = 129
