@@ -4,10 +4,10 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.PendingIntent
 import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
@@ -207,13 +207,17 @@ import kotlin.time.Duration.Companion.days
 class MainActivity : ComponentActivity() {
     @Inject
     lateinit var database: MusicDatabase
+
     @Inject
     lateinit var downloadUtil: DownloadUtil
+
     @Inject
     lateinit var syncUtils: SyncUtils
+
     private lateinit var navController: NavHostController
     private var pendingIntent: Intent? = null
     private var latestVersionName by mutableStateOf(BuildConfig.VERSION_NAME)
+
     private var playerConnection by mutableStateOf<PlayerConnection?>(null)
 
     private val serviceConnection =
@@ -246,7 +250,7 @@ class MainActivity : ComponentActivity() {
         bindService(
             Intent(this, MusicService::class.java),
             serviceConnection,
-            BIND_AUTO_CREATE
+            Context.BIND_AUTO_CREATE
         )
     }
 
@@ -322,10 +326,10 @@ class MainActivity : ComponentActivity() {
                                 latestVersionName = it
                                 if (it != BuildConfig.VERSION_NAME && notifEnabled) {
                                     val downloadUrl = Updater.getLatestDownloadUrl()
-                                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(downloadUrl))
+                                    val intent = Intent(Intent.ACTION_VIEW, downloadUrl.toUri())
 
                                     val flags = PendingIntent.FLAG_UPDATE_CURRENT or
-                                        (if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) PendingIntent.FLAG_IMMUTABLE else 0)
+                                            (if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) PendingIntent.FLAG_IMMUTABLE else 0)
                                     val pending = PendingIntent.getActivity(this@MainActivity, 1001, intent, flags)
 
                                     val notif = NotificationCompat.Builder(this@MainActivity, "updates")
@@ -360,7 +364,7 @@ class MainActivity : ComponentActivity() {
 
             val pureBlackEnabled by rememberPreference(PureBlackKey, defaultValue = false)
             val pureBlack = remember(pureBlackEnabled, useDarkTheme) {
-                pureBlackEnabled && useDarkTheme 
+                pureBlackEnabled && useDarkTheme
             }
 
             var themeColor by rememberSaveable(stateSaver = ColorSaver) {
@@ -408,11 +412,11 @@ class MainActivity : ComponentActivity() {
             ) {
                 BoxWithConstraints(
                     modifier =
-                    Modifier
-                        .fillMaxSize()
-                        .background(
-                            if (pureBlack) Color.Black else MaterialTheme.colorScheme.surface
-                        )
+                        Modifier
+                            .fillMaxSize()
+                            .background(
+                                if (pureBlack) Color.Black else MaterialTheme.colorScheme.surface
+                            )
                 ) {
                     val focusManager = LocalFocusManager.current
                     val density = LocalDensity.current
@@ -536,9 +540,9 @@ class MainActivity : ComponentActivity() {
                         rememberBottomSheetState(
                             dismissedBound = 0.dp,
                             collapsedBound = bottomInset +
-                                (if (!showRail && shouldShowNavigationBar) getNavPadding() else 0.dp) +
-                                (if (useNewMiniPlayerDesign) MiniPlayerBottomSpacing else 0.dp) +
-                                MiniPlayerHeight,
+                                    (if (!showRail && shouldShowNavigationBar) getNavPadding() else 0.dp) +
+                                    (if (useNewMiniPlayerDesign) MiniPlayerBottomSpacing else 0.dp) +
+                                    MiniPlayerHeight,
                             expandedBound = maxHeight,
                         )
 
@@ -873,7 +877,7 @@ class MainActivity : ComponentActivity() {
                                                                     TextFieldValue(
                                                                         ""
                                                                     )
-                                                               )
+                                                                )
                                                             },
                                                         ) {
                                                             Icon(
@@ -937,10 +941,10 @@ class MainActivity : ComponentActivity() {
                                             label = "",
                                             animationSpec = tween(150),
                                             modifier =
-                                            Modifier
-                                                .fillMaxSize()
-                                                .padding(bottom = if (!playerBottomSheetState.isDismissed) MiniPlayerHeight else 0.dp)
-                                                .navigationBarsPadding(),
+                                                Modifier
+                                                    .fillMaxSize()
+                                                    .padding(bottom = if (!playerBottomSheetState.isDismissed) MiniPlayerHeight else 0.dp)
+                                                    .navigationBarsPadding(),
                                         ) { searchSource ->
                                             when (searchSource) {
                                                 SearchSource.LOCAL ->
@@ -1312,9 +1316,9 @@ class MainActivity : ComponentActivity() {
 
                 val playlistId = uri.getQueryParameter("list")
 
-                videoId?.let { videoIdNonNullable ->
+                videoId?.let {
                     coroutineScope.launch(Dispatchers.IO) {
-                        YouTube.queue(listOf(videoIdNonNullable), playlistId).onSuccess { queue ->
+                        YouTube.queue(listOf(it), playlistId).onSuccess { queue ->
                             withContext(Dispatchers.Main) {
                                 playerConnection?.playQueue(
                                     YouTubeQueue(
