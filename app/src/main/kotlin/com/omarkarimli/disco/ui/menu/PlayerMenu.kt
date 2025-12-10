@@ -442,6 +442,30 @@ fun PlayerMenu(
                 )
             }
         }
+
+        item {
+            ListItem(
+                headlineContent = { Text(text = stringResource(R.string.share)) },
+                leadingContent = {
+                    Icon(
+                        painter = painterResource(R.drawable.share),
+                        contentDescription = stringResource(R.string.share),
+                    )
+                },
+                modifier = Modifier.clickable {
+                    val intent =
+                        Intent().apply {
+                            action = Intent.ACTION_SEND
+                            type = "text/plain"
+                            putExtra(
+                                Intent.EXTRA_TEXT,
+                                "https://music.youtube.com/watch?v=${mediaMetadata.id}"
+                            )
+                        }
+                    context.startActivity(Intent.createChooser(intent, null))
+                }
+            )
+        }
     }
 }
 

@@ -39,6 +39,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -640,108 +641,33 @@ fun BottomSheetPlayer(
                 Spacer(modifier = Modifier.width(12.dp))
 
                 if (useNewPlayerDesign) {
-                    val shareShape = RoundedCornerShape(
-                        topStart = 50.dp, bottomStart = 50.dp,
-                        topEnd = 5.dp, bottomEnd = 5.dp
-                    )
-
-                    val favShape = RoundedCornerShape(
-                        topStart = 5.dp, bottomStart = 5.dp,
-                        topEnd = 50.dp, bottomEnd = 50.dp
-                    )
-
-                    Row(
-                        horizontalArrangement = Arrangement.spacedBy(6.dp),
-                        verticalAlignment = Alignment.CenterVertically
+                    Box(
+                        modifier = Modifier
+                            .size(42.dp)
+                            .clip(CircleShape)
+                            .clickable {
+                                playerConnection.toggleLike()
+                            }
                     ) {
-                        Box(
+                        Image(
+                            painter = painterResource(
+                                if (currentSong?.song?.liked == true)
+                                    R.drawable.favorite
+                                else R.drawable.favorite_border
+                            ),
+                            contentDescription = null,
+                            colorFilter = ColorFilter.tint(iconButtonColor),
                             modifier = Modifier
-                                .size(42.dp)
-                                .clip(shareShape)
-                                .clickable {
-                                    val intent = Intent().apply {
-                                        action = Intent.ACTION_SEND
-                                        type = "text/plain"
-                                        putExtra(
-                                            Intent.EXTRA_TEXT,
-                                            "https://music.youtube.com/watch?v=${mediaMetadata.id}"
-                                        )
-                                    }
-                                    context.startActivity(Intent.createChooser(intent, null))
-                                }
-                        ) {
-                            Image(
-                                painter = painterResource(R.drawable.share),
-                                contentDescription = null,
-                                colorFilter = ColorFilter.tint(iconButtonColor),
-                                modifier = Modifier
-                                    .align(Alignment.Center)
-                                    .size(24.dp)
-                            )
-                        }
-
-                        Box(
-                            modifier = Modifier
-                                .size(42.dp)
-                                .clip(favShape)
-                                .clickable {
-                                    playerConnection.toggleLike()
-                                }
-                        ) {
-                            Image(
-                                painter = painterResource(
-                                    if (currentSong?.song?.liked == true)
-                                        R.drawable.favorite
-                                    else R.drawable.favorite_border
-                                ),
-                                contentDescription = null,
-                                colorFilter = ColorFilter.tint(iconButtonColor),
-                                modifier = Modifier
-                                    .align(Alignment.Center)
-                                    .size(24.dp)
-                            )
-                        }
+                                .align(Alignment.Center)
+                                .size(24.dp)
+                        )
                     }
                 } else {
                     Box(
-                        modifier =
-                        Modifier
-                            .size(40.dp)
-                            .clip(RoundedCornerShape(24.dp))
-                            .background(textButtonColor)
-                            .clickable {
-                                val intent =
-                                    Intent().apply {
-                                        action = Intent.ACTION_SEND
-                                        type = "text/plain"
-                                        putExtra(
-                                            Intent.EXTRA_TEXT,
-                                            "https://music.youtube.com/watch?v=${mediaMetadata.id}"
-                                        )
-                                    }
-                                context.startActivity(Intent.createChooser(intent, null))
-                            },
-                    ) {
-                        Image(
-                            painter = painterResource(R.drawable.share),
-                            contentDescription = null,
-                            colorFilter = ColorFilter.tint(iconButtonColor),
-                            modifier =
-                            Modifier
-                                .align(Alignment.Center)
-                                .size(24.dp),
-                        )
-                    }
-
-                    Spacer(modifier = Modifier.size(12.dp))
-
-                    Box(
                         contentAlignment = Alignment.Center,
-                        modifier =
-                        Modifier
+                        modifier = Modifier
                             .size(40.dp)
                             .clip(RoundedCornerShape(24.dp))
-                            .background(textButtonColor)
                             .clickable {
                                 menuState.show {
                                     PlayerMenu(
@@ -995,7 +921,6 @@ fun BottomSheetPlayer(
                         modifier = Modifier
                             .size(72.dp)
                             .clip(RoundedCornerShape(playPauseRoundness))
-                            .background(textButtonColor)
                             .clickable {
                                 if (playbackState == STATE_ENDED) {
                                     playerConnection.player.seekTo(0, 0)

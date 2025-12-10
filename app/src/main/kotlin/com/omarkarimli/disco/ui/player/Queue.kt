@@ -305,36 +305,7 @@ fun Queue(
                             tint = textBackgroundColor
                         )
                     }
-
-                    Box(
-                        modifier = Modifier
-                            .size(buttonSize)
-                            .clip(RoundedCornerShape(5.dp))
-                            .clickable {
-                                mediaMetadata?.let {
-                                    val intent = Intent().apply {
-                                        action = Intent.ACTION_SEND
-                                        type = "text/plain"
-                                        putExtra(
-                                            Intent.EXTRA_TEXT,
-                                            "https://music.youtube.com/watch?v=${it.id}"
-                                        )
-                                    }
-                                    context.startActivity(Intent.createChooser(intent, null))
-                                }
-                            },
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.share),
-                            contentDescription = null,
-                            modifier = Modifier.size(iconSize),
-                            tint = textBackgroundColor
-                        )
-                    }
-
                     Spacer(modifier = Modifier.weight(1f))
-
                     Box(
                         modifier = Modifier
                             .size(buttonSize)
