@@ -481,7 +481,7 @@ fun LyricsScreen(
                                 ) {
                                     IconButton(
                                         onClick = { playerConnection.player.toggleRepeatMode() },
-                                        modifier = Modifier.size(48.dp)
+                                        modifier = Modifier.size(controlButtonSize)
                                     ) {
                                         Icon(
                                             painter = painterResource(
