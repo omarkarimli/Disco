@@ -23,6 +23,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
@@ -746,69 +747,76 @@ class MainActivity : ComponentActivity() {
                                         animationSpec = tween(durationMillis = 100)
                                     ) + fadeOut(animationSpec = tween(durationMillis = 100))
                                 ) {
-                                    Row {
-                                        TopAppBar(
-                                            title = {
+                                    TopAppBar(
+                                        title = {
+                                            if (currentTitleRes == R.string.home) {
+                                                Icon(
+                                                    painter = painterResource(R.drawable.app_icon),
+                                                    contentDescription = null,
+                                                    tint = MaterialTheme.colorScheme.onSurface,
+                                                    modifier = Modifier.size(36.dp)
+                                                )
+                                            } else {
                                                 Text(
                                                     text = currentTitleRes?.let { stringResource(it) } ?: "",
                                                     style = MaterialTheme.typography.titleLarge,
                                                 )
-                                            },
-                                            actions = {
-                                                IconButton(onClick = { navController.navigate("history") }) {
-                                                    Icon(
-                                                        painter = painterResource(R.drawable.history),
-                                                        contentDescription = stringResource(R.string.history)
-                                                    )
-                                                }
-                                                IconButton(onClick = { navController.navigate("stats") }) {
-                                                    Icon(
-                                                        painter = painterResource(R.drawable.stats),
-                                                        contentDescription = stringResource(R.string.stats)
-                                                    )
-                                                }
-                                                IconButton(onClick = { showAccountDialog = true }) {
-                                                    BadgedBox(badge = {
-                                                        if (latestVersionName != BuildConfig.VERSION_NAME) {
-                                                            Badge()
-                                                        }
-                                                    }) {
-                                                        if (accountImageUrl != null) {
-                                                            AsyncImage(
-                                                                model = accountImageUrl,
-                                                                contentDescription = stringResource(R.string.account),
-                                                                modifier = Modifier
-                                                                    .size(24.dp)
-                                                                    .clip(CircleShape)
-                                                            )
-                                                        } else {
-                                                            Icon(
-                                                                painter = painterResource(R.drawable.account),
-                                                                contentDescription = stringResource(R.string.account),
-                                                                modifier = Modifier.size(24.dp)
-                                                            )
-                                                        }
+                                            }
+                                        },
+                                        actions = {
+                                            IconButton(onClick = { navController.navigate("history") }) {
+                                                Icon(
+                                                    painter = painterResource(R.drawable.history),
+                                                    contentDescription = stringResource(R.string.history)
+                                                )
+                                            }
+                                            IconButton(onClick = { navController.navigate("stats") }) {
+                                                Icon(
+                                                    painter = painterResource(R.drawable.stats),
+                                                    contentDescription = stringResource(R.string.stats)
+                                                )
+                                            }
+                                            IconButton(onClick = { showAccountDialog = true }) {
+                                                BadgedBox(badge = {
+                                                    if (latestVersionName != BuildConfig.VERSION_NAME) {
+                                                        Badge()
+                                                    }
+                                                }) {
+                                                    if (accountImageUrl != null) {
+                                                        AsyncImage(
+                                                            model = accountImageUrl,
+                                                            contentDescription = stringResource(R.string.account),
+                                                            modifier = Modifier
+                                                                .size(24.dp)
+                                                                .clip(CircleShape)
+                                                        )
+                                                    } else {
+                                                        Icon(
+                                                            painter = painterResource(R.drawable.account),
+                                                            contentDescription = stringResource(R.string.account),
+                                                            modifier = Modifier.size(24.dp)
+                                                        )
                                                     }
                                                 }
-                                            },
-                                            scrollBehavior = searchBarScrollBehavior,
-                                            colors = TopAppBarDefaults.topAppBarColors(
-                                                containerColor = if (pureBlack) Color.Black else MaterialTheme.colorScheme.surfaceContainer,
-                                                scrolledContainerColor = if (pureBlack) Color.Black else MaterialTheme.colorScheme.surfaceContainer,
-                                                titleContentColor = MaterialTheme.colorScheme.onSurface,
-                                                actionIconContentColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                                                navigationIconContentColor = MaterialTheme.colorScheme.onSurfaceVariant
-                                            ),
-                                            modifier = Modifier.windowInsetsPadding(
-                                                if (showRail) {
-                                                    WindowInsets(left = NavigationBarHeight)
-                                                        .add(cutoutInsets.only(WindowInsetsSides.Start))
-                                                } else {
-                                                    cutoutInsets.only(WindowInsetsSides.Start + WindowInsetsSides.End)
-                                                }
-                                            )
+                                            }
+                                        },
+                                        scrollBehavior = searchBarScrollBehavior,
+                                        colors = TopAppBarDefaults.topAppBarColors(
+                                            containerColor = if (pureBlack) Color.Black else MaterialTheme.colorScheme.surface,
+                                            scrolledContainerColor = if (pureBlack) Color.Black else MaterialTheme.colorScheme.surface,
+                                            titleContentColor = MaterialTheme.colorScheme.onSurface,
+                                            actionIconContentColor = MaterialTheme.colorScheme.onSurface,
+                                            navigationIconContentColor = MaterialTheme.colorScheme.onSurface
+                                        ),
+                                        modifier = Modifier.windowInsetsPadding(
+                                            if (showRail) {
+                                                WindowInsets(left = NavigationBarHeight)
+                                                    .add(cutoutInsets.only(WindowInsetsSides.Start))
+                                            } else {
+                                                cutoutInsets.only(WindowInsetsSides.Start + WindowInsetsSides.End)
+                                            }
                                         )
-                                    }
+                                    )
                                 }
                                 AnimatedVisibility(
                                     visible = active || inSearchScreen,
