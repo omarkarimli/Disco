@@ -212,7 +212,6 @@ fun BottomSheetPlayer(
         playerConnection.service.addToQueueAutomix(automix[0], 0)
     }
 
-    val defaultGradientColors = listOf(MaterialTheme.colorScheme.surface, MaterialTheme.colorScheme.surfaceVariant)
     val fallbackColor = MaterialTheme.colorScheme.surface.toArgb()
 
     LaunchedEffect(mediaMetadata?.id, playerBackground) {
@@ -257,7 +256,7 @@ fun BottomSheetPlayer(
         }
     }
 
-    val TextBackgroundColor =
+    val textBackgroundColor =
         when (playerBackground) {
             PlayerBackgroundStyle.DEFAULT -> MaterialTheme.colorScheme.onBackground
             PlayerBackgroundStyle.BLUR -> Color.White
@@ -266,13 +265,13 @@ fun BottomSheetPlayer(
 
     val icBackgroundColor =
         when (playerBackground) {
-            PlayerBackgroundStyle.DEFAULT -> MaterialTheme.colorScheme.surface
-            PlayerBackgroundStyle.BLUR -> Color.Black
-            PlayerBackgroundStyle.GRADIENT -> Color.Black
+            PlayerBackgroundStyle.DEFAULT -> MaterialTheme.colorScheme.onSurface
+            PlayerBackgroundStyle.BLUR -> Color.White
+            PlayerBackgroundStyle.GRADIENT -> Color.White
         }
 
     val (textButtonColor, iconButtonColor) = when (playerButtonsStyle) {
-        PlayerButtonsStyle.DEFAULT -> Pair(TextBackgroundColor, icBackgroundColor)
+        PlayerButtonsStyle.DEFAULT -> Pair(textBackgroundColor, icBackgroundColor)
         PlayerButtonsStyle.SECONDARY -> Pair(
             MaterialTheme.colorScheme.secondary,
             MaterialTheme.colorScheme.onSecondary
@@ -535,9 +534,8 @@ fun BottomSheetPlayer(
                             fontWeight = FontWeight.Bold,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
-                            color = TextBackgroundColor,
-                            modifier =
-                            Modifier
+                            color = textBackgroundColor,
+                            modifier = Modifier
                                 .basicMarquee(iterations = 1, initialDelayMillis = 3000, velocity = 30.dp)
                                 .combinedClickable(
                                     enabled = true,
@@ -568,7 +566,7 @@ fun BottomSheetPlayer(
                             mediaMetadata.artists.forEachIndexed { index, artist ->
                                 val tag = "artist_${artist.id.orEmpty()}"
                                 pushStringAnnotation(tag = tag, annotation = artist.id.orEmpty())
-                                withStyle(SpanStyle(color = TextBackgroundColor, fontSize = 16.sp)) {
+                                withStyle(SpanStyle(color = textBackgroundColor, fontSize = 16.sp)) {
                                     append(artist.name)
                                 }
                                 pop()
@@ -586,7 +584,7 @@ fun BottomSheetPlayer(
                             var clickOffset by remember { mutableStateOf<Offset?>(null) }
                             Text(
                                 text = annotatedString,
-                                style = MaterialTheme.typography.titleMedium.copy(color = TextBackgroundColor),
+                                style = MaterialTheme.typography.titleMedium.copy(color = textBackgroundColor),
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis,
                                 onTextLayout = { layoutResult = it },
@@ -662,7 +660,6 @@ fun BottomSheetPlayer(
                             modifier = Modifier
                                 .size(42.dp)
                                 .clip(shareShape)
-                                .background(textButtonColor)
                                 .clickable {
                                     val intent = Intent().apply {
                                         action = Intent.ACTION_SEND
@@ -689,7 +686,6 @@ fun BottomSheetPlayer(
                             modifier = Modifier
                                 .size(42.dp)
                                 .clip(favShape)
-                                .background(textButtonColor)
                                 .clickable {
                                     playerConnection.toggleLike()
                                 }
@@ -860,7 +856,7 @@ fun BottomSheetPlayer(
                 Text(
                     text = makeTimeString(sliderPosition ?: position),
                     style = MaterialTheme.typography.labelMedium,
-                    color = TextBackgroundColor,
+                    color = textBackgroundColor,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
@@ -868,7 +864,7 @@ fun BottomSheetPlayer(
                 Text(
                     text = if (duration != C.TIME_UNSET) makeTimeString(duration) else "",
                     style = MaterialTheme.typography.labelMedium,
-                    color = TextBackgroundColor,
+                    color = textBackgroundColor,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
@@ -878,35 +874,33 @@ fun BottomSheetPlayer(
 
             if (useNewPlayerDesign) {
                 BoxWithConstraints(
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
+                    contentAlignment = Alignment.Center
                 ) {
-                    val maxW = maxWidth
-                    val playButtonHeight = maxW / 6f
-                    val playButtonWidth = playButtonHeight * 1.6f
-                    val sideButtonHeight = playButtonHeight * 0.8f
-                    val sideButtonWidth = sideButtonHeight * 1.3f
+                    val controlButtonSize = maxWidth / 5f
 
                     Row(
                         horizontalArrangement = Arrangement.Center,
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier.fillMaxWidth()
                     ) {
-
                         FilledTonalIconButton(
                             onClick = playerConnection::seekToPrevious,
                             enabled = canSkipPrevious,
                             colors = IconButtonDefaults.filledTonalIconButtonColors(
-                                containerColor = textButtonColor,
-                                contentColor = iconButtonColor
+                                containerColor = Color.Transparent,
+                                contentColor = iconButtonColor.copy(alpha = 0.5f)
                             ),
                             modifier = Modifier
-                                .size(width = sideButtonWidth, height = sideButtonHeight)
+                                .size(controlButtonSize)
                                 .clip(RoundedCornerShape(32.dp))
                         ) {
                             Icon(
                                 painter = painterResource(R.drawable.skip_previous),
                                 contentDescription = null,
-                                modifier = Modifier.size(32.dp)
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(16.dp)
                             )
                         }
 
@@ -922,11 +916,11 @@ fun BottomSheetPlayer(
                                 }
                             },
                             colors = IconButtonDefaults.filledIconButtonColors(
-                                containerColor = textButtonColor,
+                                containerColor = Color.Transparent,
                                 contentColor = iconButtonColor
                             ),
                             modifier = Modifier
-                                .size(width = playButtonWidth, height = playButtonHeight)
+                                .size(controlButtonSize)
                                 .clip(RoundedCornerShape(32.dp))
                         ) {
                             Icon(
@@ -938,7 +932,9 @@ fun BottomSheetPlayer(
                                     }
                                 ),
                                 contentDescription = null,
-                                modifier = Modifier.size(42.dp)
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(16.dp)
                             )
                         }
 
@@ -948,17 +944,19 @@ fun BottomSheetPlayer(
                             onClick = playerConnection::seekToNext,
                             enabled = canSkipNext,
                             colors = IconButtonDefaults.filledTonalIconButtonColors(
-                                containerColor = textButtonColor,
-                                contentColor = iconButtonColor
+                                containerColor = Color.Transparent,
+                                contentColor = iconButtonColor.copy(alpha = 0.5f)
                             ),
                             modifier = Modifier
-                                .size(width = sideButtonWidth, height = sideButtonHeight)
+                                .size(controlButtonSize)
                                 .clip(RoundedCornerShape(32.dp))
                         ) {
                             Icon(
                                 painter = painterResource(R.drawable.skip_next),
                                 contentDescription = null,
-                                modifier = Modifier.size(32.dp)
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(16.dp)
                             )
                         }
                     }
@@ -978,7 +976,7 @@ fun BottomSheetPlayer(
                                 Player.REPEAT_MODE_ONE -> R.drawable.repeat_one
                                 else -> throw IllegalStateException()
                             },
-                            color = TextBackgroundColor,
+                            color = textBackgroundColor,
                             modifier = Modifier
                                 .size(32.dp)
                                 .padding(4.dp)
@@ -994,7 +992,7 @@ fun BottomSheetPlayer(
                         ResizableIconButton(
                             icon = R.drawable.skip_previous,
                             enabled = canSkipPrevious,
-                            color = TextBackgroundColor,
+                            color = textBackgroundColor,
                             modifier =
                             Modifier
                                 .size(32.dp)
@@ -1048,7 +1046,7 @@ fun BottomSheetPlayer(
                         ResizableIconButton(
                             icon = R.drawable.skip_next,
                             enabled = canSkipNext,
-                            color = TextBackgroundColor,
+                            color = textBackgroundColor,
                             modifier =
                             Modifier
                                 .size(32.dp)
@@ -1060,9 +1058,8 @@ fun BottomSheetPlayer(
                     Box(modifier = Modifier.weight(1f)) {
                         ResizableIconButton(
                             icon = if (currentSong?.song?.liked == true) R.drawable.favorite else R.drawable.favorite_border,
-                            color = if (currentSong?.song?.liked == true) MaterialTheme.colorScheme.error else TextBackgroundColor,
-                            modifier =
-                            Modifier
+                            color = if (currentSong?.song?.liked == true) MaterialTheme.colorScheme.error else textBackgroundColor,
+                            modifier = Modifier
                                 .size(32.dp)
                                 .padding(4.dp)
                                 .align(Alignment.Center),
@@ -1149,9 +1146,7 @@ fun BottomSheetPlayer(
             } else {
                 MaterialTheme.colorScheme.surfaceContainer
             },
-            onBackgroundColor = onBackgroundColor,
-            TextBackgroundColor = TextBackgroundColor,
-            textButtonColor = textButtonColor,
+            textBackgroundColor = textBackgroundColor,
             iconButtonColor = iconButtonColor,
             onShowLyrics = { lyricsSheetState.expandSoft() },
             pureBlack = pureBlack,
