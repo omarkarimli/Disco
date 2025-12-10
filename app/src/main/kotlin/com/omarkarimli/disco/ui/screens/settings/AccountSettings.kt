@@ -18,7 +18,6 @@ import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
@@ -111,8 +110,24 @@ fun AccountSettings(
                 modifier = Modifier.padding(start = 4.dp)
             )
             Spacer(modifier = Modifier.weight(1f))
-            IconButton(onClick = onClose) {
-                Icon(painterResource(R.drawable.close), contentDescription = null)
+            BadgedBox(badge = {
+                if (latestVersionName != BuildConfig.VERSION_NAME) Badge()
+            }) {
+                if (accountImageUrl != null) {
+                    AsyncImage(
+                        model = accountImageUrl,
+                        contentDescription = stringResource(R.string.account),
+                        modifier = Modifier
+                            .size(24.dp)
+                            .clip(CircleShape)
+                    )
+                } else {
+                    Icon(
+                        painter = painterResource(R.drawable.account_outlined),
+                        contentDescription = stringResource(R.string.account),
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
             }
         }
 

@@ -4,7 +4,6 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.PendingIntent
 import android.content.ComponentName
-import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.content.pm.PackageManager
@@ -23,7 +22,6 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
@@ -46,11 +44,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.windowInsetsPadding
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialogDefaults
-import androidx.compose.material3.Badge
-import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -71,7 +66,6 @@ import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -80,7 +74,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
@@ -116,7 +109,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import coil3.compose.AsyncImage
 import coil3.imageLoader
 import coil3.request.CachePolicy
 import coil3.request.ImageRequest
@@ -251,7 +243,7 @@ class MainActivity : ComponentActivity() {
         bindService(
             Intent(this, MusicService::class.java),
             serviceConnection,
-            Context.BIND_AUTO_CREATE
+            BIND_AUTO_CREATE
         )
     }
 
@@ -398,6 +390,7 @@ class MainActivity : ComponentActivity() {
                             } catch (e: Exception) {
                                 // Fallback to default on error
                                 themeColor = DefaultThemeColor
+                                e.printStackTrace()
                             }
                         }
                     } else {
@@ -429,11 +422,10 @@ class MainActivity : ComponentActivity() {
 
                     val navController = rememberNavController()
                     val homeViewModel: HomeViewModel = hiltViewModel()
-                    val accountImageUrl by homeViewModel.accountImageUrl.collectAsState()
                     val navBackStackEntry by navController.currentBackStackEntryAsState()
                     val (previousTab, setPreviousTab) = rememberSaveable { mutableStateOf("home") }
 
-                    val navigationItems = remember { Screens.MainScreens }
+                    val navigationItems = remember { Screens.BottomBarItems }
                     val (slimNav) = rememberPreference(SlimNavBarKey, defaultValue = false)
                     val (useNewMiniPlayerDesign) = rememberPreference(UseNewMiniPlayerDesignKey, defaultValue = true)
                     val defaultOpenTab = remember {
@@ -450,8 +442,8 @@ class MainActivity : ComponentActivity() {
                     val topLevelScreens = remember {
                         listOf(
                             Screens.Home.route,
-                            Screens.Search.route,
                             Screens.Library.route,
+                            Screens.Profile.route,
                             "settings",
                         )
                     }
@@ -712,8 +704,8 @@ class MainActivity : ComponentActivity() {
                     val currentTitleRes = remember(navBackStackEntry) {
                         when (navBackStackEntry?.destination?.route) {
                             Screens.Home.route -> R.string.home
-                            Screens.Search.route -> R.string.search
                             Screens.Library.route -> R.string.filter_library
+                            Screens.Profile.route -> R.string.account
                             else -> null
                         }
                     }
@@ -776,28 +768,12 @@ class MainActivity : ComponentActivity() {
                                                     contentDescription = stringResource(R.string.stats)
                                                 )
                                             }
-                                            IconButton(onClick = { showAccountDialog = true }) {
-                                                BadgedBox(badge = {
-                                                    if (latestVersionName != BuildConfig.VERSION_NAME) {
-                                                        Badge()
-                                                    }
-                                                }) {
-                                                    if (accountImageUrl != null) {
-                                                        AsyncImage(
-                                                            model = accountImageUrl,
-                                                            contentDescription = stringResource(R.string.account),
-                                                            modifier = Modifier
-                                                                .size(24.dp)
-                                                                .clip(CircleShape)
-                                                        )
-                                                    } else {
-                                                        Icon(
-                                                            painter = painterResource(R.drawable.account),
-                                                            contentDescription = stringResource(R.string.account),
-                                                            modifier = Modifier.size(24.dp)
-                                                        )
-                                                    }
-                                                }
+                                            IconButton(onClick = { onActiveChange(true) }) {
+                                                Icon(
+                                                    painter = painterResource(R.drawable.search),
+                                                    contentDescription = stringResource(R.string.search),
+                                                    modifier = Modifier.size(24.dp)
+                                                )
                                             }
                                         },
                                         scrollBehavior = searchBarScrollBehavior,
@@ -1048,8 +1024,8 @@ class MainActivity : ComponentActivity() {
                                                         }
                                                     },
                                                     onClick = {
-                                                        if (screen.route == Screens.Search.route) {
-                                                            onActiveChange(true)
+                                                        if (screen.route == Screens.Profile.route) {
+                                                            showAccountDialog = true
                                                         } else if (isSelected) {
                                                             navController.currentBackStackEntry?.savedStateHandle?.set("scrollToTop", true)
                                                             coroutineScope.launch {
@@ -1110,8 +1086,8 @@ class MainActivity : ComponentActivity() {
                                             NavigationRailItem(
                                                 selected = isSelected,
                                                 onClick = {
-                                                    if (screen.route == Screens.Search.route) {
-                                                        onActiveChange(true)
+                                                    if (screen.route == Screens.Profile.route) {
+                                                        showAccountDialog = true
                                                     } else if (isSelected) {
                                                         navController.currentBackStackEntry?.savedStateHandle?.set("scrollToTop", true)
                                                         coroutineScope.launch {
@@ -1324,9 +1300,9 @@ class MainActivity : ComponentActivity() {
 
                 val playlistId = uri.getQueryParameter("list")
 
-                videoId?.let {
+                videoId?.let { videoIdNonNullable ->
                     coroutineScope.launch(Dispatchers.IO) {
-                        YouTube.queue(listOf(it), playlistId).onSuccess { queue ->
+                        YouTube.queue(listOf(videoIdNonNullable), playlistId).onSuccess { queue ->
                             withContext(Dispatchers.Main) {
                                 playerConnection?.playQueue(
                                     YouTubeQueue(
