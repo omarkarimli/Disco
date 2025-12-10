@@ -271,8 +271,8 @@ fun BottomSheetPlayer(
     val (textButtonColor, iconButtonColor) = when (playerButtonsStyle) {
         PlayerButtonsStyle.DEFAULT -> Pair(textBackgroundColor, icBackgroundColor)
         PlayerButtonsStyle.SECONDARY -> Pair(
-            MaterialTheme.colorScheme.secondary,
-            MaterialTheme.colorScheme.onSecondary
+            MaterialTheme.colorScheme.onSecondary,
+            MaterialTheme.colorScheme.secondary
         )
     }
 
@@ -942,7 +942,7 @@ fun BottomSheetPlayer(
                             Icon(
                                 painter = painterResource(R.drawable.skip_next),
                                 contentDescription = null,
-                                tint = iconButtonColor,
+                                tint = iconButtonColor.copy(alpha = 0.5f),
                                 modifier = Modifier
                                     .fillMaxSize()
                                     .padding(16.dp)
@@ -1006,8 +1006,7 @@ fun BottomSheetPlayer(
                             },
                     ) {
                         Image(
-                            painter =
-                            painterResource(
+                            painter = painterResource(
                                 if (playbackState ==
                                     STATE_ENDED
                                 ) {

@@ -119,24 +119,23 @@ fun <T> ListPreference(
         ) {
             items(values) { value ->
                 Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier =
-                    Modifier
+                    modifier = Modifier
                         .fillMaxWidth()
                         .clickable {
                             showDialog = false
                             onValueSelected(value)
-                        }.padding(horizontal = 16.dp, vertical = 12.dp),
+                        }
+                        .padding(16.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
                     RadioButton(
                         selected = value == selectedValue,
                         onClick = null,
                     )
-
                     Text(
                         text = valueText(value),
-                        style = MaterialTheme.typography.bodyLarge,
-                        modifier = Modifier.padding(start = 16.dp),
+                        style = MaterialTheme.typography.bodyLarge
                     )
                 }
             }

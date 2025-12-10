@@ -78,7 +78,7 @@ fun SettingsScreen(
             title = stringResource(R.string.settings_section_player_content),
             items = listOf(
                 Material3SettingsItem(
-                    icon = painterResource(R.drawable.play),
+                    icon = painterResource(R.drawable.play_circle),
                     title = { Text(stringResource(R.string.player_and_audio)) },
                     onClick = { navController.navigate("settings/player") }
                 ),

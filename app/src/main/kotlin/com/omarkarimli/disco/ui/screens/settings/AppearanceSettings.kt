@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.windowInsetsPadding
@@ -497,26 +498,29 @@ fun AppearanceSettings(
                     }
                 ) {
                     Column(
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        modifier = Modifier.padding(16.dp)
+                        modifier = Modifier.padding(4.dp)
                     ) {
                         Text(
                             text = stringResource(R.string.swipe_sensitivity),
-                            style = MaterialTheme.typography.headlineSmall,
-                            modifier = Modifier.padding(bottom = 16.dp)
+                            style = MaterialTheme.typography.titleLarge
                         )
-    
-                        Text(
-                            text = stringResource(R.string.sensitivity_percentage, (tempSensitivity * 100).roundToInt()),
-                            style = MaterialTheme.typography.bodyLarge,
-                            modifier = Modifier.padding(bottom = 16.dp)
-                        )
-    
+                        Spacer(modifier = Modifier.height(16.dp))
                         Slider(
                             value = tempSensitivity,
-                            onValueChange = { tempSensitivity = it },
                             valueRange = 0f..1f,
+                            onValueChange = { tempSensitivity = it },
+                            thumb = { Spacer(modifier = Modifier.size(0.dp)) },
+                            track = { sliderState ->
+                                PlayerSliderTrack(
+                                    sliderState = sliderState,
+                                    colors = SliderDefaults.colors()
+                                )
+                            },
                             modifier = Modifier.fillMaxWidth()
+                        )
+                        Text(
+                            text = stringResource(R.string.sensitivity_percentage, (tempSensitivity * 100).roundToInt()),
+                            style = MaterialTheme.typography.bodyLarge
                         )
                     }
                 }
