@@ -29,7 +29,7 @@ val AlbumThumbnailSize = 144.dp
 
 val ThumbnailCornerRadius = 6.dp
 
-val PlayerHorizontalPadding = 32.dp
+val PlayerHorizontalPadding = 20.dp
 
 val NavigationBarAnimationSpec = spring<Dp>(stiffness = Spring.StiffnessMediumLow)
 val BottomSheetAnimationSpec = spring<Dp>(stiffness = Spring.StiffnessMediumLow)

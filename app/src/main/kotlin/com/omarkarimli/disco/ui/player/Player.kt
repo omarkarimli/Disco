@@ -514,13 +514,14 @@ fun BottomSheetPlayer(
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
-                modifier =
-                Modifier
+                modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = PlayerHorizontalPadding),
             ) {
                 Column(
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier
+                        .padding(top = 16.dp)
+                        .weight(1f)
                 ) {
                     AnimatedContent(
                         targetState = mediaMetadata.title,
@@ -694,9 +695,7 @@ fun BottomSheetPlayer(
                     }
                 }
             }
-
-            Spacer(Modifier.height(12.dp))
-
+            Spacer(Modifier.height(16.dp))
             when (sliderStyle) {
                 SliderStyle.DEFAULT -> {
                     Slider(
@@ -766,16 +765,14 @@ fun BottomSheetPlayer(
                     )
                 }
             }
-
             Spacer(Modifier.height(4.dp))
 
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
-                modifier =
-                Modifier
+                modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = PlayerHorizontalPadding + 4.dp),
+                    .padding(horizontal = PlayerHorizontalPadding),
             ) {
                 Text(
                     text = makeTimeString(sliderPosition ?: position),
@@ -1017,7 +1014,6 @@ fun BottomSheetPlayer(
                     }
                 }
             }
-
             else -> {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
