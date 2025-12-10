@@ -53,6 +53,7 @@ import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.NavigationRail
 import androidx.compose.material3.NavigationRailItem
 import androidx.compose.material3.Scaffold
@@ -169,6 +170,8 @@ import com.omarkarimli.disco.ui.theme.ColorSaver
 import com.omarkarimli.disco.ui.theme.DefaultThemeColor
 import com.omarkarimli.disco.ui.theme.AppTheme
 import com.omarkarimli.disco.ui.theme.extractThemeColor
+import com.omarkarimli.disco.ui.theme.onSurfaceLight
+import com.omarkarimli.disco.ui.theme.surfaceLight
 import com.omarkarimli.disco.ui.utils.appBarScrollBehavior
 import com.omarkarimli.disco.ui.utils.backToMain
 import com.omarkarimli.disco.ui.utils.resetHeightOffset
@@ -725,6 +728,11 @@ class MainActivity : ComponentActivity() {
                         LocalSyncUtils provides syncUtils,
                     )
 
+                    val isDynamicTheme by rememberPreference(
+                        DynamicThemeKey,
+                        defaultValue = true
+                    )
+
                     CompositionLocalProvider(values = providedValues) {
                         Scaffold(
                             topBar = {
@@ -965,6 +973,16 @@ class MainActivity : ComponentActivity() {
                                 }
                             },
                             bottomBar = {
+                                val containerColor =
+                                    if (pureBlack) Color.Black
+                                    else if (isDynamicTheme) MaterialTheme.colorScheme.surfaceContainer
+                                    else onSurfaceLight
+
+                                val contentColor =
+                                    if (pureBlack) Color.White
+                                    else if (isDynamicTheme) MaterialTheme.colorScheme.onSurfaceVariant
+                                    else surfaceLight
+
                                 if (!showRail) {
                                     Box {
                                         BottomSheetPlayer(
@@ -997,8 +1015,8 @@ class MainActivity : ComponentActivity() {
                                                         )
                                                     }
                                                 },
-                                            containerColor = if (pureBlack) Color.Black else MaterialTheme.colorScheme.surfaceContainer,
-                                            contentColor = if (pureBlack) Color.White else MaterialTheme.colorScheme.onSurfaceVariant
+                                            containerColor = containerColor,
+                                            contentColor = contentColor
                                         ) {
                                             navigationItems.fastForEach { screen ->
                                                 val isSelected =
@@ -1041,6 +1059,13 @@ class MainActivity : ComponentActivity() {
                                                             }
                                                         }
                                                     },
+                                                    colors = NavigationBarItemDefaults.colors(
+                                                        indicatorColor = contentColor,
+                                                        selectedIconColor = containerColor,
+                                                        unselectedIconColor = contentColor,
+                                                        selectedTextColor = contentColor,
+                                                        unselectedTextColor = contentColor
+                                                    )
                                                 )
                                             }
                                         }
