@@ -42,10 +42,8 @@ import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FilledIconButton
-import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButtonDefaults
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedIconButton
 import androidx.compose.material3.Slider
@@ -884,13 +882,9 @@ fun BottomSheetPlayer(
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier.fillMaxWidth()
                     ) {
-                        FilledTonalIconButton(
+                        IconButton(
                             onClick = playerConnection::seekToPrevious,
                             enabled = canSkipPrevious,
-                            colors = IconButtonDefaults.filledTonalIconButtonColors(
-                                containerColor = Color.Transparent,
-                                contentColor = iconButtonColor.copy(alpha = 0.5f)
-                            ),
                             modifier = Modifier
                                 .size(controlButtonSize)
                                 .clip(RoundedCornerShape(32.dp))
@@ -898,6 +892,7 @@ fun BottomSheetPlayer(
                             Icon(
                                 painter = painterResource(R.drawable.skip_previous),
                                 contentDescription = null,
+                                tint = iconButtonColor.copy(alpha = 0.5f),
                                 modifier = Modifier
                                     .fillMaxSize()
                                     .padding(16.dp)
@@ -906,7 +901,7 @@ fun BottomSheetPlayer(
 
                         Spacer(modifier = Modifier.width(16.dp))
 
-                        FilledIconButton(
+                        IconButton(
                             onClick = {
                                 if (playbackState == STATE_ENDED) {
                                     playerConnection.player.seekTo(0, 0)
@@ -915,10 +910,6 @@ fun BottomSheetPlayer(
                                     playerConnection.player.togglePlayPause()
                                 }
                             },
-                            colors = IconButtonDefaults.filledIconButtonColors(
-                                containerColor = Color.Transparent,
-                                contentColor = iconButtonColor
-                            ),
                             modifier = Modifier
                                 .size(controlButtonSize)
                                 .clip(RoundedCornerShape(32.dp))
@@ -932,6 +923,7 @@ fun BottomSheetPlayer(
                                     }
                                 ),
                                 contentDescription = null,
+                                tint = iconButtonColor,
                                 modifier = Modifier
                                     .fillMaxSize()
                                     .padding(16.dp)
@@ -940,13 +932,9 @@ fun BottomSheetPlayer(
 
                         Spacer(modifier = Modifier.width(16.dp))
 
-                        FilledTonalIconButton(
+                        IconButton(
                             onClick = playerConnection::seekToNext,
                             enabled = canSkipNext,
-                            colors = IconButtonDefaults.filledTonalIconButtonColors(
-                                containerColor = Color.Transparent,
-                                contentColor = iconButtonColor.copy(alpha = 0.5f)
-                            ),
                             modifier = Modifier
                                 .size(controlButtonSize)
                                 .clip(RoundedCornerShape(32.dp))
@@ -954,6 +942,7 @@ fun BottomSheetPlayer(
                             Icon(
                                 painter = painterResource(R.drawable.skip_next),
                                 contentDescription = null,
+                                tint = iconButtonColor,
                                 modifier = Modifier
                                     .fillMaxSize()
                                     .padding(16.dp)
@@ -964,8 +953,7 @@ fun BottomSheetPlayer(
             } else {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    modifier =
-                    Modifier
+                    modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = PlayerHorizontalPadding),
                 ) {
@@ -1004,8 +992,7 @@ fun BottomSheetPlayer(
                     Spacer(Modifier.width(8.dp))
 
                     Box(
-                        modifier =
-                        Modifier
+                        modifier = Modifier
                             .size(72.dp)
                             .clip(RoundedCornerShape(playPauseRoundness))
                             .background(textButtonColor)
@@ -1047,8 +1034,7 @@ fun BottomSheetPlayer(
                             icon = R.drawable.skip_next,
                             enabled = canSkipNext,
                             color = textBackgroundColor,
-                            modifier =
-                            Modifier
+                            modifier = Modifier
                                 .size(32.dp)
                                 .align(Alignment.Center),
                             onClick = playerConnection::seekToNext,
@@ -1073,10 +1059,10 @@ fun BottomSheetPlayer(
         when (LocalConfiguration.current.orientation) {
             Configuration.ORIENTATION_LANDSCAPE -> {
                 Row(
-                    modifier =
-                    Modifier
+                    modifier = Modifier
                         .windowInsetsPadding(WindowInsets.systemBars.only(WindowInsetsSides.Horizontal))
                         .padding(bottom = queueSheetState.collapsedBound + 48.dp),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
                     Box(
                         contentAlignment = Alignment.Center,
@@ -1172,7 +1158,6 @@ fun BottomSheetPlayer(
                     LyricsScreen(
                         mediaMetadata = metadata,
                         onBackClick = { lyricsSheetState.collapseSoft() },
-                        navController = navController,
                         backgroundAlpha = lyricsSheetState.progress.coerceIn(0f, 1f)
                     )
                 }
