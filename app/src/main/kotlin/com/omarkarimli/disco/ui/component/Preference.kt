@@ -31,6 +31,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
@@ -51,16 +53,18 @@ fun PreferenceEntry(
     trailingContent: (@Composable () -> Unit)? = null,
     onClick: (() -> Unit)? = null,
     isEnabled: Boolean = true,
+    shape: Shape = RectangleShape
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
             .fillMaxWidth()
-            .clip(MaterialTheme.shapes.medium)
+            .clip(shape)
             .clickable(
                 enabled = isEnabled && onClick != null,
                 onClick = onClick ?: {},
-            ).alpha(if (isEnabled) 1f else 0.5f)
+            )
+            .alpha(if (isEnabled) 1f else 0.5f)
             .padding(horizontal = 16.dp, vertical = 12.dp),
     ) {
         if (icon != null) {

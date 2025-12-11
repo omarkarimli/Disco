@@ -48,10 +48,11 @@ fun NavGraphBuilder.navigationBuilder(
     composable(Screens.Home.route) {
         HomeScreen(navController)
     }
-    composable(
-        Screens.Library.route,
-    ) {
+    composable(Screens.Library.route) {
         LibraryScreen(navController)
+    }
+    composable(Screens.Profile.route) {
+        ProfileScreen(navController, latestVersionName)
     }
     composable("history") {
         HistoryScreen(navController)

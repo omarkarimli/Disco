@@ -759,6 +759,7 @@ class MainActivity : ComponentActivity() {
                                     ) + fadeOut(animationSpec = tween(durationMillis = 100))
                                 ) {
                                     TopAppBar(
+                                        scrollBehavior = searchBarScrollBehavior,
                                         title = {
                                             if (currentTitleRes == R.string.home) {
                                                 Icon(
@@ -795,17 +796,6 @@ class MainActivity : ComponentActivity() {
                                                 )
                                             }
                                         },
-                                        navigationIcon = {
-                                            if (currentTitleRes == R.string.account) {
-                                                IconButton(onClick = { navController.navigateUp() }) {
-                                                    Icon(
-                                                        painter = painterResource(R.drawable.arrow_back),
-                                                        contentDescription = stringResource(R.string.back_button_desc)
-                                                    )
-                                                }
-                                            }
-                                        },
-                                        scrollBehavior = searchBarScrollBehavior,
                                         colors = TopAppBarDefaults.topAppBarColors(
                                             containerColor = if (pureBlack) Color.Black else MaterialTheme.colorScheme.surface,
                                             scrolledContainerColor = if (pureBlack) Color.Black else MaterialTheme.colorScheme.surface,
@@ -1054,9 +1044,7 @@ class MainActivity : ComponentActivity() {
                                                         }
                                                     },
                                                     onClick = {
-                                                        if (screen.route == Screens.Profile.route) {
-                                                            showAccountDialog = true
-                                                        } else if (isSelected) {
+                                                        if (isSelected) {
                                                             navController.currentBackStackEntry?.savedStateHandle?.set("scrollToTop", true)
                                                             coroutineScope.launch {
                                                                 searchBarScrollBehavior.state.resetHeightOffset()
@@ -1122,9 +1110,7 @@ class MainActivity : ComponentActivity() {
                                             NavigationRailItem(
                                                 selected = isSelected,
                                                 onClick = {
-                                                    if (screen.route == Screens.Profile.route) {
-                                                        showAccountDialog = true
-                                                    } else if (isSelected) {
+                                                    if (isSelected) {
                                                         navController.currentBackStackEntry?.savedStateHandle?.set("scrollToTop", true)
                                                         coroutineScope.launch {
                                                             searchBarScrollBehavior.state.resetHeightOffset()
