@@ -60,7 +60,7 @@ fun AppTheme(
     // Use standard MaterialTheme instead of MaterialExpressiveTheme
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = AppTypography, // Use the defined AppTypography
+        typography = AppTypography,
         content = content
     )
 }

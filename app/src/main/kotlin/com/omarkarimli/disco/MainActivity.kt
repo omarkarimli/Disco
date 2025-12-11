@@ -160,8 +160,10 @@ import com.omarkarimli.disco.ui.component.rememberBottomSheetState
 import com.omarkarimli.disco.ui.component.shimmer.ShimmerTheme
 import com.omarkarimli.disco.ui.menu.YouTubeSongMenu
 import com.omarkarimli.disco.ui.player.BottomSheetPlayer
-import com.omarkarimli.disco.ui.screens.Screens
-import com.omarkarimli.disco.ui.screens.navigationBuilder
+import com.omarkarimli.disco.ui.nav.BottomBarItems
+import com.omarkarimli.disco.ui.nav.RouteToTitleMap
+import com.omarkarimli.disco.ui.nav.Screens
+import com.omarkarimli.disco.ui.nav.navigationBuilder
 import com.omarkarimli.disco.ui.screens.search.LocalSearchScreen
 import com.omarkarimli.disco.ui.screens.search.OnlineSearchScreen
 import com.omarkarimli.disco.ui.screens.settings.DarkMode
@@ -169,6 +171,7 @@ import com.omarkarimli.disco.ui.screens.settings.NavigationTab
 import com.omarkarimli.disco.ui.theme.ColorSaver
 import com.omarkarimli.disco.ui.theme.DefaultThemeColor
 import com.omarkarimli.disco.ui.theme.AppTheme
+import com.omarkarimli.disco.ui.theme.AppTypography
 import com.omarkarimli.disco.ui.theme.extractThemeColor
 import com.omarkarimli.disco.ui.theme.onSurfaceLight
 import com.omarkarimli.disco.ui.theme.surfaceLight
@@ -433,7 +436,6 @@ class MainActivity : ComponentActivity() {
                     val navBackStackEntry by navController.currentBackStackEntryAsState()
                     val (previousTab, setPreviousTab) = rememberSaveable { mutableStateOf("home") }
 
-                    val navigationItems = remember { Screens.BottomBarItems }
                     val (slimNav) = rememberPreference(SlimNavBarKey, defaultValue = false)
                     val (useNewMiniPlayerDesign) = rememberPreference(UseNewMiniPlayerDesignKey, defaultValue = true)
                     val defaultOpenTab = remember {
@@ -447,19 +449,9 @@ class MainActivity : ComponentActivity() {
                         }
                     }
 
-                    val topLevelScreens = remember {
-                        listOf(
-                            Screens.Home.route,
-                            Screens.Library.route,
-                            Screens.Profile.route,
-                            "settings",
-                        )
-                    }
-
-                    val (query, onQueryChange) =
-                        rememberSaveable(stateSaver = TextFieldValue.Saver) {
+                    val (query, onQueryChange) = rememberSaveable(stateSaver = TextFieldValue.Saver) {
                             mutableStateOf(TextFieldValue())
-                        }
+                    }
 
                     var active by rememberSaveable {
                         mutableStateOf(false)
@@ -469,7 +461,7 @@ class MainActivity : ComponentActivity() {
                         active = newActive
                         if (!newActive) {
                             focusManager.clearFocus()
-                            if (navigationItems.fastAny { it.route == navBackStackEntry?.destination?.route }) {
+                            if (BottomBarItems.fastAny { it.route == navBackStackEntry?.destination?.route }) {
                                 onQueryChange(TextFieldValue())
                             }
                         }
@@ -506,13 +498,13 @@ class MainActivity : ComponentActivity() {
 
                     val shouldShowSearchBar = remember(active, navBackStackEntry) {
                         active ||
-                                navigationItems.fastAny { it.route == navBackStackEntry?.destination?.route } ||
+                                BottomBarItems.fastAny { it.route == navBackStackEntry?.destination?.route } ||
                                 inSearchScreen
                     }
 
                     val shouldShowNavigationBar = remember(navBackStackEntry, active) {
                         navBackStackEntry?.destination?.route == null ||
-                                navigationItems.fastAny { it.route == navBackStackEntry?.destination?.route } &&
+                                BottomBarItems.fastAny { it.route == navBackStackEntry?.destination?.route } &&
                                 !active
                     }
 
@@ -615,13 +607,13 @@ class MainActivity : ComponentActivity() {
                                     TextRange(searchQuery.length)
                                 )
                             )
-                        } else if (navigationItems.fastAny { it.route == navBackStackEntry?.destination?.route }) {
+                        } else if (BottomBarItems.fastAny { it.route == navBackStackEntry?.destination?.route }) {
                             onQueryChange(TextFieldValue())
                         }
 
                         // Reset scroll behavior for main navigation items
-                        if (navigationItems.fastAny { it.route == navBackStackEntry?.destination?.route }) {
-                            if (navigationItems.fastAny { it.route == previousTab }) {
+                        if (BottomBarItems.fastAny { it.route == navBackStackEntry?.destination?.route }) {
+                            if (BottomBarItems.fastAny { it.route == previousTab }) {
                                 searchBarScrollBehavior.state.resetHeightOffset()
                             }
                         }
@@ -682,8 +674,9 @@ class MainActivity : ComponentActivity() {
                     var shouldShowTopBar by rememberSaveable { mutableStateOf(false) }
 
                     LaunchedEffect(navBackStackEntry) {
-                        shouldShowTopBar =
-                            !active && navBackStackEntry?.destination?.route in topLevelScreens && navBackStackEntry?.destination?.route != "settings"
+                        shouldShowTopBar = !active
+                                && navBackStackEntry?.destination?.route in
+                                    BottomBarItems.map { it.route }
                     }
 
                     val coroutineScope = rememberCoroutineScope()
@@ -710,12 +703,8 @@ class MainActivity : ComponentActivity() {
                     }
 
                     val currentTitleRes = remember(navBackStackEntry) {
-                        when (navBackStackEntry?.destination?.route) {
-                            Screens.Home.route -> R.string.home
-                            Screens.Library.route -> R.string.filter_library
-                            Screens.Profile.route -> R.string.account
-                            else -> null
-                        }
+                        navBackStackEntry?.destination?.route
+                            ?.let { route -> RouteToTitleMap[route] }
                     }
 
                     val isDynamicTheme by rememberPreference(
@@ -766,7 +755,7 @@ class MainActivity : ComponentActivity() {
                                                     fadeIn(tween(150)).togetherWith(fadeOut(tween(100)))
                                                 }
                                             ) { targetState ->
-                                                if (targetState == R.string.home) {
+                                                if (targetState == Screens.Home.titleId) {
                                                     Icon(
                                                         painter = painterResource(R.drawable.app_icon),
                                                         contentDescription = null,
@@ -776,7 +765,7 @@ class MainActivity : ComponentActivity() {
                                                 } else {
                                                     Text(
                                                         text = targetState?.let { stringResource(it) } ?: "",
-                                                        style = MaterialTheme.typography.titleLarge,
+                                                        style = AppTypography.titleLarge,
                                                     )
                                                 }
                                             }
@@ -833,7 +822,7 @@ class MainActivity : ComponentActivity() {
                                                 onClick = {
                                                     when {
                                                         active -> onActiveChange(false)
-                                                        !navigationItems.fastAny { it.route == navBackStackEntry?.destination?.route } -> {
+                                                        !BottomBarItems.fastAny { it.route == navBackStackEntry?.destination?.route } -> {
                                                             navController.navigateUp()
                                                         }
 
@@ -843,7 +832,7 @@ class MainActivity : ComponentActivity() {
                                                 onLongClick = {
                                                     when {
                                                         active -> {}
-                                                        !navigationItems.fastAny { it.route == navBackStackEntry?.destination?.route } -> {
+                                                        !BottomBarItems.fastAny { it.route == navBackStackEntry?.destination?.route } -> {
                                                             navController.backToMain()
                                                         }
                                                         else -> {}
@@ -853,7 +842,7 @@ class MainActivity : ComponentActivity() {
                                                 Icon(
                                                     painterResource(
                                                         if (active ||
-                                                            !navigationItems.fastAny { it.route == navBackStackEntry?.destination?.route }
+                                                            !BottomBarItems.fastAny { it.route == navBackStackEntry?.destination?.route }
                                                         ) {
                                                             R.drawable.arrow_back
                                                         } else {
@@ -1014,7 +1003,7 @@ class MainActivity : ComponentActivity() {
                                             containerColor = containerColor,
                                             contentColor = contentColor
                                         ) {
-                                            navigationItems.fastForEach { screen ->
+                                            BottomBarItems.fastForEach { screen ->
                                                 val isSelected =
                                                     navBackStackEntry?.destination?.hierarchy?.any { it.route == screen.route } == true
 
@@ -1098,7 +1087,7 @@ class MainActivity : ComponentActivity() {
                                     ) {
                                         Spacer(modifier = Modifier.weight(1f))
 
-                                        navigationItems.fastForEach { screen ->
+                                        BottomBarItems.fastForEach { screen ->
                                             val isSelected =
                                                 navBackStackEntry?.destination?.hierarchy?.any { it.route == screen.route } == true
                                             NavigationRailItem(
@@ -1144,10 +1133,10 @@ class MainActivity : ComponentActivity() {
                                         }.route,
                                         // Enter Transition
                                         enterTransition = {
-                                            val currentRouteIndex = navigationItems.indexOfFirst {
+                                            val currentRouteIndex = BottomBarItems.indexOfFirst {
                                                 it.route == targetState.destination.route
                                             }
-                                            val previousRouteIndex = navigationItems.indexOfFirst {
+                                            val previousRouteIndex = BottomBarItems.indexOfFirst {
                                                 it.route == initialState.destination.route
                                             }
 
@@ -1158,10 +1147,10 @@ class MainActivity : ComponentActivity() {
                                         },
                                         // Exit Transition
                                         exitTransition = {
-                                            val currentRouteIndex = navigationItems.indexOfFirst {
+                                            val currentRouteIndex = BottomBarItems.indexOfFirst {
                                                 it.route == initialState.destination.route
                                             }
-                                            val targetRouteIndex = navigationItems.indexOfFirst {
+                                            val targetRouteIndex = BottomBarItems.indexOfFirst {
                                                 it.route == targetState.destination.route
                                             }
 
@@ -1172,10 +1161,10 @@ class MainActivity : ComponentActivity() {
                                         },
                                         // Pop Enter Transition
                                         popEnterTransition = {
-                                            val currentRouteIndex = navigationItems.indexOfFirst {
+                                            val currentRouteIndex = BottomBarItems.indexOfFirst {
                                                 it.route == targetState.destination.route
                                             }
-                                            val previousRouteIndex = navigationItems.indexOfFirst {
+                                            val previousRouteIndex = BottomBarItems.indexOfFirst {
                                                 it.route == initialState.destination.route
                                             }
 
@@ -1186,10 +1175,10 @@ class MainActivity : ComponentActivity() {
                                         },
                                         // Pop Exit Transition
                                         popExitTransition = {
-                                            val currentRouteIndex = navigationItems.indexOfFirst {
+                                            val currentRouteIndex = BottomBarItems.indexOfFirst {
                                                 it.route == initialState.destination.route
                                             }
-                                            val targetRouteIndex = navigationItems.indexOfFirst {
+                                            val targetRouteIndex = BottomBarItems.indexOfFirst {
                                                 it.route == targetState.destination.route
                                             }
 
@@ -1199,7 +1188,7 @@ class MainActivity : ComponentActivity() {
                                                 slideOutHorizontally { it / 4 } + fadeOut(tween(100))
                                         },
                                         modifier = Modifier.nestedScroll(
-                                            if (navigationItems.fastAny { it.route == navBackStackEntry?.destination?.route } ||
+                                            if (BottomBarItems.fastAny { it.route == navBackStackEntry?.destination?.route } ||
                                                 inSearchScreen
                                             ) {
                                                 searchBarScrollBehavior.nestedScrollConnection

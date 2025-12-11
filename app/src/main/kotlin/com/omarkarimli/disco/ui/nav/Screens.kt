@@ -1,9 +1,18 @@
-package com.omarkarimli.disco.ui.screens
+package com.omarkarimli.disco.ui.nav
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.runtime.Immutable
 import com.omarkarimli.disco.R
+import com.omarkarimli.disco.ui.nav.Screens.Home
+import com.omarkarimli.disco.ui.nav.Screens.Library
+import com.omarkarimli.disco.ui.nav.Screens.Center
+
+val BottomBarItems = listOf(Home, Library, Center)
+
+val RouteToTitleMap = BottomBarItems.associate { screen ->
+    screen.route to screen.titleId
+}
 
 @Immutable
 sealed class Screens(
@@ -26,14 +35,10 @@ sealed class Screens(
         route = "library"
     )
 
-    object Profile : Screens(
-        titleId = R.string.account,
-        iconIdInactive = R.drawable.account_outlined,
-        iconIdActive = R.drawable.account_filled,
-        route = "profile"
+    object Center : Screens(
+        titleId = R.string.center,
+        iconIdInactive = R.drawable.center_outlined,
+        iconIdActive = R.drawable.center_filled,
+        route = "center"
     )
-
-    companion object {
-        val BottomBarItems = listOf(Home, Library, Profile)
-    }
 }

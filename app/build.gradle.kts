@@ -206,6 +206,7 @@ dependencies {
 
     implementation(libs.room.runtime)
     implementation(libs.kuromoji.ipadic)
+    implementation(libs.ui.text.google.fonts)
     ksp(libs.room.compiler)
     implementation(libs.room.ktx)
 

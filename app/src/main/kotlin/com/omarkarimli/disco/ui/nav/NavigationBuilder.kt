@@ -1,4 +1,4 @@
-package com.omarkarimli.disco.ui.screens
+package com.omarkarimli.disco.ui.nav
 
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -12,6 +12,18 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.omarkarimli.disco.ui.screens.AccountScreen
+import com.omarkarimli.disco.ui.screens.AlbumScreen
+import com.omarkarimli.disco.ui.screens.BrowseScreen
+import com.omarkarimli.disco.ui.screens.CenterScreen
+import com.omarkarimli.disco.ui.screens.ChartsScreen
+import com.omarkarimli.disco.ui.screens.HistoryScreen
+import com.omarkarimli.disco.ui.screens.HomeScreen
+import com.omarkarimli.disco.ui.screens.LoginScreen
+import com.omarkarimli.disco.ui.screens.MoodAndGenresScreen
+import com.omarkarimli.disco.ui.screens.NewReleaseScreen
+import com.omarkarimli.disco.ui.screens.StatsScreen
+import com.omarkarimli.disco.ui.screens.YouTubeBrowseScreen
 import com.omarkarimli.disco.ui.screens.artist.ArtistAlbumsScreen
 import com.omarkarimli.disco.ui.screens.artist.ArtistItemsScreen
 import com.omarkarimli.disco.ui.screens.artist.ArtistScreen
@@ -51,8 +63,8 @@ fun NavGraphBuilder.navigationBuilder(
     composable(Screens.Library.route) {
         LibraryScreen(navController)
     }
-    composable(Screens.Profile.route) {
-        ProfileScreen(navController, latestVersionName)
+    composable(Screens.Center.route) {
+        CenterScreen(navController, latestVersionName)
     }
     composable("history") {
         HistoryScreen(navController)
@@ -70,7 +82,7 @@ fun NavGraphBuilder.navigationBuilder(
         NewReleaseScreen(navController, scrollBehavior)
     }
     composable("charts_screen") {
-       ChartsScreen(navController)
+        ChartsScreen(navController)
     }
     composable(
         route = "browse/{browseId}",

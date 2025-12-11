@@ -3,6 +3,7 @@ package com.omarkarimli.disco.ui.screens.library
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
@@ -20,27 +21,20 @@ fun LibraryScreen(navController: NavController) {
     var filterType by rememberEnumPreference(ChipSortTypeKey, LibraryFilter.LIBRARY)
 
     val filterContent = @Composable {
-        Row {
-            ChipsRow(
-                chips =
-                listOf(
-                    LibraryFilter.PLAYLISTS to stringResource(R.string.filter_playlists),
-                    LibraryFilter.SONGS to stringResource(R.string.filter_songs),
-                    LibraryFilter.ALBUMS to stringResource(R.string.filter_albums),
-                    LibraryFilter.ARTISTS to stringResource(R.string.filter_artists),
-                ),
-                currentValue = filterType,
-                onValueUpdate = {
-                    filterType =
-                        if (filterType == it) {
-                            LibraryFilter.LIBRARY
-                        } else {
-                            it
-                        }
-                },
-                modifier = Modifier.weight(1f),
-            )
-        }
+        ChipsRow(
+            modifier = Modifier.fillMaxWidth(1f),
+            chips = listOf(
+                LibraryFilter.PLAYLISTS to stringResource(R.string.filter_playlists),
+                LibraryFilter.SONGS to stringResource(R.string.filter_songs),
+                LibraryFilter.ALBUMS to stringResource(R.string.filter_albums),
+                LibraryFilter.ARTISTS to stringResource(R.string.filter_artists),
+            ),
+            currentValue = filterType,
+            onValueUpdate = {
+                filterType = if (filterType == it) LibraryFilter.LIBRARY
+                    else it
+            }
+        )
     }
 
     Box(

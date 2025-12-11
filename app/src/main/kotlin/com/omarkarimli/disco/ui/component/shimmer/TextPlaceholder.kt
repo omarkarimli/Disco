@@ -10,7 +10,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -20,7 +19,7 @@ import kotlin.random.Random
 fun TextPlaceholder(
     modifier: Modifier = Modifier,
     height: Dp = 16.dp,
-    shape: Shape = RectangleShape
+    shape: Shape = MaterialTheme.shapes.small
 ) {
     Box(
         modifier = modifier
