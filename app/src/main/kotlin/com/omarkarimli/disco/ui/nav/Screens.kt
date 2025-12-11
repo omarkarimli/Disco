@@ -37,8 +37,8 @@ sealed class Screens(
 
     object Center : Screens(
         titleId = R.string.center,
-        iconIdInactive = R.drawable.center_outlined,
-        iconIdActive = R.drawable.center_filled,
+        iconIdInactive = R.drawable.explore_outlined,
+        iconIdActive = R.drawable.explore_filled,
         route = "center"
     )
 }
