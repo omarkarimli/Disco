@@ -100,24 +100,15 @@ fun AccountSettings(
             .padding(16.dp)
             .verticalScroll(scrollState)
     ) {
-        Text(
-            text = stringResource(id = R.string.account),
-            style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold)
-        )
-        Spacer(Modifier.height(16.dp))
-
-        val accountSectionModifier = Modifier.clickable {
-            onClose()
-            if (isLoggedIn) {
-                navController.navigate("account")
-            } else {
-                navController.navigate("login")
-            }
-        }
-
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = accountSectionModifier
+            modifier = Modifier
+                .clickable {
+                    onClose()
+
+                    if (isLoggedIn) navController.navigate("account")
+                    else navController.navigate("login")
+                }
                 .fillMaxWidth()
                 .clip(MaterialTheme.shapes.medium)
                 .background(MaterialTheme.colorScheme.surface)

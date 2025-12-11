@@ -795,6 +795,16 @@ class MainActivity : ComponentActivity() {
                                                 )
                                             }
                                         },
+                                        navigationIcon = {
+                                            if (currentTitleRes == R.string.account) {
+                                                IconButton(onClick = { navController.navigateUp() }) {
+                                                    Icon(
+                                                        painter = painterResource(R.drawable.arrow_back),
+                                                        contentDescription = stringResource(R.string.back_button_desc)
+                                                    )
+                                                }
+                                            }
+                                        },
                                         scrollBehavior = searchBarScrollBehavior,
                                         colors = TopAppBarDefaults.topAppBarColors(
                                             containerColor = if (pureBlack) Color.Black else MaterialTheme.colorScheme.surface,
