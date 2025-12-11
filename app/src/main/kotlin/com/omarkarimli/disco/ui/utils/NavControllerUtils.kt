@@ -4,10 +4,10 @@ import androidx.navigation.NavController
 import com.omarkarimli.disco.ui.screens.Screens
 
 fun NavController.backToMain() {
-    val mainRoutes = Screens.BottomBarItems.map { it.route }
+    val bottomRoutes = Screens.BottomBarItems.map { it.route }
 
     while (previousBackStackEntry != null &&
-        currentBackStackEntry?.destination?.route !in mainRoutes
+        currentBackStackEntry?.destination?.route !in bottomRoutes
     ) {
         popBackStack()
     }

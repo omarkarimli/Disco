@@ -715,8 +715,20 @@ class MainActivity : ComponentActivity() {
 
                     var showAccountDialog by remember { mutableStateOf(false) }
 
-                    val baseBg = if (pureBlack) Color.Black else MaterialTheme.colorScheme.surfaceContainer
-                    val insetBg = if (playerBottomSheetState.progress > 0f) Color.Transparent else baseBg
+                    val isDynamicTheme by rememberPreference(
+                        DynamicThemeKey,
+                        defaultValue = true
+                    )
+
+                    val containerColor =
+                        if (pureBlack) Color.Black
+                        else if (isDynamicTheme) MaterialTheme.colorScheme.surface
+                        else onSurfaceLight
+                    val contentColor =
+                        if (pureBlack) Color.White
+                        else if (isDynamicTheme) MaterialTheme.colorScheme.onSurface
+                        else surfaceLight
+                    val insetBg = if (playerBottomSheetState.progress > 0f) Color.Transparent else containerColor
 
                     val providedValues = arrayOf(
                         LocalDatabase provides database,
@@ -726,11 +738,6 @@ class MainActivity : ComponentActivity() {
                         LocalDownloadUtil provides downloadUtil,
                         LocalShimmerTheme provides ShimmerTheme,
                         LocalSyncUtils provides syncUtils,
-                    )
-
-                    val isDynamicTheme by rememberPreference(
-                        DynamicThemeKey,
-                        defaultValue = true
                     )
 
                     CompositionLocalProvider(values = providedValues) {
@@ -973,16 +980,6 @@ class MainActivity : ComponentActivity() {
                                 }
                             },
                             bottomBar = {
-                                val containerColor =
-                                    if (pureBlack) Color.Black
-                                    else if (isDynamicTheme) MaterialTheme.colorScheme.surfaceContainer
-                                    else onSurfaceLight
-
-                                val contentColor =
-                                    if (pureBlack) Color.White
-                                    else if (isDynamicTheme) MaterialTheme.colorScheme.onSurfaceVariant
-                                    else surfaceLight
-
                                 if (!showRail) {
                                     Box {
                                         BottomSheetPlayer(
@@ -990,6 +987,7 @@ class MainActivity : ComponentActivity() {
                                             navController = navController,
                                             pureBlack = pureBlack
                                         )
+
                                         NavigationBar(
                                             modifier = Modifier
                                                 .align(Alignment.BottomCenter)
@@ -1072,7 +1070,6 @@ class MainActivity : ComponentActivity() {
 
                                         Box(
                                             modifier = Modifier
-                                                .background(insetBg)
                                                 .fillMaxWidth()
                                                 .align(Alignment.BottomCenter)
                                                 .height(bottomInsetDp)

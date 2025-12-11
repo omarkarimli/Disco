@@ -149,7 +149,7 @@ fun AccountSettingsDialog(
                 ) {
                     onDismiss()
                 },
-            contentAlignment = Alignment.TopCenter
+            contentAlignment = Alignment.Center
         ) {
             Surface(
                 modifier = Modifier

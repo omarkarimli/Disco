@@ -51,15 +51,18 @@ fun LibraryScreen(navController: NavController) {
             LibraryFilter.PLAYLISTS -> LibraryPlaylistsScreen(navController, filterContent)
             LibraryFilter.SONGS -> LibrarySongsScreen(
                 navController,
-                { filterType = LibraryFilter.LIBRARY })
+                { filterType = LibraryFilter.LIBRARY }
+            )
 
             LibraryFilter.ALBUMS -> LibraryAlbumsScreen(
                 navController,
-                { filterType = LibraryFilter.LIBRARY })
+                { filterType = LibraryFilter.LIBRARY }
+            )
 
             LibraryFilter.ARTISTS -> LibraryArtistsScreen(
                 navController,
-                { filterType = LibraryFilter.LIBRARY })
+                { filterType = LibraryFilter.LIBRARY }
+            )
         }
     }
 }

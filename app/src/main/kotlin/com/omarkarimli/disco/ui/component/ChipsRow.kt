@@ -25,7 +25,6 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.DropdownMenu
@@ -42,7 +41,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -55,12 +53,16 @@ fun <E> ChipsRow(
     chips: List<Pair<E, String>>,
     currentValue: E,
     onValueUpdate: (E) -> Unit,
-    modifier: Modifier = Modifier,
-    containerColor: Color = MaterialTheme.colorScheme.surfaceContainer,
+    modifier: Modifier = Modifier
 ) {
+    val containerColor = MaterialTheme.colorScheme.surfaceContainer
+    val contentColor = MaterialTheme.colorScheme.onSurface
+
+    val selectedContainerColor = MaterialTheme.colorScheme.onSurface
+    val selectedContentColor = MaterialTheme.colorScheme.surface
+
     Row(
-        modifier =
-        modifier
+        modifier = modifier
             .fillMaxWidth()
             .horizontalScroll(rememberScrollState())
             .windowInsetsPadding(WindowInsets.systemBars.only(WindowInsetsSides.Horizontal)),
@@ -73,9 +75,12 @@ fun <E> ChipsRow(
                 selected = currentValue == value,
                 colors = FilterChipDefaults.filterChipColors(
                     containerColor = containerColor,
+                    selectedContainerColor = selectedContainerColor,
+                    labelColor = contentColor,
+                    selectedLabelColor = selectedContentColor
                 ),
                 onClick = { onValueUpdate(value) },
-                shape = RoundedCornerShape(16.dp),
+                shape = MaterialTheme.shapes.large,
                 border = null
             )
 
@@ -93,9 +98,14 @@ fun <Int> ChoiceChipsRow(
     onSelectionChange: (OptionStats) -> Unit,
     currentValue: Int,
     onValueUpdate: (Int) -> Unit,
-    modifier: Modifier = Modifier,
-    containerColor: Color = MaterialTheme.colorScheme.surfaceContainer,
+    modifier: Modifier = Modifier
 ) {
+    val containerColor = MaterialTheme.colorScheme.surfaceContainer
+    val contentColor = MaterialTheme.colorScheme.onSurface
+
+    val selectedContainerColor = MaterialTheme.colorScheme.onSurface
+    val selectedContentColor = MaterialTheme.colorScheme.surface
+
     var expandIconDegree by remember { mutableFloatStateOf(0f) }
     val rotationAnimation by animateFloatAsState(
         targetValue = expandIconDegree,
@@ -104,8 +114,7 @@ fun <Int> ChoiceChipsRow(
     )
 
     Row(
-        modifier =
-        modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(start = 12.dp)
             .windowInsetsPadding(WindowInsets.systemBars.only(WindowInsetsSides.Horizontal)),
@@ -136,11 +145,12 @@ fun <Int> ChoiceChipsRow(
                         modifier = Modifier.graphicsLayer(rotationZ = rotationAnimation),
                     )
                 },
-                shape = RoundedCornerShape(16.dp),
+                shape = MaterialTheme.shapes.large,
                 border = null,
                 colors = AssistChipDefaults.assistChipColors(
                     containerColor = containerColor,
-                    labelColor = MaterialTheme.colorScheme.onSurface
+                    labelColor = contentColor,
+                    trailingIconContentColor = contentColor,
                 )
             )
 
@@ -191,9 +201,12 @@ fun <Int> ChoiceChipsRow(
                         selected = currentValue == value,
                         colors = FilterChipDefaults.filterChipColors(
                             containerColor = containerColor,
+                            selectedContainerColor = selectedContainerColor,
+                            labelColor = contentColor,
+                            selectedLabelColor = selectedContentColor
                         ),
                         onClick = { onValueUpdate(value) },
-                        shape = RoundedCornerShape(16.dp),
+                        shape = MaterialTheme.shapes.large,
                         border = null
                     )
                 }

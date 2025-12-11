@@ -101,13 +101,12 @@ fun AccountSettings(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 8.dp, end = 8.dp),
+                .padding(horizontal = 8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = stringResource(id = R.string.app_name),
-                style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-                modifier = Modifier.padding(start = 4.dp)
+                text = stringResource(id = R.string.account),
+                style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold)
             )
             Spacer(modifier = Modifier.weight(1f))
             BadgedBox(badge = {
@@ -131,7 +130,7 @@ fun AccountSettings(
             }
         }
 
-        Spacer(Modifier.height(12.dp))
+        Spacer(Modifier.height(24.dp))
 
         val accountSectionModifier = Modifier.clickable {
             onClose()
@@ -283,7 +282,7 @@ fun AccountSettings(
             )
         }
 
-        Spacer(Modifier.height(12.dp))
+        Spacer(Modifier.height(4.dp))
 
         Column(
             modifier = Modifier
@@ -301,9 +300,6 @@ fun AccountSettings(
                     .fillMaxWidth()
                     .background(MaterialTheme.colorScheme.surfaceContainer)
             )
-
-            Spacer(Modifier.height(4.dp))
-
             PreferenceEntry(
                 title = { Text(stringResource(R.string.settings)) },
                 icon = {

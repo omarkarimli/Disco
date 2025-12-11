@@ -13,9 +13,9 @@ sealed class Screens(
     val route: String,
 ) {
     object Home : Screens(
-        titleId = R.string.home,
-        iconIdInactive = R.drawable.home_outlined,
-        iconIdActive = R.drawable.home_filled,
+        titleId = R.string.explore,
+        iconIdInactive = R.drawable.search,
+        iconIdActive = R.drawable.search_filled,
         route = "home"
     )
 
