@@ -334,7 +334,12 @@ class MainActivity : ComponentActivity() {
                                         .setContentIntent(pending)
                                         .setAutoCancel(true)
                                         .build()
-                                    NotificationManagerCompat.from(this@MainActivity).notify(1001, notif)
+
+                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                                        if (ContextCompat.checkSelfPermission(this@MainActivity, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                                            NotificationManagerCompat.from(this@MainActivity).notify(1001, notif)
+                                        }
+                                    }
                                 }
                             }
                         }
