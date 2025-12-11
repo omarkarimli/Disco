@@ -64,7 +64,7 @@ fun NavGraphBuilder.navigationBuilder(
         MoodAndGenresScreen(navController, scrollBehavior)
     }
     composable("account") {
-        AccountScreen(navController, scrollBehavior)
+        AccountScreen(navController)
     }
     composable("new_release") {
         NewReleaseScreen(navController, scrollBehavior)

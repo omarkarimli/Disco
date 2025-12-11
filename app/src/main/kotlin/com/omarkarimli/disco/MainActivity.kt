@@ -148,7 +148,6 @@ import com.omarkarimli.disco.playback.MusicService
 import com.omarkarimli.disco.playback.MusicService.MusicBinder
 import com.omarkarimli.disco.playback.PlayerConnection
 import com.omarkarimli.disco.playback.queues.YouTubeQueue
-import com.omarkarimli.disco.ui.component.AccountSettingsDialog
 import com.omarkarimli.disco.ui.component.BottomSheetMenu
 import com.omarkarimli.disco.ui.component.BottomSheetPage
 import com.omarkarimli.disco.ui.component.IconButton
@@ -717,8 +716,6 @@ class MainActivity : ComponentActivity() {
                         }
                     }
 
-                    var showAccountDialog by remember { mutableStateOf(false) }
-
                     val isDynamicTheme by rememberPreference(
                         DynamicThemeKey,
                         defaultValue = true
@@ -1233,17 +1230,6 @@ class MainActivity : ComponentActivity() {
                             state = LocalBottomSheetPageState.current,
                             modifier = Modifier.align(Alignment.BottomCenter)
                         )
-
-                        if (showAccountDialog) {
-                            AccountSettingsDialog(
-                                navController = navController,
-                                onDismiss = {
-                                    showAccountDialog = false
-                                    homeViewModel.refresh()
-                                },
-                                latestVersionName = latestVersionName
-                            )
-                        }
 
                         sharedSong?.let { song ->
                             playerConnection?.let {
