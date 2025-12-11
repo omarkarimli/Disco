@@ -21,6 +21,7 @@ import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
@@ -251,6 +252,20 @@ fun ProfileScreen(
         }
         item {
             PreferenceEntry(
+                title = { Text(stringResource(R.string.history)) },
+                icon = { Icon(painterResource(R.drawable.history), stringResource(R.string.history)) },
+                onClick = { navController.navigate("history") }
+            )
+        }
+        item {
+            PreferenceEntry(
+                title = { Text(stringResource(R.string.stats)) },
+                icon = { Icon(painterResource(R.drawable.stats), stringResource(R.string.stats)) },
+                onClick = { navController.navigate("stats") }
+            )
+        }
+        item {
+            PreferenceEntry(
                 title = { Text(stringResource(R.string.integrations)) },
                 icon = { Icon(painterResource(R.drawable.integration), null) },
                 onClick = { navController.navigate("settings/integrations") }
@@ -271,6 +286,7 @@ fun ProfileScreen(
                 onClick = { navController.navigate("settings") }
             )
         }
+
         if (latestVersionName != BuildConfig.VERSION_NAME) {
             item {
                 PreferenceEntry(

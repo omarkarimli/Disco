@@ -14,6 +14,7 @@ import android.view.View
 import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.animateDpAsState
@@ -22,6 +23,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
@@ -758,33 +760,28 @@ class MainActivity : ComponentActivity() {
                                     TopAppBar(
                                         scrollBehavior = searchBarScrollBehavior,
                                         title = {
-                                            if (currentTitleRes == R.string.home) {
-                                                Icon(
-                                                    painter = painterResource(R.drawable.app_icon),
-                                                    contentDescription = null,
-                                                    tint = MaterialTheme.colorScheme.onSurface,
-                                                    modifier = Modifier.size(36.dp)
-                                                )
-                                            } else {
-                                                Text(
-                                                    text = currentTitleRes?.let { stringResource(it) } ?: "",
-                                                    style = MaterialTheme.typography.titleLarge,
-                                                )
+                                            AnimatedContent(
+                                                targetState = currentTitleRes,
+                                                transitionSpec = {
+                                                    fadeIn(tween(150)).togetherWith(fadeOut(tween(100)))
+                                                }
+                                            ) { targetState ->
+                                                if (targetState == R.string.home) {
+                                                    Icon(
+                                                        painter = painterResource(R.drawable.app_icon),
+                                                        contentDescription = null,
+                                                        tint = MaterialTheme.colorScheme.onSurface,
+                                                        modifier = Modifier.size(36.dp)
+                                                    )
+                                                } else {
+                                                    Text(
+                                                        text = targetState?.let { stringResource(it) } ?: "",
+                                                        style = MaterialTheme.typography.titleLarge,
+                                                    )
+                                                }
                                             }
                                         },
                                         actions = {
-                                            IconButton(onClick = { navController.navigate("history") }) {
-                                                Icon(
-                                                    painter = painterResource(R.drawable.history),
-                                                    contentDescription = stringResource(R.string.history)
-                                                )
-                                            }
-                                            IconButton(onClick = { navController.navigate("stats") }) {
-                                                Icon(
-                                                    painter = painterResource(R.drawable.stats),
-                                                    contentDescription = stringResource(R.string.stats)
-                                                )
-                                            }
                                             IconButton(onClick = { onActiveChange(true) }) {
                                                 Icon(
                                                     painter = painterResource(R.drawable.search),
