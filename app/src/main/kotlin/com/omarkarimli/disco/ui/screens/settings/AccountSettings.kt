@@ -2,6 +2,7 @@ package com.omarkarimli.disco.ui.screens.settings
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -12,7 +13,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
@@ -71,6 +71,8 @@ fun AccountSettings(
     val context = LocalContext.current
     val uriHandler = LocalUriHandler.current
 
+    val scrollState = rememberScrollState()
+
     val (accountNamePref, onAccountNameChange) = rememberPreference(AccountNameKey, "")
     val (accountEmail, onAccountEmailChange) = rememberPreference(AccountEmailKey, "")
     val (accountChannelHandle, onAccountChannelHandleChange) = rememberPreference(AccountChannelHandleKey, "")
@@ -96,41 +98,13 @@ fun AccountSettings(
         modifier = Modifier
             .background(MaterialTheme.colorScheme.surfaceContainer)
             .padding(16.dp)
-            .verticalScroll(rememberScrollState())
+            .verticalScroll(scrollState)
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 8.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text = stringResource(id = R.string.account),
-                style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold)
-            )
-            Spacer(modifier = Modifier.weight(1f))
-            BadgedBox(badge = {
-                if (latestVersionName != BuildConfig.VERSION_NAME) Badge()
-            }) {
-                if (accountImageUrl != null) {
-                    AsyncImage(
-                        model = accountImageUrl,
-                        contentDescription = stringResource(R.string.account),
-                        modifier = Modifier
-                            .size(24.dp)
-                            .clip(CircleShape)
-                    )
-                } else {
-                    Icon(
-                        painter = painterResource(R.drawable.account_outlined),
-                        contentDescription = stringResource(R.string.account),
-                        modifier = Modifier.size(24.dp)
-                    )
-                }
-            }
-        }
-
-        Spacer(Modifier.height(24.dp))
+        Text(
+            text = stringResource(id = R.string.account),
+            style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold)
+        )
+        Spacer(Modifier.height(16.dp))
 
         val accountSectionModifier = Modifier.clickable {
             onClose()
@@ -145,7 +119,7 @@ fun AccountSettings(
             verticalAlignment = Alignment.CenterVertically,
             modifier = accountSectionModifier
                 .fillMaxWidth()
-                .clip(RoundedCornerShape(16.dp))
+                .clip(MaterialTheme.shapes.medium)
                 .background(MaterialTheme.colorScheme.surface)
                 .padding(horizontal = 18.dp, vertical = 12.dp)
         ) {
@@ -246,7 +220,7 @@ fun AccountSettings(
             },
             modifier = Modifier
                 .fillMaxWidth()
-                .clip(RoundedCornerShape(16.dp))
+                .clip(MaterialTheme.shapes.medium)
                 .background(MaterialTheme.colorScheme.surface)
         )
 
@@ -264,7 +238,7 @@ fun AccountSettings(
                 },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clip(RoundedCornerShape(16.dp))
+                    .clip(MaterialTheme.shapes.medium)
                     .background(MaterialTheme.colorScheme.surface)
             )
   
@@ -277,7 +251,7 @@ fun AccountSettings(
                 onCheckedChange = onYtmSyncChange,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clip(RoundedCornerShape(16.dp))
+                    .clip(MaterialTheme.shapes.medium)
                     .background(MaterialTheme.colorScheme.surface)
             )
         }
@@ -285,9 +259,8 @@ fun AccountSettings(
         Spacer(Modifier.height(4.dp))
 
         Column(
-            modifier = Modifier
-                .clip(RoundedCornerShape(16.dp))
-                .background(MaterialTheme.colorScheme.surfaceContainer)
+            modifier = Modifier.background(MaterialTheme.colorScheme.surfaceContainer),
+            verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
             PreferenceEntry(
                 title = { Text(stringResource(R.string.integrations)) },

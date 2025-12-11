@@ -38,7 +38,6 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.Button
@@ -633,7 +632,7 @@ fun Lyrics(
                     val isSelected = selectedIndices.contains(index)
                     val itemModifier = Modifier
                         .fillMaxWidth()
-                        .clip(RoundedCornerShape(8.dp)) // Clip for background
+                        .clip(MaterialTheme.shapes.medium)
                         .combinedClickable(
                             enabled = true,
                             onClick = {
@@ -826,7 +825,7 @@ fun Lyrics(
                                         Color.White.copy(alpha = 0.9f) // White background when active
                                     else
                                         Color.White.copy(alpha = 0.5f), // Lighter white when inactive
-                                    shape = RoundedCornerShape(24.dp)
+                                    shape = MaterialTheme.shapes.large
                                 )
                                 .clickable(enabled = selectedIndices.isNotEmpty()) {
                                     if (selectedIndices.isNotEmpty()) {
@@ -1053,7 +1052,7 @@ fun Lyrics(
 
         BasicAlertDialog(onDismissRequest = { showColorPickerDialog = false }) {
             Card(
-                shape = RoundedCornerShape(20.dp),
+                shape = MaterialTheme.shapes.medium,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(20.dp)
@@ -1096,12 +1095,12 @@ fun Lyrics(
                             Box(
                                 modifier = Modifier
                                     .size(32.dp)
-                                    .background(color, shape = RoundedCornerShape(8.dp))
+                                    .background(color, shape = MaterialTheme.shapes.small)
                                     .clickable { previewBackgroundColor = color }
                                     .border(
                                         2.dp,
                                         if (previewBackgroundColor == color) MaterialTheme.colorScheme.primary else Color.Transparent,
-                                        RoundedCornerShape(8.dp)
+                                        MaterialTheme.shapes.small
                                     )
                             )
                         }
@@ -1113,12 +1112,12 @@ fun Lyrics(
                             Box(
                                 modifier = Modifier
                                     .size(32.dp)
-                                    .background(color, shape = RoundedCornerShape(8.dp))
+                                    .background(color, shape = MaterialTheme.shapes.small)
                                     .clickable { previewTextColor = color }
                                     .border(
                                         2.dp,
                                         if (previewTextColor == color) MaterialTheme.colorScheme.primary else Color.Transparent,
-                                        RoundedCornerShape(8.dp)
+                                        MaterialTheme.shapes.small
                                     )
                             )
                         }
@@ -1130,19 +1129,17 @@ fun Lyrics(
                             Box(
                                 modifier = Modifier
                                     .size(32.dp)
-                                    .background(color, shape = RoundedCornerShape(8.dp))
+                                    .background(color, shape = MaterialTheme.shapes.small)
                                     .clickable { previewSecondaryTextColor = color }
                                     .border(
                                         2.dp,
                                         if (previewSecondaryTextColor == color) MaterialTheme.colorScheme.primary else Color.Transparent,
-                                        RoundedCornerShape(8.dp)
+                                        MaterialTheme.shapes.small
                                     )
                             )
                         }
                     }
-
                     Spacer(modifier = Modifier.height(12.dp))
-
                     Button(
                         onClick = {
                             showColorPickerDialog = false

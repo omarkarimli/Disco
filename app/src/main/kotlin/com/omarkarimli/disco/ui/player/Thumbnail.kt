@@ -393,7 +393,7 @@ fun Thumbnail(
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
-                    .background(Color.Black.copy(alpha = 0.7f), RoundedCornerShape(8.dp))
+                    .background(Color.Black.copy(alpha = 0.7f), MaterialTheme.shapes.small)
                     .padding(8.dp)
             )
         }

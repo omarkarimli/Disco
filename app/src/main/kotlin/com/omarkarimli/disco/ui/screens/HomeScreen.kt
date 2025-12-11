@@ -652,10 +652,8 @@ fun HomeScreen(
                             title = recommendation.title.title,
                             thumbnail = recommendation.title.thumbnailUrl?.let { thumbnailUrl ->
                                 {
-                                    val shape =
-                                        if (recommendation.title is Artist) CircleShape else RoundedCornerShape(
-                                            ThumbnailCornerRadius
-                                        )
+                                    val shape = if (recommendation.title is Artist) CircleShape
+                                        else RoundedCornerShape(ThumbnailCornerRadius)
                                     AsyncImage(
                                         model = thumbnailUrl,
                                         contentDescription = null,
@@ -699,10 +697,8 @@ fun HomeScreen(
                         label = section.label,
                         thumbnail = section.thumbnail?.let { thumbnailUrl ->
                             {
-                                val shape =
-                                    if (section.endpoint?.isArtistEndpoint == true) CircleShape else RoundedCornerShape(
-                                        ThumbnailCornerRadius
-                                    )
+                                val shape = if (section.endpoint?.isArtistEndpoint == true) CircleShape
+                                    else RoundedCornerShape(ThumbnailCornerRadius)
                                 AsyncImage(
                                     model = thumbnailUrl,
                                     contentDescription = null,
@@ -811,7 +807,7 @@ fun HomeScreen(
                                     repeat(2) {
                                         TextPlaceholder(
                                             height = MoodAndGenresButtonHeight,
-                                            shape = RoundedCornerShape(6.dp),
+                                            shape = MaterialTheme.shapes.medium,
                                             modifier = Modifier
                                                 .padding(horizontal = 12.dp)
                                                 .width(200.dp)

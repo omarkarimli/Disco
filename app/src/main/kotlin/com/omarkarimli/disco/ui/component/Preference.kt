@@ -30,6 +30,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
@@ -53,14 +54,14 @@ fun PreferenceEntry(
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier =
-        modifier
+        modifier = modifier
             .fillMaxWidth()
+            .clip(MaterialTheme.shapes.medium)
             .clickable(
                 enabled = isEnabled && onClick != null,
                 onClick = onClick ?: {},
             ).alpha(if (isEnabled) 1f else 0.5f)
-            .padding(horizontal = 16.dp, vertical = 16.dp),
+            .padding(horizontal = 16.dp, vertical = 12.dp),
     ) {
         if (icon != null) {
             Box(
@@ -227,8 +228,7 @@ fun EditTextPreference(
 
     if (showDialog) {
         TextFieldDialog(
-            initialTextFieldValue =
-            TextFieldValue(
+            initialTextFieldValue = TextFieldValue(
                 text = value,
                 selection = TextRange(value.length),
             ),
@@ -337,6 +337,6 @@ fun PreferenceGroupTitle(
         text = title.uppercase(),
         style = MaterialTheme.typography.labelLarge,
         color = MaterialTheme.colorScheme.primary,
-        modifier = modifier.padding(16.dp),
+        modifier = modifier.padding(start = 16.dp, end = 16.dp, top = 16.dp),
     )
 }

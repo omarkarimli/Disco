@@ -4,20 +4,15 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.dp
 
-/**
- * A Material 3 Expressive style settings group component
- * @param title The title of the settings group
- * @param items List of settings items to display
- */
 @Composable
 fun Material3SettingsGroup(
     title: String? = null,
@@ -32,7 +27,7 @@ fun Material3SettingsGroup(
                 text = it,
                 style = MaterialTheme.typography.labelLarge,
                 color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.padding(start = 16.dp, bottom = 8.dp, top = 8.dp)
+                modifier = Modifier.padding(start = 16.dp, bottom = 12.dp, top = 8.dp)
             )
         }
         
@@ -41,11 +36,11 @@ fun Material3SettingsGroup(
             modifier = Modifier
                 .fillMaxWidth()
                 .animateContentSize(),
-            shape = RoundedCornerShape(24.dp),
+            shape = RectangleShape,
+            elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
             colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f)
-            ),
-            elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
+                containerColor = MaterialTheme.colorScheme.surfaceContainer.copy(alpha = 0.5f)
+            )
         ) {
             Column {
                 items.forEachIndexed { index, item ->
@@ -71,7 +66,7 @@ private fun Material3SettingsItemRow(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .clip(RoundedCornerShape(12.dp))
+                .clip(MaterialTheme.shapes.large)
                 .clickable(
                     enabled = item.onClick != null,
                     onClick = { item.onClick?.invoke() }
@@ -84,7 +79,7 @@ private fun Material3SettingsItemRow(
                 Box(
                     modifier = Modifier
                         .size(40.dp)
-                        .clip(RoundedCornerShape(12.dp))
+                        .clip(MaterialTheme.shapes.medium)
                         .background(
                             MaterialTheme.colorScheme.primary.copy(
                                 alpha = if (item.isHighlighted) 0.15f else 0.1f

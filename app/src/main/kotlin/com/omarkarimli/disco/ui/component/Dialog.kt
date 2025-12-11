@@ -16,7 +16,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.AlertDialogDefaults
@@ -155,8 +154,8 @@ fun AccountSettingsDialog(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 72.dp, start = 16.dp, end = 16.dp)
-                    .clip(RoundedCornerShape(28.dp)),
-                shape = MaterialTheme.shapes.large,
+                    .clip(MaterialTheme.shapes.extraLarge),
+                shape = MaterialTheme.shapes.medium,
                 color = MaterialTheme.colorScheme.surface,
                 tonalElevation = 8.dp
             ) {

@@ -16,7 +16,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -338,14 +337,14 @@ fun RichPresence(song: Song?, currentPlaybackTimeMillis: Long = 0L) {
                         modifier =
                         Modifier
                             .size(96.dp)
-                            .clip(RoundedCornerShape(12.dp))
+                            .clip(MaterialTheme.shapes.medium)
                             .align(Alignment.TopStart)
                             .run {
                                 if (song == null) {
                                     border(
                                         2.dp,
                                         MaterialTheme.colorScheme.onSurface,
-                                        RoundedCornerShape(12.dp)
+                                        MaterialTheme.shapes.medium
                                     )
                                 } else {
                                     this
@@ -463,7 +462,7 @@ fun SongProgressBar(currentTimeMillis: Long, durationMillis: Long) {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(6.dp)
-                .clip(RoundedCornerShape(3.dp))
+                .clip(MaterialTheme.shapes.extraSmall)
         )
         Row(
             modifier = Modifier.fillMaxWidth(),

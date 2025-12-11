@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -176,8 +177,8 @@ fun LyricsImageCard(
                         contentScale = ContentScale.Crop,
                         modifier = Modifier
                             .size(coverArtSize)
-                            .clip(RoundedCornerShape(12.dp))
-                            .border(1.dp, mainTextColor.copy(alpha = 0.16f), RoundedCornerShape(12.dp))
+                            .clip(MaterialTheme.shapes.large)
+                            .border(1.dp, mainTextColor.copy(alpha = 0.16f), MaterialTheme.shapes.large)
                     )
                     Spacer(modifier = Modifier.width(16.dp))
                     Column(
@@ -266,9 +267,8 @@ fun LyricsImageCard(
                         Image(
                             painter = painterResource(id = R.drawable.small_icon),
                             contentDescription = null,
-                            modifier = Modifier
-                                .size(16.dp),
-                            colorFilter = androidx.compose.ui.graphics.ColorFilter.tint(backgroundGradient) // الرمز بلون الخلفية
+                            modifier = Modifier.size(16.dp),
+                            colorFilter = androidx.compose.ui.graphics.ColorFilter.tint(backgroundGradient)
                         )
                     }
 

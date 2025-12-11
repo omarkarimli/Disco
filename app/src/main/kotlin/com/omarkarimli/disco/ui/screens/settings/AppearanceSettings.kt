@@ -17,7 +17,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -230,11 +229,11 @@ fun AppearanceSettings(
                     modifier = Modifier
                         .aspectRatio(1f)
                         .weight(1f)
-                        .clip(RoundedCornerShape(16.dp))
+                        .clip(MaterialTheme.shapes.medium)
                         .border(
                             1.dp,
                             if (sliderStyle == SliderStyle.DEFAULT) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outlineVariant,
-                            RoundedCornerShape(16.dp)
+                            MaterialTheme.shapes.medium
                         )
                         .clickable {
                             onSliderStyleChange(SliderStyle.DEFAULT)
@@ -264,11 +263,11 @@ fun AppearanceSettings(
                     modifier = Modifier
                         .aspectRatio(1f)
                         .weight(1f)
-                        .clip(RoundedCornerShape(16.dp))
+                        .clip(MaterialTheme.shapes.medium)
                         .border(
                             1.dp,
                             if (sliderStyle == SliderStyle.SQUIGGLY) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outlineVariant,
-                            RoundedCornerShape(16.dp)
+                            MaterialTheme.shapes.medium
                         )
                         .clickable {
                             onSliderStyleChange(SliderStyle.SQUIGGLY)
@@ -298,11 +297,11 @@ fun AppearanceSettings(
                     modifier = Modifier
                         .aspectRatio(1f)
                         .weight(1f)
-                        .clip(RoundedCornerShape(16.dp))
+                        .clip(MaterialTheme.shapes.medium)
                         .border(
                             1.dp,
                             if (sliderStyle == SliderStyle.SLIM) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outlineVariant,
-                            RoundedCornerShape(16.dp)
+                            MaterialTheme.shapes.medium
                         )
                         .clickable {
                             onSliderStyleChange(SliderStyle.SLIM)
@@ -640,7 +639,7 @@ fun AppearanceSettings(
 
         SwitchPreference(
             title = { Text(stringResource(R.string.show_liked_playlist)) },
-            icon = { Icon(painterResource(R.drawable.favorite), null) },
+            icon = { Icon(painterResource(R.drawable.favorite_border), null) },
             checked = showLikedPlaylist,
             onCheckedChange = onShowLikedPlaylistChange
         )

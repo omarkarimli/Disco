@@ -12,7 +12,6 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
@@ -132,7 +131,7 @@ fun ExploreScreen(
                                     Box(
                                         modifier = Modifier
                                             .size(ListItemHeight - 16.dp)
-                                            .clip(RoundedCornerShape(4.dp))
+                                            .clip(MaterialTheme.shapes.small)
                                             .background(MaterialTheme.colorScheme.onSurface),
                                     )
                                     Spacer(modifier = Modifier.width(8.dp))

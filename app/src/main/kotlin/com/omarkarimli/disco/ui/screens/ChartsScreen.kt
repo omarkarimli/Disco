@@ -15,7 +15,6 @@ import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -130,7 +129,7 @@ fun ChartsScreen(
                                         Box(
                                             modifier = Modifier
                                                 .size(ListItemHeight - 16.dp)
-                                                .clip(RoundedCornerShape(4.dp))
+                                                .clip(MaterialTheme.shapes.medium)
                                                 .background(MaterialTheme.colorScheme.onSurface),
                                         )
                                         Spacer(modifier = Modifier.width(8.dp))

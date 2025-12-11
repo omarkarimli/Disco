@@ -44,7 +44,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.windowInsetsPadding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialogDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -1253,7 +1252,7 @@ class MainActivity : ComponentActivity() {
                                 ) {
                                     Surface(
                                         modifier = Modifier.padding(24.dp),
-                                        shape = RoundedCornerShape(16.dp),
+                                        shape = MaterialTheme.shapes.large,
                                         color = AlertDialogDefaults.containerColor,
                                         tonalElevation = AlertDialogDefaults.TonalElevation,
                                     ) {

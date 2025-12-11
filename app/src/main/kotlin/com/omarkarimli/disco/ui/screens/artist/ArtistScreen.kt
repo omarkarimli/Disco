@@ -238,7 +238,7 @@ fun ArtistScreen(
                                             .shimmer()
                                             .background(
                                                 MaterialTheme.colorScheme.onSurface,
-                                                RoundedCornerShape(24.dp)
+                                                MaterialTheme.shapes.extraLarge
                                             )
                                     )
                                 }
@@ -397,7 +397,7 @@ fun ArtistScreen(
                                                         .size(48.dp)
                                                         .background(
                                                             MaterialTheme.colorScheme.primary,
-                                                            RoundedCornerShape(24.dp)
+                                                            MaterialTheme.shapes.extraLarge
                                                         )
                                                 ) {
                                                     Icon(
@@ -425,7 +425,7 @@ fun ArtistScreen(
                                                     .size(48.dp)
                                                     .background(
                                                         MaterialTheme.colorScheme.primary,
-                                                        RoundedCornerShape(24.dp)
+                                                        MaterialTheme.shapes.extraLarge
                                                     )
                                             ) {
                                                 Icon(

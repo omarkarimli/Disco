@@ -205,7 +205,7 @@ fun ContentSettings(
     }
 
     Column(
-        Modifier
+        modifier = Modifier
             .windowInsetsPadding(LocalPlayerAwareWindowInsets.current)
             .verticalScroll(rememberScrollState()),
     ) {
