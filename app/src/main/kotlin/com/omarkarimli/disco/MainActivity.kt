@@ -22,9 +22,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutHorizontally
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -976,95 +974,81 @@ class MainActivity : ComponentActivity() {
                                             pureBlack = pureBlack
                                         )
 
-                                        AnimatedVisibility(
+                                        NavigationBar(
                                             modifier = Modifier
-                                                .align(Alignment.BottomCenter),
-                                            visible = shouldShowNavigationBar,
-                                            enter = slideInVertically(
-                                                initialOffsetY = { fullY -> fullY },
-                                                animationSpec = tween(durationMillis = 100)
-                                            ) + fadeIn(animationSpec = tween(durationMillis = 100)),
-                                            exit = slideOutVertically(
-                                                targetOffsetY = { fullY -> fullY },
-                                                animationSpec = tween(durationMillis = 100)
-                                            ) + fadeOut(animationSpec = tween(durationMillis = 100))
+                                                .align(Alignment.BottomCenter)
+                                                .height(bottomInset + getNavPadding())
+                                                .offset {
+                                                    if (navigationBarHeight == 0.dp) {
+                                                        IntOffset(
+                                                            x = 0,
+                                                            y = (bottomInset + NavigationBarHeight).roundToPx(),
+                                                        )
+                                                    } else {
+                                                        val slideOffset =
+                                                            (bottomInset + NavigationBarHeight) *
+                                                                    playerBottomSheetState.progress.coerceIn(
+                                                                        0f,
+                                                                        1f,
+                                                                    )
+                                                        val hideOffset =
+                                                            (bottomInset + NavigationBarHeight) * (1 - navigationBarHeight / NavigationBarHeight)
+                                                        IntOffset(
+                                                            x = 0,
+                                                            y = (slideOffset + hideOffset).roundToPx(),
+                                                        )
+                                                    }
+                                                },
+                                            containerColor = containerColor,
+                                            contentColor = contentColor
                                         ) {
-                                            NavigationBar(
-                                                modifier = Modifier
-                                                    .align(Alignment.BottomCenter)
-                                                    .height(bottomInset + getNavPadding())
-                                                    .offset {
-                                                        if (navigationBarHeight == 0.dp) {
-                                                            IntOffset(
-                                                                x = 0,
-                                                                y = (bottomInset + NavigationBarHeight).roundToPx(),
-                                                            )
-                                                        } else {
-                                                            val slideOffset =
-                                                                (bottomInset + NavigationBarHeight) *
-                                                                        playerBottomSheetState.progress.coerceIn(
-                                                                            0f,
-                                                                            1f,
-                                                                        )
-                                                            val hideOffset =
-                                                                (bottomInset + NavigationBarHeight) * (1 - navigationBarHeight / NavigationBarHeight)
-                                                            IntOffset(
-                                                                x = 0,
-                                                                y = (slideOffset + hideOffset).roundToPx(),
+                                            BottomBarItems.fastForEach { screen ->
+                                                val isSelected =
+                                                    navBackStackEntry?.destination?.hierarchy?.any { it.route == screen.route } == true
+
+                                                NavigationBarItem(
+                                                    selected = isSelected,
+                                                    icon = {
+                                                        Icon(
+                                                            painter = painterResource(
+                                                                id = if (isSelected) screen.iconIdActive else screen.iconIdInactive
+                                                            ),
+                                                            contentDescription = null,
+                                                        )
+                                                    },
+                                                    label = {
+                                                        if (!slimNav) {
+                                                            Text(
+                                                                text = stringResource(screen.titleId),
+                                                                maxLines = 1,
+                                                                overflow = TextOverflow.Ellipsis
                                                             )
                                                         }
                                                     },
-                                                containerColor = containerColor,
-                                                contentColor = contentColor
-                                            ) {
-                                                BottomBarItems.fastForEach { screen ->
-                                                    val isSelected =
-                                                        navBackStackEntry?.destination?.hierarchy?.any { it.route == screen.route } == true
-
-                                                    NavigationBarItem(
-                                                        selected = isSelected,
-                                                        icon = {
-                                                            Icon(
-                                                                painter = painterResource(
-                                                                    id = if (isSelected) screen.iconIdActive else screen.iconIdInactive
-                                                                ),
-                                                                contentDescription = null,
-                                                            )
-                                                        },
-                                                        label = {
-                                                            if (!slimNav) {
-                                                                Text(
-                                                                    text = stringResource(screen.titleId),
-                                                                    maxLines = 1,
-                                                                    overflow = TextOverflow.Ellipsis
-                                                                )
+                                                    onClick = {
+                                                        if (isSelected) {
+                                                            navController.currentBackStackEntry?.savedStateHandle?.set("scrollToTop", true)
+                                                            coroutineScope.launch {
+                                                                searchBarScrollBehavior.state.resetHeightOffset()
                                                             }
-                                                        },
-                                                        onClick = {
-                                                            if (isSelected) {
-                                                                navController.currentBackStackEntry?.savedStateHandle?.set("scrollToTop", true)
-                                                                coroutineScope.launch {
-                                                                    searchBarScrollBehavior.state.resetHeightOffset()
+                                                        } else {
+                                                            navController.navigate(screen.route) {
+                                                                popUpTo(navController.graph.startDestinationId) {
+                                                                    saveState = true
                                                                 }
-                                                            } else {
-                                                                navController.navigate(screen.route) {
-                                                                    popUpTo(navController.graph.startDestinationId) {
-                                                                        saveState = true
-                                                                    }
-                                                                    launchSingleTop = true
-                                                                    restoreState = true
-                                                                }
+                                                                launchSingleTop = true
+                                                                restoreState = true
                                                             }
-                                                        },
-                                                        colors = NavigationBarItemDefaults.colors(
-                                                            indicatorColor = contentColor,
-                                                            selectedIconColor = containerColor,
-                                                            unselectedIconColor = contentColor,
-                                                            selectedTextColor = contentColor,
-                                                            unselectedTextColor = contentColor
-                                                        )
+                                                        }
+                                                    },
+                                                    colors = NavigationBarItemDefaults.colors(
+                                                        indicatorColor = contentColor,
+                                                        selectedIconColor = containerColor,
+                                                        unselectedIconColor = contentColor,
+                                                        selectedTextColor = contentColor,
+                                                        unselectedTextColor = contentColor
                                                     )
-                                                }
+                                                )
                                             }
                                         }
 
