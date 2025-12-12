@@ -192,7 +192,7 @@ fun AlbumScreen(
                         Spacer(Modifier.width(16.dp))
 
                         Column(
-                            verticalArrangement = Arrangement.Center,
+                            verticalArrangement = Arrangement.spacedBy(4.dp, Alignment.CenterVertically),
                         ) {
                             AutoResizeText(
                                 text = albumWithSongs.album.title,
@@ -231,7 +231,11 @@ fun AlbumScreen(
                                 )
                             }
 
-                            Row {
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.End,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
                                 IconButton(
                                     onClick = {
                                         database.query {
@@ -374,6 +378,9 @@ fun AlbumScreen(
                             Spacer(Modifier.size(ButtonDefaults.IconSpacing))
                             Text(
                                 text = stringResource(R.string.play),
+                                style = MaterialTheme.typography.bodyMedium,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
                             )
                         }
 

@@ -328,7 +328,6 @@ fun ArtistScreen(
                                     val isSubscribed = libraryArtist?.artist?.bookmarkedAt != null
 
                                     // Subscribe Button
-                                    val contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
                                     Button(
                                         onClick = {
                                             database.transaction {
@@ -349,7 +348,7 @@ fun ArtistScreen(
                                                 }
                                             }
                                         },
-                                        contentPadding = contentPadding,
+                                        contentPadding = ButtonDefaults.ButtonWithIconContentPadding,
                                         colors = ButtonDefaults.buttonColors(
                                             containerColor =
                                                 if (isSubscribed) MaterialTheme.colorScheme.primaryContainer
@@ -363,10 +362,10 @@ fun ArtistScreen(
                                         if (isSubscribed) {
                                             Icon(
                                                 painter = painterResource(R.drawable.subscribed),
-                                                contentDescription = null,
-                                                modifier = Modifier.padding(end = 8.dp)
+                                                contentDescription = null
                                             )
                                         }
+                                        Spacer(Modifier.size(ButtonDefaults.IconSpacing))
                                         Text(
                                             text = stringResource(if (isSubscribed) R.string.subscribed else R.string.subscribe),
                                             style = MaterialTheme.typography.bodyMedium
