@@ -271,10 +271,6 @@ fun AlbumMenu(
         },
     )
 
-    HorizontalDivider()
-
-    Spacer(modifier = Modifier.height(12.dp))
-
     val configuration = LocalConfiguration.current
     val isPortrait = configuration.orientation == Configuration.ORIENTATION_PORTRAIT
 
@@ -293,7 +289,7 @@ fun AlbumMenu(
                     NewAction(
                         icon = {
                             Icon(
-                                painter = painterResource(R.drawable.play),
+                                painter = painterResource(R.drawable.play_circle),
                                 contentDescription = null,
                                 modifier = Modifier.size(28.dp),
                                 tint = MaterialTheme.colorScheme.onSurfaceVariant

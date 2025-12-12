@@ -264,10 +264,6 @@ fun PlaylistMenu(
         },
     )
 
-    HorizontalDivider()
-
-    Spacer(modifier = Modifier.height(12.dp))
-
     val configuration = LocalConfiguration.current
     val isPortrait = configuration.orientation == Configuration.ORIENTATION_PORTRAIT
 

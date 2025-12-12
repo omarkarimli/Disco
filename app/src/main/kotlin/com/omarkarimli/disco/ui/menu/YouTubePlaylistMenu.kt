@@ -181,7 +181,6 @@ fun YouTubePlaylistMenu(
             }
         }
     )
-    HorizontalDivider()
 
     var downloadState by remember {
         mutableStateOf(Download.STATE_STOPPED)
@@ -333,7 +332,7 @@ fun YouTubePlaylistMenu(
                             NewAction(
                                 icon = {
                                     Icon(
-                                        painter = painterResource(R.drawable.play),
+                                        painter = painterResource(R.drawable.play_circle),
                                         contentDescription = null,
                                         modifier = Modifier.size(28.dp),
                                         tint = MaterialTheme.colorScheme.onSurfaceVariant

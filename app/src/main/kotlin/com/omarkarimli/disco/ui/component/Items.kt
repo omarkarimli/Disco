@@ -516,7 +516,7 @@ fun AlbumListItem(
         )
     },
     trailingContent = trailingContent,
-    modifier = modifier
+    modifier = modifier.padding(bottom = 4.dp)
 )
 
 @Composable

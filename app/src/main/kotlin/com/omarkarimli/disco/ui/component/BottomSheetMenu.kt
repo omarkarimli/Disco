@@ -76,7 +76,7 @@ fun BottomSheetMenu(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 20.dp)
+                    .padding(horizontal = 8.dp)
             ) {
                 state.content(this)
             }

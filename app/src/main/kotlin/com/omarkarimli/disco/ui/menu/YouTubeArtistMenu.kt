@@ -53,8 +53,6 @@ fun YouTubeArtistMenu(
         trailingContent = {},
     )
 
-    HorizontalDivider()
-
     Spacer(modifier = Modifier.height(12.dp))
 
     val configuration = LocalConfiguration.current

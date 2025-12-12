@@ -198,7 +198,7 @@ fun SelectionSongMenu(
                     NewAction(
                         icon = {
                             Icon(
-                                painter = painterResource(R.drawable.play),
+                                painter = painterResource(R.drawable.play_circle),
                                 contentDescription = null,
                                 modifier = Modifier.size(28.dp),
                                 tint = MaterialTheme.colorScheme.onSurfaceVariant
@@ -256,48 +256,6 @@ fun SelectionSongMenu(
             )
         }
 
-        item {
-            ListItem(
-                headlineContent = { Text(text = stringResource(R.string.play)) },
-                leadingContent = {
-                    Icon(
-                        painter = painterResource(R.drawable.play),
-                        contentDescription = null,
-                    )
-                },
-                modifier = Modifier.clickable {
-                    onDismiss()
-                    playerConnection.playQueue(
-                        ListQueue(
-                            title = "Selection",
-                            items = songSelection.map { it.toMediaItem() },
-                        ),
-                    )
-                    clearAction()
-                }
-            )
-        }
-        item {
-            ListItem(
-                headlineContent = { Text(text = stringResource(R.string.shuffle)) },
-                leadingContent = {
-                    Icon(
-                        painter = painterResource(R.drawable.shuffle),
-                        contentDescription = null,
-                    )
-                },
-                modifier = Modifier.clickable {
-                    onDismiss()
-                    playerConnection.playQueue(
-                        ListQueue(
-                            title = "Selection",
-                            items = songSelection.shuffled().map { it.toMediaItem() },
-                        ),
-                    )
-                    clearAction()
-                }
-            )
-        }
         item {
             ListItem(
                 headlineContent = { Text(text = stringResource(R.string.add_to_queue)) },
