@@ -1,6 +1,7 @@
 package com.omarkarimli.disco.ui.theme
 
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.googlefonts.Font
 import androidx.compose.ui.text.googlefonts.GoogleFont
 import com.omarkarimli.disco.R
@@ -11,18 +12,19 @@ val provider = GoogleFont.Provider(
     certificates = R.array.com_google_android_gms_fonts_certs
 )
 
-val googleFont = GoogleFont("Inter")
+val interFont = GoogleFont("Inter")
 
-val bodyFontFamily = FontFamily(
+val regularFontFamily = FontFamily(
     Font(
-        googleFont = googleFont,
+        googleFont = interFont,
         fontProvider = provider,
     )
 )
 
-val displayFontFamily = FontFamily(
+val boldFontFamily = FontFamily(
     Font(
-        googleFont = googleFont,
+        googleFont = interFont,
         fontProvider = provider,
+        weight = FontWeight.Bold,
     )
 )
