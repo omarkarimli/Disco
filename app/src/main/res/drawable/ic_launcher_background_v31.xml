@@ -8,5 +8,5 @@
         android:type="linear" />
      -->
 
-    <solid android:color="#FFFFFF" />
+    <solid android:color="@color/ic_launcher_background" />
 </shape>
