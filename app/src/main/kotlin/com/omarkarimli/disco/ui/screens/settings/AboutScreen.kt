@@ -1,5 +1,6 @@
 package com.omarkarimli.disco.ui.screens.settings
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -14,6 +15,7 @@ import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
@@ -25,6 +27,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -36,11 +39,42 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.omarkarimli.disco.BuildConfig
 import com.omarkarimli.disco.LocalPlayerAwareWindowInsets
 import com.omarkarimli.disco.R
 import com.omarkarimli.disco.ui.component.IconButton
 import com.omarkarimli.disco.ui.utils.backToMain
+import com.omarkarimli.disco.BuildConfig
+
+@Immutable
+sealed class DevSocialMedias(
+    val title: String,
+    val url: String,
+    @DrawableRes val icon: Int,
+) {
+    object GitHub : DevSocialMedias(
+        title = "GitHub",
+        url = "https://github.com/omarkarimli",
+        icon = R.drawable.github
+    )
+
+    object Instagram : DevSocialMedias(
+        title = "Instagram",
+        url = "https://www.instagram.com/omar.karimli",
+        icon = R.drawable.instagram
+    )
+
+    object LinkedIn : DevSocialMedias(
+        title = "LinkedIn",
+        url = "https://www.linkedin.com/in/omarkarimli/",
+        icon = R.drawable.linkedin
+    )
+
+    object Linktree : DevSocialMedias(
+        title = "Linktree",
+        url = "https://linktr.ee/omarkarimli",
+        icon = R.drawable.linktree
+    )
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -49,6 +83,13 @@ fun AboutScreen(
     scrollBehavior: TopAppBarScrollBehavior,
 ) {
     val uriHandler = LocalUriHandler.current
+
+    val mediaItems = listOf(
+        DevSocialMedias.GitHub,
+        DevSocialMedias.Instagram,
+        DevSocialMedias.LinkedIn,
+        DevSocialMedias.Linktree
+    )
 
     Column(
         modifier = Modifier
@@ -156,67 +197,29 @@ fun AboutScreen(
         Spacer(Modifier.height(4.dp))
 
         Text(
-            text = "MO AGAMY",
+            text = "OMAR",
             style = MaterialTheme.typography.titleMedium,
             color = MaterialTheme.colorScheme.secondary,
         )
 
         Spacer(Modifier.height(8.dp))
 
-        Row {
-            IconButton(
-                onClick = {
-                    uriHandler.openUri("https://github.com/omarkarimli/disco")
-                },
-            ) {
-                Icon(
-                    painter = painterResource(R.drawable.github),
-                    contentDescription = null
-                )
-            }
+        LazyRow {
+            items(mediaItems.size) { index ->
+                val item = mediaItems[index]
 
-            IconButton(
-                onClick = {
-                    uriHandler.openUri("https://www.instagram.com/omar.karimli")
+                IconButton(
+                    onClick = {
+                        uriHandler.openUri(item.url)
+                    },
+                ) {
+                    Icon(
+                        painter = painterResource(item.icon),
+                        contentDescription = item.title
+                    )
                 }
-            ) {
-                Icon(
-                    painter = painterResource(R.drawable.instagram),
-                    contentDescription = null
-                )
             }
         }
-
-        Spacer(Modifier.height(16.dp))
-
-        Text(
-            text = "COLLABORATORS",
-            style = MaterialTheme.typography.labelSmall,
-            color = MaterialTheme.colorScheme.secondary,
-            modifier = Modifier
-                .border(
-                    width = 1.dp,
-                    color = MaterialTheme.colorScheme.secondary,
-                    shape = CircleShape,
-                )
-                .padding(
-                    horizontal = 6.dp,
-                    vertical = 2.dp,
-                ),
-        )
-
-        Spacer(Modifier.height(4.dp))
-
-        Text(
-            text = "Damian Sobczak",
-            style = MaterialTheme.typography.titleMedium,
-            color = MaterialTheme.colorScheme.secondary,
-            modifier = Modifier.clickable {
-                uriHandler.openUri("https://github.com/FullerBread2032")
-            }
-        )
-
-        Spacer(Modifier.height(32.dp))
     }
 
     TopAppBar(
