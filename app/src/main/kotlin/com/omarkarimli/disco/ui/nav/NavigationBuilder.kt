@@ -149,7 +149,7 @@ fun NavGraphBuilder.navigationBuilder(
             },
         ),
     ) {
-        ArtistScreen(navController, scrollBehavior)
+        ArtistScreen(navController)
     }
     composable(
         route = "artist/{artistId}/songs",

@@ -10,6 +10,7 @@ import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
@@ -22,6 +23,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.WindowInsetsSides
+import androidx.compose.foundation.layout.calculateEndPadding
+import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
@@ -30,20 +33,16 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -112,17 +111,20 @@ import com.omarkarimli.disco.ui.utils.resize
 import com.omarkarimli.disco.viewmodels.ArtistViewModel
 import com.valentinilk.shimmer.shimmer
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Button
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.LocalResources
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun ArtistScreen(
     navController: NavController,
-    scrollBehavior: TopAppBarScrollBehavior,
     viewModel: ArtistViewModel = hiltViewModel(),
 ) {
+    val layoutDirection = LocalLayoutDirection.current
     val context = LocalContext.current
     val database = LocalDatabase.current
     val menuState = LocalMenuState.current
@@ -164,7 +166,12 @@ fun ArtistScreen(
     ) {
         LazyColumn(
             state = lazyListState,
-            contentPadding = LocalPlayerAwareWindowInsets.current.asPaddingValues(),
+            contentPadding = PaddingValues(
+                start = LocalPlayerAwareWindowInsets.current.asPaddingValues().calculateStartPadding(layoutDirection),
+                end = LocalPlayerAwareWindowInsets.current.asPaddingValues().calculateEndPadding(layoutDirection),
+                top = LocalPlayerAwareWindowInsets.current.asPaddingValues().calculateTopPadding(),
+                bottom = LocalPlayerAwareWindowInsets.current.asPaddingValues().calculateBottomPadding() + 24.dp
+            )
         ) {
             if (artistPage == null && !showLocal) {
                 item(key = "shimmer") {
@@ -318,8 +325,11 @@ fun ArtistScreen(
                                     modifier = Modifier.fillMaxWidth(),
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
+                                    val isSubscribed = libraryArtist?.artist?.bookmarkedAt != null
+
                                     // Subscribe Button
-                                    OutlinedButton(
+                                    val contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
+                                    Button(
                                         onClick = {
                                             database.transaction {
                                                 val artist = libraryArtist?.artist
@@ -339,48 +349,49 @@ fun ArtistScreen(
                                                 }
                                             }
                                         },
-                                        colors = ButtonDefaults.outlinedButtonColors(
-                                            containerColor = if (libraryArtist?.artist?.bookmarkedAt != null)
-                                                MaterialTheme.colorScheme.surface
-                                            else
-                                                Color.Transparent
+                                        contentPadding = contentPadding,
+                                        colors = ButtonDefaults.buttonColors(
+                                            containerColor =
+                                                if (isSubscribed) MaterialTheme.colorScheme.primaryContainer
+                                                else MaterialTheme.colorScheme.onSurface,
+                                            contentColor =
+                                                if (isSubscribed) MaterialTheme.colorScheme.onPrimaryContainer
+                                                else MaterialTheme.colorScheme.surface
                                         ),
-                                        shape = RoundedCornerShape(50),
-                                        modifier = Modifier.height(40.dp)
+                                        shape = CircleShape
                                     ) {
-                                        val isSubscribed = libraryArtist?.artist?.bookmarkedAt != null
+                                        if (isSubscribed) {
+                                            Icon(
+                                                painter = painterResource(R.drawable.subscribed),
+                                                contentDescription = null,
+                                                modifier = Modifier.padding(end = 8.dp)
+                                            )
+                                        }
                                         Text(
                                             text = stringResource(if (isSubscribed) R.string.subscribed else R.string.subscribe),
-                                            fontSize = 14.sp,
-                                            color = if (!isSubscribed) MaterialTheme.colorScheme.error else LocalContentColor.current
+                                            style = MaterialTheme.typography.bodyMedium
                                         )
                                     }
 
                                     Spacer(modifier = Modifier.weight(1f))
 
                                     Row(
-                                        horizontalArrangement = Arrangement.spacedBy(16.dp),
-                                        verticalAlignment = Alignment.CenterVertically
+                                        verticalAlignment = Alignment.CenterVertically,
+                                        horizontalArrangement = Arrangement.spacedBy(8.dp)
                                     ) {
                                         // Radio Button
                                         if (!showLocal) {
                                             artistPage?.artist?.radioEndpoint?.let { radioEndpoint ->
-                                                OutlinedButton(
+                                                IconButton(
                                                     onClick = {
                                                         playerConnection.playQueue(YouTubeQueue(radioEndpoint))
                                                     },
-                                                    shape = RoundedCornerShape(50),
-                                                    modifier = Modifier.height(40.dp)
+                                                    modifier = Modifier.size(48.dp)
                                                 ) {
                                                     Icon(
                                                         painter = painterResource(R.drawable.radio),
-                                                        contentDescription = null,
-                                                        modifier = Modifier.size(20.dp)
-                                                    )
-                                                    Spacer(modifier = Modifier.width(8.dp))
-                                                    Text(
-                                                        text = stringResource(R.string.radio),
-                                                        fontSize = 14.sp
+                                                        contentDescription = stringResource(R.string.radio),
+                                                        modifier = Modifier.size(24.dp)
                                                     )
                                                 }
                                             }
@@ -393,18 +404,12 @@ fun ArtistScreen(
                                                     onClick = {
                                                         playerConnection.playQueue(YouTubeQueue(shuffleEndpoint))
                                                     },
-                                                    modifier = Modifier
-                                                        .size(48.dp)
-                                                        .background(
-                                                            MaterialTheme.colorScheme.primary,
-                                                            MaterialTheme.shapes.extraLarge
-                                                        )
+                                                    modifier = Modifier.size(48.dp)
                                                 ) {
                                                     Icon(
                                                         painter = painterResource(R.drawable.shuffle),
                                                         contentDescription = "Shuffle",
-                                                        tint = MaterialTheme.colorScheme.onPrimary,
-                                                        modifier = Modifier.size(20.dp)
+                                                        modifier = Modifier.size(24.dp)
                                                     )
                                                 }
                                             }
@@ -421,18 +426,12 @@ fun ArtistScreen(
                                                         )
                                                     }
                                                 },
-                                                modifier = Modifier
-                                                    .size(48.dp)
-                                                    .background(
-                                                        MaterialTheme.colorScheme.primary,
-                                                        MaterialTheme.shapes.extraLarge
-                                                    )
+                                                modifier = Modifier.size(48.dp)
                                             ) {
                                                 Icon(
                                                     painter = painterResource(R.drawable.shuffle),
                                                     contentDescription = "Shuffle",
-                                                    tint = MaterialTheme.colorScheme.onPrimary,
-                                                    modifier = Modifier.size(20.dp)
+                                                    modifier = Modifier.size(24.dp)
                                                 )
                                             }
                                         }

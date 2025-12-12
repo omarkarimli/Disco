@@ -193,12 +193,9 @@ fun GridItem(
     ) {
         BoxWithConstraints(
             contentAlignment = Alignment.Center,
-            modifier = if (fillMaxWidth) {
-                Modifier.fillMaxWidth()
-            } else {
-                Modifier.height(GridThumbnailHeight)
-            }
+            modifier = if (fillMaxWidth) Modifier.fillMaxWidth() else Modifier.height(GridThumbnailHeight)
                 .aspectRatio(thumbnailRatio)
+                .clip(RoundedCornerShape(ThumbnailCornerRadius))
         ) {
             thumbnailContent()
         }
