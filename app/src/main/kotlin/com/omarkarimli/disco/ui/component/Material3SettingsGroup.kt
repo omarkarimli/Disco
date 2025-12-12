@@ -10,6 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.dp
 
@@ -54,19 +55,17 @@ fun Material3SettingsGroup(
     }
 }
 
-/**
- * Individual settings item row with Material 3 styling
- */
 @Composable
 private fun Material3SettingsItemRow(
     item: Material3SettingsItem,
-    showDivider: Boolean
+    showDivider: Boolean,
+    shape: Shape = RectangleShape
 ) {
     Column {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .clip(MaterialTheme.shapes.large)
+                .clip(shape)
                 .clickable(
                     enabled = item.onClick != null,
                     onClick = { item.onClick?.invoke() }

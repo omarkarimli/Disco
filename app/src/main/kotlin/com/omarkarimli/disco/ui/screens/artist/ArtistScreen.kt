@@ -772,10 +772,8 @@ fun ArtistScreen(
                 )
             }
         },
-        colors = if (transparentAppBar) {
-            TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent)
-        } else {
-            TopAppBarDefaults.topAppBarColors()
-        }
+        colors =
+            if (transparentAppBar) TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent)
+            else TopAppBarDefaults.topAppBarColors()
     )
 }

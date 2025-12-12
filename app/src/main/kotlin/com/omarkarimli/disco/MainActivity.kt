@@ -758,7 +758,6 @@ class MainActivity : ComponentActivity() {
                                                     Icon(
                                                         painter = painterResource(R.drawable.app_icon),
                                                         contentDescription = null,
-                                                        tint = MaterialTheme.colorScheme.onSurface,
                                                         modifier = Modifier.size(36.dp)
                                                     )
                                                 } else {

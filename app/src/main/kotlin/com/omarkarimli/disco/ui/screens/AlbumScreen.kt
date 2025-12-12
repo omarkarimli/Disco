@@ -399,7 +399,7 @@ fun AlbumScreen(
                 }
             }
 
-            if (!wrappedSongs.isNullOrEmpty()) {
+            if (!wrappedSongs.isEmpty()) {
                 itemsIndexed(
                     items = wrappedSongs,
                     key = { _, song -> song.item.id },
@@ -430,8 +430,7 @@ fun AlbumScreen(
                             }
                         },
                         isSelected = songWrapper.isSelected && selection,
-                        modifier =
-                        Modifier
+                        modifier = Modifier
                             .fillMaxWidth()
                             .animateItem()
                             .combinedClickable(
@@ -553,7 +552,7 @@ fun AlbumScreen(
     TopAppBar(
         title = {
             if (selection) {
-                val count = wrappedSongs?.count { it.isSelected } ?: 0
+                val count = wrappedSongs.count { it.isSelected }
                 Text(
                     text = pluralStringResource(R.plurals.n_song, count, count),
                     style = MaterialTheme.typography.titleLarge

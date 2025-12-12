@@ -202,11 +202,8 @@ fun GridItem(
         ) {
             thumbnailContent()
         }
-
-        Spacer(modifier = Modifier.height(6.dp))
-
+        Spacer(modifier = Modifier.height(12.dp))
         title()
-
         Row(verticalAlignment = Alignment.CenterVertically) {
             badges()
 
@@ -465,7 +462,7 @@ fun AlbumListItem(
         val downloadUtil = LocalDownloadUtil.current
         val database = LocalDatabase.current
 
-        val songs by produceState<List<Song>>(initialValue = emptyList(), album.id) {
+        val songs by produceState(initialValue = emptyList(), album.id) {
             withContext(Dispatchers.IO) {
                 value = database.albumSongs(album.id).first()
             }
@@ -685,30 +682,30 @@ fun PlaylistGridItem(
         )
     },
     subtitle = {
-        val subtitle = if (autoPlaylist) {
-            ""
-        } else {
-            if (playlist.songCount == 0 && playlist.playlist.remoteSongCount != null) {
-                pluralStringResource(
-                    R.plurals.n_song,
-                    playlist.playlist.remoteSongCount,
-                    playlist.playlist.remoteSongCount
-                )
-            } else {
-                pluralStringResource(
-                    R.plurals.n_song,
-                    playlist.songCount,
-                    playlist.songCount
-                )
-            }
+        if (!autoPlaylist) {
+            val subtitle =
+                if (playlist.songCount == 0 && playlist.playlist.remoteSongCount != null) {
+                    pluralStringResource(
+                        R.plurals.n_song,
+                        playlist.playlist.remoteSongCount,
+                        playlist.playlist.remoteSongCount
+                    )
+                } else {
+                    pluralStringResource(
+                        R.plurals.n_song,
+                        playlist.songCount,
+                        playlist.songCount
+                    )
+                }
+
+            Text(
+                text = subtitle,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.secondary,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis
+            )
         }
-        Text(
-            text = subtitle,
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.secondary,
-            maxLines = 2,
-            overflow = TextOverflow.Ellipsis
-        )
     },
     badges = badges,
     thumbnailContent = {
@@ -1071,7 +1068,8 @@ fun ItemThumbnail(
                 contentDescription = null,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clip(shape)
+                    .clip(shape),
+                contentScale = ContentScale.Crop
             )
         }
 
@@ -1312,10 +1310,10 @@ fun BoxScope.OverlayPlayButton(
                 .background(Color.Black.copy(alpha = ActiveBoxAlpha))
         ) {
             Icon(
+                modifier = Modifier.padding(10.dp),
                 painter = painterResource(R.drawable.play),
                 contentDescription = null,
                 tint = Color.White,
-                modifier = Modifier.size(20.dp)
             )
         }
     }
@@ -1376,6 +1374,7 @@ fun BoxScope.AlbumPlayButton(
                 .clickable(onClick = onClick)
         ) {
             Icon(
+                modifier = Modifier.padding(10.dp),
                 painter = painterResource(R.drawable.play),
                 contentDescription = null,
                 tint = Color.White

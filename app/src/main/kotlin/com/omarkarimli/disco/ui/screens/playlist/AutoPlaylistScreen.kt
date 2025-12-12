@@ -108,6 +108,10 @@ import com.omarkarimli.disco.viewmodels.AutoPlaylistViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
+enum class PlaylistType {
+    LIKE, DOWNLOAD, UPLOADED, OTHER
+}
+
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun AutoPlaylistScreen(
@@ -698,8 +702,4 @@ fun AutoPlaylistScreen(
             }
         )
     }
-}
-
-enum class PlaylistType {
-    LIKE, DOWNLOAD, UPLOADED, OTHER
 }
