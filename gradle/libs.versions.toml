@@ -34,8 +34,8 @@ junit = "4.13.2"
 timber = "5.0.1"
 materialKolor = "4.0.5"
 kuromojiIpadic = "0.9.0"
-extractor = "a194151"
 uiTextGoogleFonts = "1.10.0"
+extractor = "7939911"
 
 [libraries]
 annotation = { module = "androidx.annotation:annotation", version.ref = "annotation" }
@@ -111,7 +111,7 @@ multidex = { module = "androidx.multidex:multidex", version.ref = "multidex" }
 
 #newpipe-extractor = { module = "com.github.libre-tube:NewPipeExtractor", version = "70abbdb" }
 #newpipe-extractor = { module = "com.github.TeamNewPipe:NewPipeExtractor", version = "dev-SNAPSHOT" }
-extractor = { module = "com.github.mostafaalagamy:MetrolistExtractor", version.ref = "extractor" }
+extractor = { group = "com.github.omarkarimli.DiscoExtractor", name = "extractor", version.ref = "extractor" }
 
 kuromoji-ipadic = { module = "com.atilika.kuromoji:kuromoji-ipadic", version.ref = "kuromojiIpadic" }
 ui-text-google-fonts = { group = "androidx.compose.ui", name = "ui-text-google-fonts", version.ref = "uiTextGoogleFonts" }
