@@ -48,29 +48,7 @@ If you're in a region where YouTube Music is not supported, you won't be able to
 - Light - Dark - black - Dynamic theme
 - Sleep timer
 - Material 3 
-- etc.
-
-<div align="center">
-
-</div>
-
-<div align="center">
-<h1>Translations</h1>
-
-[![Translation status](https://img.shields.io/weblate/progress/disco?style=for-the-badge)](https://hosted.weblate.org/engage/disco/)
-
-We use Weblate to translate Disco. For more details or to get started, visit our [Weblate page](https://hosted.weblate.org/projects/Disco/).
-
-<a href="https://hosted.weblate.org/projects/Disco/">
-<img src="https://hosted.weblate.org/widget/Disco/horizontal-auto.svg" alt="Translation status" />
-</a>
-
-Thank you very much for helping to make Disco accessible to many people worldwide.
-</div>
-
-<div align="center">
-<h1>FAQ</h1>
-</div>
+  etc.
 
 ### Q: Why Disco isn't showing in Android Auto?
 
