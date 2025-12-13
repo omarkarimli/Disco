@@ -50,6 +50,8 @@ If you're in a region where YouTube Music is not supported, you won't be able to
 - Material 3 
   etc.
 
+<h1>FAQs</h1>
+
 ### Q: Why Disco isn't showing in Android Auto?
 
 1. Go to Android Auto's settings and tap multiple times on the version in the bottom to enable
