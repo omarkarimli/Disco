@@ -9,7 +9,7 @@
 If you're in a region where YouTube Music is not supported, you won't be able to use this app <strong>unless</strong> you have a proxy or VPN to connect to a YTM-supported region.
 </div>
 
-<h1>Screenshots</h1>
+<h1>Showcase</h1>
 
 <img width="30%" alt="1" src="https://github.com/user-attachments/assets/0361d2e6-8f55-4a1e-a90c-836838d63ffa" />
 <img width="30%" alt="2" src="https://github.com/user-attachments/assets/51e10d39-0043-4195-9cca-74bd5b497fa3" />
@@ -28,18 +28,7 @@ If you're in a region where YouTube Music is not supported, you won't be able to
 <img width="30%" alt="15" src="https://github.com/user-attachments/assets/af727676-6847-49e9-9e39-61a06b044190" />
 <img width="30%" alt="16" src="https://github.com/user-attachments/assets/6feb659d-4219-43d4-a8d0-181c3213f806" />
 
-<div align="center">
-<h1>Release numbers</h1>
-</div>
-
-[![Latest release](https://img.shields.io/github/v/release/omarkarimli/Disco?style=for-the-badge)](https://github.com/omarkarimli/Disco/releases)
-[![GitHub license](https://img.shields.io/github/license/omarkarimli/disco?style=for-the-badge)](https://github.com/omarkarimli/Disco/blob/main/LICENSE)
-[![Downloads](https://img.shields.io/github/downloads/omarkarimli/Disco/total?style=for-the-badge)](https://github.com/omarkarimli/Disco/releases)
-</div>
-
-<div align="center">
 <h1>Features</h1>
-</div>
 
 - Play any song or video from YT Music
 - Background playback 
