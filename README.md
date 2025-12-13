@@ -1,5 +1,6 @@
 <div align="center">
-<img src="https://github.com/omarkarimli/Disco/blob/main/fastlane/metadata/android/en-US/images/icon.png" width="160" height="160" style="display: block; margin: 0 auto"/>
+
+<img src="https://github.com/user-attachments/assets/80ddbe2f-d1f1-4d94-bf36-fe48bbe3f942" alt="Disco" width="160" height="160" style="display: block; margin: 0 auto"/>
 <h1>Disco</h1>
 <p>YouTube Music client for Android</p>
 
