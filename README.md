@@ -26,7 +26,6 @@ If you're in a region where YouTube Music is not supported, you won't be able to
 <img width="30%" alt="12" src="https://github.com/user-attachments/assets/bc721421-0bd5-4b8c-bc35-d783fc6a44e0" />
 <img width="30%" alt="14" src="https://github.com/user-attachments/assets/aeb3120d-87ad-4ee4-ad2b-7fe4329e7077" />
 <img width="30%" alt="3" src="https://github.com/user-attachments/assets/3697ccab-1499-4511-9952-7e0364c129f6" />
-<img width="30%" alt="6" src="https://github.com/user-attachments/assets/0695b781-c352-4f16-8ec6-ec1f9dfed3a8" />
 
 <h1>Features</h1>
 
