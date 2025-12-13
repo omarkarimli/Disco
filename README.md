@@ -11,8 +11,6 @@ If you're in a region where YouTube Music is not supported, you won't be able to
 
 <h1>Showcase</h1>
 
-<img width="30%" alt="12" src="https://github.com/user-attachments/assets/bc721421-0bd5-4b8c-bc35-d783fc6a44e0" />
-<img width="30%" alt="14" src="https://github.com/user-attachments/assets/aeb3120d-87ad-4ee4-ad2b-7fe4329e7077" />
 <img width="30%" alt="16" src="https://github.com/user-attachments/assets/6feb659d-4219-43d4-a8d0-181c3213f806" />
 <img width="30%" alt="1" src="https://github.com/user-attachments/assets/0361d2e6-8f55-4a1e-a90c-836838d63ffa" />
 <img width="30%" alt="2" src="https://github.com/user-attachments/assets/51e10d39-0043-4195-9cca-74bd5b497fa3" />
@@ -27,6 +25,8 @@ If you're in a region where YouTube Music is not supported, you won't be able to
 <img width="30%" alt="11" src="https://github.com/user-attachments/assets/c970e24f-4196-4066-8271-1d1dd06b9043" />
 <img width="30%" alt="13" src="https://github.com/user-attachments/assets/f822eaa4-9eff-4d8b-b6e2-237d6300a058" />
 <img width="30%" alt="15" src="https://github.com/user-attachments/assets/af727676-6847-49e9-9e39-61a06b044190" />
+<img width="30%" alt="12" src="https://github.com/user-attachments/assets/bc721421-0bd5-4b8c-bc35-d783fc6a44e0" />
+<img width="30%" alt="14" src="https://github.com/user-attachments/assets/aeb3120d-87ad-4ee4-ad2b-7fe4329e7077" />
 
 <h1>Features</h1>
 
