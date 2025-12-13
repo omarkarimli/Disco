@@ -62,23 +62,6 @@ If you're in a region where YouTube Music is not supported, you won't be able to
 - etc.
 
 <div align="center">
-<h1>Download Now</h1>
-
-<table>
-<tr>
-<td align="center">
-<a href="https://github.com/omarkarimli/Disco/releases/latest/download/Disco.apk"><img src="https://github.com/machiav3lli/oandbackupx/blob/034b226cea5c1b30eb4f6a6f313e4dadcbb0ece4/badge_github.png" alt="Get it on GitHub" height="82"></a><br/>
-<a href="https://www.openapk.net/disco/com.omarkarimli.disco/"><img src="https://www.openapk.net/images/openapk-badge.png" alt="Get it on OpenAPK" height="80"></a>
-</td>
-<td align="center">
-<a href="https://apps.obtainium.imranr.dev/redirect?r=obtainium://add/https://github.com/omarkarimli/Disco/"><img src="https://github.com/ImranR98/Obtainium/blob/main/assets/graphics/badge_obtainium.png" alt="Get it on Obtainium" height="50"></a>
-</td>
-<td align="center">
-<a href="https://apt.izzysoft.de/fdroid/index/apk/com.omarkarimli.music"><img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png" alt="Get it on IzzyOnDroid" height="80"></a><br/>
-<a href="https://belberi.com/disco/?fbclid=PAY2xjawJP5dlleHRuA2FlbQIxMAABpjSk1oBp4e8aSV4nfX2dfunQObTlMWIkN-aVA9CSq36pnmkHsvfoYTjhHg_aem_9o9OGbQuZ2PjJTArq21UDA"><img src="https://github.com/omarkarimli/Disco/blob/main/fastlane/metadata/android/en-US/images/belberi_github.png" alt="Get it on Belberi" height="82"></a>
-</td>
-</tr>
-</table>
 
 </div>
 
