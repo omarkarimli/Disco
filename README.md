@@ -81,56 +81,6 @@ This project uses GitHub Secrets to securely store API keys for building release
 
 **Note:** These secrets are automatically injected into the build process via GitHub Actions and are not visible in the source code.
 
-<div align="center">
-<h1>Support Me</h1>
-
-If you'd like to support my work, send a Monero (XMR) donation to this address:
-
-44XjSELSWcgJTZiCKzjpCQWyXhokrH9RqH3rpp35FkSKi57T25hniHWHQNhLeXyFn3DDYqufmfRB1iEtENerZpJc7xJCcqt
-
-Or scan this QR code:
-
-<img src="https://github.com/omarkarimli/Disco/blob/main/assets/XMR.png" alt="QR Code" width="200" height="200" />
-
-Or other
-
-<a href="https://www.buymeacoffee.com/omarkarimli">
-<img src="https://github.com/omarkarimli/Disco/blob/main/assets/buymeacoffee.png?raw=true" alt="Buy Me a Coffee" width="150" height="150" />
-</a>
-
-<div align="center">
-<h1>Join our community</h1>
-
-[![Discord](https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white&labelColor=1c1917)](https://dsc.gg/disco)
-[![Telegram](https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white&labelColor=1c1917)](https://t.me/discoapp)
-</div>
-
-<div align="center">
-<h1>Special thanks</h1>
-
-**InnerTune**
-[Zion Huang](https://github.com/z-huang) • [Malopieds](https://github.com/Malopieds)
-
-**OuterTune**
-[Davide Garberi](https://github.com/DD3Boh) • [Michael Zh](https://github.com/mikooomich)
-
-<sub>Thank you to all the amazing developers who made this project possible!</sub>
-
-</div>
-
-<div align="center">
-<h1>Thanks to all contributors</h1>
-
-<a href = "https://github.com/omarkarimli/Disco/graphs/contributors">
-<img src = "https://contrib.rocks/image?repo=omarkarimli/Disco" width="600"/>
-</a>
-
-</div>
-
-<div align="center">
-<h1>Disclaimer</h1>
-</div>
-
 This project and its contents are not affiliated with, funded, authorized, endorsed by, or in any way associated with YouTube, Google LLC, Disco Group LLC or any of its affiliates and subsidiaries.
 
 Any trademark, service mark, trade name, or other intellectual property rights used in this project are owned by the respective owners.
