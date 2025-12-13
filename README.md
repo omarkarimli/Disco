@@ -80,7 +80,7 @@ This project uses GitHub Secrets to securely store API keys for building release
 
 **Note:** These secrets are automatically injected into the build process via GitHub Actions and are not visible in the source code.
 
-This project and its contents are not affiliated with, funded, authorized, endorsed by, or in any way associated with YouTube, Google LLC, Disco Group LLC or any of its affiliates and subsidiaries.
+This project and its contents are not affiliated with, funded, authorized, endorsed by, or in any way associated with YouTube, Google LLC or any of its affiliates and subsidiaries.
 
 Any trademark, service mark, trade name, or other intellectual property rights used in this project are owned by the respective owners.
 
