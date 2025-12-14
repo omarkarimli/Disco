@@ -360,7 +360,7 @@ fun Thumbnail(
                                                 .networkCachePolicy(coil3.request.CachePolicy.ENABLED)
                                                 .build(),
                                             contentDescription = null,
-                                            contentScale = ContentScale.Fit,
+                                            contentScale = ContentScale.Crop,
                                             modifier = Modifier.fillMaxSize()
                                         )
                                     }
