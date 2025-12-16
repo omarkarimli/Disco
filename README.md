@@ -58,10 +58,6 @@ If you're in a region where YouTube Music is not supported, you won't be able to
 2. In the three dots menu at the top-right of the screen, click "Developer settings"
 3. Enable "Unknown sources"
 
-### Q: How to scrobble music to LastFM, LibreFM, ListenBrainz or GNU FM?
-
-Use other music scrobbler apps, I recommend [Pano Scrobbler](https://play.google.com/store/apps/details?id=com.arn.scrobble).
-
 <div align="center">
 <h1>Development Setup</h1>
 </div>
