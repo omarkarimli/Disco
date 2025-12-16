@@ -37,7 +37,6 @@ import com.omarkarimli.disco.db.MusicDatabase
 import com.omarkarimli.disco.extensions.filterExplicit
 import com.omarkarimli.disco.extensions.filterExplicitAlbums
 import com.omarkarimli.disco.extensions.toEnum
-import com.omarkarimli.disco.playback.DownloadUtil
 import com.omarkarimli.disco.utils.SyncUtils
 import com.omarkarimli.disco.utils.dataStore
 import com.omarkarimli.disco.utils.reportException
@@ -56,12 +55,9 @@ import java.time.LocalDateTime
 import javax.inject.Inject
 
 @HiltViewModel
-class LibrarySongsViewModel
-@Inject
-constructor(
+class LibrarySongsViewModel @Inject constructor(
     @ApplicationContext context: Context,
     database: MusicDatabase,
-    downloadUtil: DownloadUtil,
     private val syncUtils: SyncUtils,
 ) : ViewModel() {
     val allSongs =

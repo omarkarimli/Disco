@@ -325,7 +325,6 @@ fun LibraryAlbumsScreen(
                             LibraryAlbumGridItem(
                                 navController = navController,
                                 menuState = menuState,
-                                coroutineScope = coroutineScope,
                                 album = album,
                                 isActive = album.id == mediaMetadata?.album?.id,
                                 isPlaying = isPlaying,

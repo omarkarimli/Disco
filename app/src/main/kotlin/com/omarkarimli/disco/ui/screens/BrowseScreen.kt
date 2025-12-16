@@ -10,7 +10,6 @@ package com.omarkarimli.disco.ui.screens
  import androidx.compose.material3.Icon
  import androidx.compose.material3.Text
  import androidx.compose.material3.TopAppBar
- import androidx.compose.material3.TopAppBarScrollBehavior
  import androidx.compose.runtime.Composable
  import androidx.compose.runtime.collectAsState
  import androidx.compose.runtime.getValue
@@ -42,15 +41,12 @@ package com.omarkarimli.disco.ui.screens
  @Composable
  fun BrowseScreen(
     navController: NavController,
-    scrollBehavior: TopAppBarScrollBehavior,
-    browseId: String?,
     viewModel: BrowseViewModel = hiltViewModel(),
 ) {
      val menuState = LocalMenuState.current
      val playerConnection = LocalPlayerConnection.current ?: return
      val isPlaying by playerConnection.isPlaying.collectAsState()
-     val mediaMetadata by playerConnection.mediaMetadata.collectAsState()
- 
+
      val title by viewModel.title.collectAsState()
      val items by viewModel.items.collectAsState()
  

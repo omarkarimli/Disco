@@ -1,6 +1,5 @@
 package com.omarkarimli.disco.ui.screens.settings
 
-import android.os.Build
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -26,7 +25,6 @@ import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
@@ -92,7 +90,6 @@ import kotlin.math.roundToInt
 @Composable
 fun AppearanceSettings(
     navController: NavController,
-    scrollBehavior: TopAppBarScrollBehavior,
 ) {
     val (dynamicTheme, onDynamicThemeChange) = rememberPreference(
         DynamicThemeKey,
@@ -187,10 +184,6 @@ fun AppearanceSettings(
         ShowUploadedPlaylistKey,
         defaultValue = true
     )
-
-    val availableBackgroundStyles = PlayerBackgroundStyle.entries.filter {
-        it != PlayerBackgroundStyle.BLUR || Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
-    }
 
     val isSystemInDarkTheme = isSystemInDarkTheme()
     val useDarkTheme =
@@ -705,9 +698,4 @@ enum class LyricsPosition {
     LEFT,
     CENTER,
     RIGHT,
-}
-
-enum class PlayerTextAlignment {
-    SIDED,
-    CENTER,
 }

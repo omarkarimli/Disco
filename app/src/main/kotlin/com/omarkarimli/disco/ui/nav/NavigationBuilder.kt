@@ -93,9 +93,7 @@ fun NavGraphBuilder.navigationBuilder(
         )
     ) {
         BrowseScreen(
-            navController,
-            scrollBehavior,
-            it.arguments?.getString("browseId")
+            navController
         )
     }
     composable(
@@ -233,7 +231,7 @@ fun NavGraphBuilder.navigationBuilder(
             },
         ),
     ) {
-        CachePlaylistScreen(navController, scrollBehavior)
+        CachePlaylistScreen(navController)
     }
     composable(
         route = "top_playlist/{top}",
@@ -266,10 +264,10 @@ fun NavGraphBuilder.navigationBuilder(
         SettingsScreen(navController, scrollBehavior, latestVersionName)
     }
     composable("settings/appearance") {
-        AppearanceSettings(navController, scrollBehavior)
+        AppearanceSettings(navController)
     }
     composable("settings/content") {
-        ContentSettings(navController, scrollBehavior)
+        ContentSettings(navController)
     }
     composable("settings/content/romanization") {
         RomanizationSettings(navController, scrollBehavior)
@@ -287,13 +285,13 @@ fun NavGraphBuilder.navigationBuilder(
         BackupAndRestore(navController)
     }
     composable("settings/integrations") {
-        IntegrationScreen(navController, scrollBehavior)
+        IntegrationScreen(navController)
     }
     composable("settings/integrations/discord") {
-        DiscordSettings(navController, scrollBehavior)
+        DiscordSettings(navController)
     }
     composable("settings/integrations/lastfm") {
-        LastFMSettings(navController, scrollBehavior)
+        LastFMSettings(navController)
     }
     composable("settings/discord/login") {
         DiscordLoginScreen(navController)

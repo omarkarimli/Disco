@@ -127,7 +127,6 @@ fun LibraryAlbumGridItem(
     modifier: Modifier = Modifier,
     navController: NavController,
     menuState: MenuState,
-    coroutineScope: CoroutineScope,
     album: Album,
     isActive: Boolean = false,
     isPlaying: Boolean = false
