@@ -1,6 +1,5 @@
 package com.omarkarimli.disco.ui.component
 
-import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animate
 import androidx.compose.animation.core.tween
@@ -101,6 +100,7 @@ import com.omarkarimli.disco.utils.joinByBullet
 import com.omarkarimli.disco.utils.makeTimeString
 import com.omarkarimli.disco.utils.rememberPreference
 import com.omarkarimli.disco.utils.reportException
+import com.omarkarimli.disco.utils.toast
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
@@ -214,7 +214,6 @@ fun GridItem(
     modifier: Modifier = Modifier,
     title: String,
     subtitle: String,
-    badges: @Composable RowScope.() -> Unit = {},
     thumbnailContent: @Composable BoxWithConstraintsScope.() -> Unit,
     thumbnailRatio: Float = 1f,
     fillMaxWidth: Boolean = false,
@@ -421,16 +420,10 @@ fun ArtistListItem(
 fun ArtistGridItem(
     artist: Artist,
     modifier: Modifier = Modifier,
-    badges: @Composable RowScope.() -> Unit = {
-        if (artist.artist.bookmarkedAt != null) {
-            Icon.Favorite()
-        }
-    },
     fillMaxWidth: Boolean = false,
 ) = GridItem(
     title = artist.artist.name,
     subtitle = pluralStringResource(R.plurals.n_song, artist.songCount, artist.songCount),
-    badges = badges,
     thumbnailContent = {
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
@@ -517,12 +510,11 @@ fun AlbumListItem(
 fun AlbumGridItem(
     album: Album,
     modifier: Modifier = Modifier,
-    coroutineScope: CoroutineScope,
     badges: @Composable RowScope.() -> Unit = {
         val downloadUtil = LocalDownloadUtil.current
         val database = LocalDatabase.current
 
-        val songs by produceState<List<Song>>(initialValue = emptyList(), album.id) {
+        val songs by produceState(initialValue = emptyList(), album.id) {
             withContext(Dispatchers.IO) {
                 value = database.albumSongs(album.id).first()
             }
@@ -850,7 +842,6 @@ fun YouTubeListItem(
 fun YouTubeGridItem(
     item: YTItem,
     modifier: Modifier = Modifier,
-    coroutineScope: CoroutineScope? = null,
     badges: @Composable RowScope.() -> Unit = {
         val database = LocalDatabase.current
         val song by produceState<Song?>(initialValue = null, item.id) {
@@ -953,7 +944,6 @@ fun YouTubeGridItem(
 fun LocalSongsGrid(
     title: String,
     subtitle: String,
-    badges: @Composable RowScope.() -> Unit = {},
     thumbnailUrl: String?,
     isActive: Boolean = false,
     isPlaying: Boolean = false,
@@ -962,7 +952,6 @@ fun LocalSongsGrid(
 ) = GridItem(
     title = title,
     subtitle = subtitle,
-    badges = badges,
     thumbnailContent = {
         LocalThumbnail(
             thumbnailUrl = thumbnailUrl,
@@ -982,16 +971,12 @@ fun LocalSongsGrid(
 fun LocalArtistsGrid(
     title: String,
     subtitle: String,
-    badges: @Composable RowScope.() -> Unit = {},
     thumbnailUrl: String?,
-    isActive: Boolean = false,
-    isPlaying: Boolean = false,
     fillMaxWidth: Boolean = false,
     modifier: Modifier = Modifier
 ) = GridItem(
     title = title,
     subtitle = subtitle,
-    badges = badges,
     thumbnailContent = {
         LocalThumbnail(
             thumbnailUrl = thumbnailUrl,
@@ -1011,7 +996,6 @@ fun LocalArtistsGrid(
 fun LocalAlbumsGrid(
     title: String,
     subtitle: String,
-    badges: @Composable RowScope.() -> Unit = {},
     thumbnailUrl: String?,
     isActive: Boolean = false,
     isPlaying: Boolean = false,
@@ -1020,7 +1004,6 @@ fun LocalAlbumsGrid(
 ) = GridItem(
     title = title,
     subtitle = subtitle,
-    badges = badges,
     thumbnailContent = {
         LocalThumbnail(
             thumbnailUrl = thumbnailUrl,
@@ -1227,8 +1210,7 @@ fun PlaylistThumbnail(
     thumbnails: List<String>,
     size: Dp,
     placeHolder: @Composable () -> Unit,
-    shape: Shape,
-    cacheKey: String? = null
+    shape: Shape
 ) {
     when (thumbnails.size) {
         0 -> Box(
@@ -1406,13 +1388,13 @@ fun SwipeToSongBox(
                     when {
                         offset.value >= threshold -> {
                             player?.playNext(listOf(mediaItem))
-                            Toast.makeText(ctx, R.string.play_next, Toast.LENGTH_SHORT).show()
+                            ctx.toast(ctx.getString(R.string.play_next))
                             reset(offset, scope)
                         }
 
                         offset.value <= -threshold -> {
                             player?.addToQueue(listOf(mediaItem))
-                            Toast.makeText(ctx, R.string.add_to_queue, Toast.LENGTH_SHORT).show()
+                            ctx.toast(ctx.getString(R.string.add_to_queue))
                             reset(offset, scope)
                         }
 

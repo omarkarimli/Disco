@@ -14,13 +14,11 @@ import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalContentColor
@@ -68,7 +66,6 @@ import com.omarkarimli.disco.LocalSyncUtils
 import com.omarkarimli.disco.R
 import com.omarkarimli.disco.constants.ListItemHeight
 import com.omarkarimli.disco.constants.ListThumbnailSize
-import com.omarkarimli.disco.db.entities.ArtistEntity
 import com.omarkarimli.disco.db.entities.Event
 import com.omarkarimli.disco.db.entities.PlaylistSong
 import com.omarkarimli.disco.db.entities.Song
@@ -118,7 +115,7 @@ fun SongMenu(
         label = "",
     )
 
-    val orderedArtists by produceState(initialValue = emptyList<ArtistEntity>(), song) {
+    val orderedArtists by produceState(initialValue = emptyList(), song) {
         withContext(Dispatchers.IO) {
             val artistMaps = database.songArtistMap(song.id).sortedBy { it.position }
             val sorted = artistMaps.mapNotNull { map ->

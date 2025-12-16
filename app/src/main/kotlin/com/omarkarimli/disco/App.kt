@@ -5,7 +5,6 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
-import android.widget.Toast
 import androidx.datastore.preferences.core.edit
 import coil3.ImageLoader
 import coil3.PlatformContext
@@ -26,6 +25,7 @@ import com.omarkarimli.disco.extensions.toInetSocketAddress
 import com.omarkarimli.disco.utils.dataStore
 import com.omarkarimli.disco.utils.get
 import com.omarkarimli.disco.utils.reportException
+import com.omarkarimli.disco.utils.toast
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -106,7 +106,7 @@ class App : Application(), SingletonImageLoader.Factory {
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(this@App, "Failed to parse proxy url.", Toast.LENGTH_SHORT).show()
+                    this@App.toast("Failed to parse proxy url.")
                 }
                 reportException(e)
             }

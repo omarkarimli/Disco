@@ -34,7 +34,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -105,14 +104,12 @@ import com.omarkarimli.disco.viewmodels.AlbumViewModel
 @Composable
 fun AlbumScreen(
     navController: NavController,
-    scrollBehavior: TopAppBarScrollBehavior,
     viewModel: AlbumViewModel = hiltViewModel(),
 ) {
     val context = LocalContext.current
     val menuState = LocalMenuState.current
     val database = LocalDatabase.current
     val haptic = LocalHapticFeedback.current
-    val coroutineScope = rememberCoroutineScope()
     val playerConnection = LocalPlayerConnection.current ?: return
 
     val scope = rememberCoroutineScope()
@@ -489,7 +486,6 @@ fun AlbumScreen(
                                 item = item,
                                 isActive = mediaMetadata?.album?.id == item.id,
                                 isPlaying = isPlaying,
-                                coroutineScope = scope,
                                 modifier =
                                 Modifier
                                     .combinedClickable(
@@ -598,19 +594,19 @@ fun AlbumScreen(
         },
         actions = {
             if (selection) {
-                val count = wrappedSongs?.count { it.isSelected } ?: 0
+                val count = wrappedSongs.count { it.isSelected }
                 IconButton(
                     onClick = {
-                        if (count == wrappedSongs?.size) {
+                        if (count == wrappedSongs.size) {
                             wrappedSongs.forEach { it.isSelected = false }
                         } else {
-                            wrappedSongs?.forEach { it.isSelected = true }
+                            wrappedSongs.forEach { it.isSelected = true }
                         }
                     },
                 ) {
                     Icon(
                         painter = painterResource(
-                            if (count == wrappedSongs?.size) R.drawable.deselect else R.drawable.select_all
+                            if (count == wrappedSongs.size) R.drawable.deselect else R.drawable.select_all
                         ),
                         contentDescription = null
                     )
@@ -620,7 +616,7 @@ fun AlbumScreen(
                     onClick = {
                         menuState.show {
                             SelectionSongMenu(
-                                songSelection = wrappedSongs?.filter { it.isSelected }!!
+                                songSelection = wrappedSongs.filter { it.isSelected }
                                     .map { it.item },
                                 onDismiss = menuState::dismiss,
                                 clearAction = { selection = false }

@@ -294,7 +294,6 @@ fun ChartsScreen(
                                         item = video,
                                         isActive = video.id == mediaMetadata?.id,
                                         isPlaying = isPlaying,
-                                        coroutineScope = coroutineScope,
                                         modifier = Modifier
                                             .combinedClickable(
                                                 onClick = {

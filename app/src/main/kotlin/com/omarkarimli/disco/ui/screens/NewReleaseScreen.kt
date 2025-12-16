@@ -66,7 +66,6 @@ fun NewReleaseScreen(
                 isActive = mediaMetadata?.album?.id == album.id,
                 isPlaying = isPlaying,
                 fillMaxWidth = true,
-                coroutineScope = coroutineScope,
                 modifier =
                 Modifier
                     .combinedClickable(

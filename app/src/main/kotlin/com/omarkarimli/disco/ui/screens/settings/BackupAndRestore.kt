@@ -13,7 +13,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -46,7 +45,6 @@ import java.time.format.DateTimeFormatter
 @Composable
 fun BackupAndRestore(
     navController: NavController,
-    scrollBehavior: TopAppBarScrollBehavior,
     viewModel: BackupRestoreViewModel = hiltViewModel(),
 ) {
     var importedTitle by remember { mutableStateOf("") }

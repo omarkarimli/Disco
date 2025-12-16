@@ -102,7 +102,7 @@ constructor(
         mediaSession: MediaSession,
         controller: MediaSession.ControllerInfo
     ): ListenableFuture<MediaItemsWithStartPosition> {
-        return SettableFuture.create<MediaItemsWithStartPosition>()
+        return SettableFuture.create()
     }
 
     override fun onGetLibraryRoot(

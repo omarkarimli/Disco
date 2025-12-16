@@ -2,7 +2,6 @@ package com.omarkarimli.disco.ui.player
 
 import androidx.activity.compose.BackHandler
 import android.annotation.SuppressLint
-import android.content.Intent
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize

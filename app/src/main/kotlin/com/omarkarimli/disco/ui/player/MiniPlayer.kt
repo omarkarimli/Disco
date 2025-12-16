@@ -53,7 +53,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalLayoutDirection
-import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -94,8 +93,7 @@ fun MiniPlayer(
         NewMiniPlayer(
             position = position,
             duration = duration,
-            modifier = modifier,
-            pureBlack = pureBlack
+            modifier = modifier
         )
     } else {
         // NEW: Wrap LegacyMiniPlayer in a Box to allow alignment on tablet landscape.
@@ -125,7 +123,6 @@ private fun NewMiniPlayer(
     position: Long,
     duration: Long,
     modifier: Modifier = Modifier,
-    pureBlack: Boolean,
 ) {
     val playerConnection = LocalPlayerConnection.current ?: return
     val database = LocalDatabase.current
@@ -136,7 +133,6 @@ private fun NewMiniPlayer(
     val canSkipNext by playerConnection.canSkipNext.collectAsState()
     val canSkipPrevious by playerConnection.canSkipPrevious.collectAsState()
 
-    val currentView = LocalView.current
     val layoutDirection = LocalLayoutDirection.current
     val coroutineScope = rememberCoroutineScope()
     val swipeSensitivity by rememberPreference(SwipeSensitivityKey, 0.73f)
@@ -540,7 +536,6 @@ private fun LegacyMiniPlayer(
     val canSkipNext by playerConnection.canSkipNext.collectAsState()
     val canSkipPrevious by playerConnection.canSkipPrevious.collectAsState()
 
-    val currentView = LocalView.current
     val layoutDirection = LocalLayoutDirection.current
     val coroutineScope = rememberCoroutineScope()
     val swipeSensitivity by rememberPreference(SwipeSensitivityKey, 0.73f)

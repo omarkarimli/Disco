@@ -69,7 +69,6 @@ package com.omarkarimli.disco.ui.screens
                      item = item,
                      isPlaying = isPlaying,
                      fillMaxWidth = true,
-                     coroutineScope = coroutineScope,
                      modifier = Modifier
                          .combinedClickable(
                              onClick = {

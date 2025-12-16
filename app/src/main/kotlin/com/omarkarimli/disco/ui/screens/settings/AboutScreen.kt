@@ -25,7 +25,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
@@ -74,22 +73,25 @@ sealed class DevSocialMedias(
         url = "https://linktr.ee/omarkarimli",
         icon = R.drawable.linktree
     )
+
+    companion object {
+        val ALL_ITEMS = listOf(
+            GitHub,
+            Instagram,
+            LinkedIn,
+            Linktree
+        )
+    }
 }
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AboutScreen(
     navController: NavController,
-    scrollBehavior: TopAppBarScrollBehavior,
 ) {
     val uriHandler = LocalUriHandler.current
-
-    val mediaItems = listOf(
-        DevSocialMedias.GitHub,
-        DevSocialMedias.Instagram,
-        DevSocialMedias.LinkedIn,
-        DevSocialMedias.Linktree
-    )
+    val mediaItems = DevSocialMedias.ALL_ITEMS
 
     Column(
         modifier = Modifier

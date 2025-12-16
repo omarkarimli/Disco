@@ -289,7 +289,7 @@ fun ShowMediaInfo(videoId: String) {
                                 modifier = Modifier
                             )
                             BasicText(
-                                text = "" + info?.viewCount?.toInt()
+                                text = "" + info?.viewCount
                                     ?.let { numberFormatter(it) },
                                 style = MaterialTheme.typography.titleSmall.copy(color = MaterialTheme.colorScheme.onBackground),
                                 modifier = Modifier.padding(top = 8.dp)
@@ -302,7 +302,7 @@ fun ShowMediaInfo(videoId: String) {
                                 modifier = Modifier
                             )
                             BasicText(
-                                text = "" + info?.like?.toInt()?.let { numberFormatter(it) },
+                                text = "" + info?.like?.let { numberFormatter(it) },
                                 style = MaterialTheme.typography.titleSmall.copy(color = MaterialTheme.colorScheme.onBackground),
                                 modifier = Modifier.padding(top = 8.dp)
                             )
@@ -314,7 +314,7 @@ fun ShowMediaInfo(videoId: String) {
                                 modifier = Modifier
                             )
                             BasicText(
-                                text = "" + info?.dislike?.toInt()?.let { numberFormatter(it) },
+                                text = "" + info?.dislike?.let { numberFormatter(it) },
                                 style = MaterialTheme.typography.titleSmall.copy(color = MaterialTheme.colorScheme.onBackground),
                                 modifier = Modifier.padding(top = 8.dp)
                             )

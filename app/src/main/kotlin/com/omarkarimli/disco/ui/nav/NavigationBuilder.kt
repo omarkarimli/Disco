@@ -138,7 +138,7 @@ fun NavGraphBuilder.navigationBuilder(
             },
         ),
     ) {
-        AlbumScreen(navController, scrollBehavior)
+        AlbumScreen(navController)
     }
     composable(
         route = "artist/{artistId}",
@@ -160,7 +160,7 @@ fun NavGraphBuilder.navigationBuilder(
             },
         ),
     ) {
-        ArtistSongsScreen(navController, scrollBehavior)
+        ArtistSongsScreen(navController)
     }
     composable(
         route = "artist/{artistId}/albums",
@@ -189,7 +189,7 @@ fun NavGraphBuilder.navigationBuilder(
             },
         ),
     ) {
-        ArtistItemsScreen(navController, scrollBehavior)
+        ArtistItemsScreen(navController)
     }
     composable(
         route = "online_playlist/{playlistId}",
@@ -222,7 +222,7 @@ fun NavGraphBuilder.navigationBuilder(
             },
         ),
     ) {
-        AutoPlaylistScreen(navController, scrollBehavior)
+        AutoPlaylistScreen(navController)
     }
     composable(
         route = "cache_playlist/{playlist}",
@@ -244,7 +244,7 @@ fun NavGraphBuilder.navigationBuilder(
             },
         ),
     ) {
-        TopPlaylistScreen(navController, scrollBehavior)
+        TopPlaylistScreen(navController)
     }
     composable(
         route = "youtube_browse/{browseId}?params={params}",
@@ -284,7 +284,7 @@ fun NavGraphBuilder.navigationBuilder(
         PrivacySettings(navController, scrollBehavior)
     }
     composable("settings/backup_restore") {
-        BackupAndRestore(navController, scrollBehavior)
+        BackupAndRestore(navController)
     }
     composable("settings/integrations") {
         IntegrationScreen(navController, scrollBehavior)
@@ -302,7 +302,7 @@ fun NavGraphBuilder.navigationBuilder(
         UpdaterScreen(navController, scrollBehavior)
     }
     composable("settings/about") {
-        AboutScreen(navController, scrollBehavior)
+        AboutScreen(navController)
     }
     composable("login") {
         LoginScreen(navController)

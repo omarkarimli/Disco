@@ -135,7 +135,6 @@ fun LibraryAlbumGridItem(
     album = album,
     isActive = isActive,
     isPlaying = isPlaying,
-    coroutineScope = coroutineScope,
     fillMaxWidth = true,
     modifier = modifier
         .fillMaxWidth()

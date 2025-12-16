@@ -21,7 +21,6 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
@@ -962,7 +961,6 @@ fun BottomSheetPlayer(
                         val screenWidth = LocalConfiguration.current.screenWidthDp
                         val thumbnailSize = (screenWidth * 0.4).dp
                         Thumbnail(
-                            sliderPositionProvider = { sliderPosition },
                             modifier = Modifier.size(thumbnailSize),
                             isPlayerExpanded = state.isExpanded
                         )
@@ -996,7 +994,6 @@ fun BottomSheetPlayer(
                         modifier = Modifier.weight(1f),
                     ) {
                         Thumbnail(
-                            sliderPositionProvider = { sliderPosition },
                             modifier = Modifier.nestedScroll(state.preUpPostDownNestedScrollConnection),
                             isPlayerExpanded = state.isExpanded
                         )

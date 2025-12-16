@@ -39,7 +39,6 @@ import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -49,7 +48,6 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
-import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -79,14 +77,11 @@ import kotlin.math.abs
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun Thumbnail(
-    sliderPositionProvider: () -> Long?,
     modifier: Modifier = Modifier,
-    isPlayerExpanded: Boolean = true, // Add parameter to control swipe based on player state
+    isPlayerExpanded: Boolean = true
 ) {
     val playerConnection = LocalPlayerConnection.current ?: return
     val context = LocalContext.current
-    val currentView = LocalView.current
-    val coroutineScope = rememberCoroutineScope()
 
     // States
     val mediaMetadata by playerConnection.mediaMetadata.collectAsState()
@@ -126,7 +121,10 @@ fun Thumbnail(
         if (previousIndex != C.INDEX_UNSET) {
             try {
                 playerConnection.player.getMediaItemAt(previousIndex)
-            } catch (e: Exception) { null }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                null
+            }
         } else null
     } else null
 
@@ -139,13 +137,19 @@ fun Thumbnail(
         if (nextIndex != C.INDEX_UNSET) {
             try {
                 playerConnection.player.getMediaItemAt(nextIndex)
-            } catch (e: Exception) { null }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                null
+            }
         } else null
     } else null
 
     val currentMediaItem = try {
         playerConnection.player.currentMediaItem
-    } catch (e: Exception) { null }
+    } catch (e: Exception) {
+        e.printStackTrace()
+        null
+    }
 
     val mediaItems = listOfNotNull(previousMediaMetadata, currentMediaItem, nextMediaMetadata)
     val currentMediaIndex = mediaItems.indexOf(currentMediaItem)
@@ -184,6 +188,7 @@ fun Thumbnail(
             try {
                 thumbnailLazyGridState.animateScrollToItem(index)
             } catch (e: Exception) {
+                e.printStackTrace()
                 thumbnailLazyGridState.scrollToItem(index)
             }
         }
@@ -449,7 +454,7 @@ fun SnapLayoutInfoProvider(
             }
 
             // Find item that is closest to center, but after it
-            if (offset >= 0 && offset < upperBoundOffset) {
+            if (offset in 0.0..<upperBoundOffset.toDouble()) {
                 upperBoundOffset = offset
             }
         }

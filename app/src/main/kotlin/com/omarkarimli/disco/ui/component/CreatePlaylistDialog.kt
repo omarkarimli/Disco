@@ -1,6 +1,5 @@
 package com.omarkarimli.disco.ui.component
 
-import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -29,6 +28,7 @@ import com.omarkarimli.disco.db.entities.PlaylistEntity
 import com.omarkarimli.disco.constants.InnerTubeCookieKey
 import com.omarkarimli.disco.extensions.isSyncEnabled
 import com.omarkarimli.disco.utils.rememberPreference
+import com.omarkarimli.disco.utils.toast
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
@@ -99,17 +99,9 @@ fun CreatePlaylistDialog(
                             onCheckedChange = {
                                 val isYtmSyncEnabled = context.isSyncEnabled()
                                 if (!isSignedIn && !syncedPlaylist) {
-                                    Toast.makeText(
-                                        context,
-                                        context.getString(R.string.not_logged_in_youtube),
-                                        Toast.LENGTH_SHORT
-                                    ).show()
+                                    context.toast(context.getString(R.string.not_logged_in_youtube))
                                 } else if (!isYtmSyncEnabled) {
-                                    Toast.makeText(
-                                        context,
-                                        context.getString(R.string.sync_disabled),
-                                        Toast.LENGTH_SHORT
-                                    ).show()
+                                    context.toast(context.getString(R.string.sync_disabled))
                                 } else {
                                     syncedPlaylist = !syncedPlaylist
                                 }

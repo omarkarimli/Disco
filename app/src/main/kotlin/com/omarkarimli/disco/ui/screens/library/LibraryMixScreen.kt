@@ -736,7 +736,6 @@ fun LibraryMixScreen(
                                     album = item,
                                     isActive = item.id == mediaMetadata?.album?.id,
                                     isPlaying = isPlaying,
-                                    coroutineScope = coroutineScope,
                                     fillMaxWidth = true,
                                     modifier =
                                     Modifier

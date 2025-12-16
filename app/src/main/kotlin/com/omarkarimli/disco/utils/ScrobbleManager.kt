@@ -77,7 +77,6 @@ class ScrobbleManager(
             scrobbleRemainingMillis -= elapsed
             if (scrobbleRemainingMillis < 0) scrobbleRemainingMillis = 0
             scrobbleTimerStartedAt = 0L
-        } else {
         }
     }
 

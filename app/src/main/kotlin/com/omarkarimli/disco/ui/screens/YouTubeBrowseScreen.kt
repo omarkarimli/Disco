@@ -207,7 +207,6 @@ fun YouTubeBrowseScreen(
                                             else -> false
                                         },
                                         isPlaying = isPlaying,
-                                        coroutineScope = coroutineScope,
                                         modifier =
                                         Modifier
                                             .combinedClickable(

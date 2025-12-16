@@ -230,7 +230,6 @@ fun HomeScreen(
                 album = it,
                 isActive = it.id == mediaMetadata?.album?.id,
                 isPlaying = isPlaying,
-                coroutineScope = scope,
                 modifier = Modifier
                     .fillMaxWidth()
                     .combinedClickable(
@@ -282,7 +281,6 @@ fun HomeScreen(
             item = item,
             isActive = item.id in listOf(mediaMetadata?.album?.id, mediaMetadata?.id),
             isPlaying = isPlaying,
-            coroutineScope = scope,
             thumbnailRatio = 1f,
             modifier = Modifier
                 .combinedClickable(

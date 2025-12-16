@@ -18,7 +18,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -58,7 +57,6 @@ import com.omarkarimli.disco.viewmodels.ArtistSongsViewModel
 @Composable
 fun ArtistSongsScreen(
     navController: NavController,
-    scrollBehavior: TopAppBarScrollBehavior,
     viewModel: ArtistSongsViewModel = hiltViewModel(),
 ) {
     val context = LocalContext.current

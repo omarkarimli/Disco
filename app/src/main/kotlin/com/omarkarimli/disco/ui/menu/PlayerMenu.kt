@@ -3,6 +3,7 @@ package com.omarkarimli.disco.ui.menu
 import android.content.Intent
 import android.content.res.Configuration
 import android.media.audiofx.AudioEffect
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.DrawableRes
@@ -12,26 +13,25 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.ListItem
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -55,13 +55,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
 import androidx.core.net.toUri
-import android.widget.Toast
 import androidx.media3.common.PlaybackParameters
 import androidx.media3.exoplayer.offline.Download
 import androidx.media3.exoplayer.offline.DownloadRequest
 import androidx.media3.exoplayer.offline.DownloadService
 import androidx.navigation.NavController
-import com.omarkarimli.innertube.YouTube
 import com.omarkarimli.disco.LocalDatabase
 import com.omarkarimli.disco.LocalDownloadUtil
 import com.omarkarimli.disco.LocalPlayerConnection
@@ -74,6 +72,8 @@ import com.omarkarimli.disco.ui.component.BottomSheetState
 import com.omarkarimli.disco.ui.component.ListDialog
 import com.omarkarimli.disco.ui.component.NewAction
 import com.omarkarimli.disco.ui.component.NewActionGrid
+import com.omarkarimli.disco.utils.toast
+import com.omarkarimli.innertube.YouTube
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlin.math.log2
@@ -257,7 +257,7 @@ fun PlayerMenu(
                             val clipboard = context.getSystemService(android.content.Context.CLIPBOARD_SERVICE) as android.content.ClipboardManager
                             val clip = android.content.ClipData.newPlainText("Song Link", "https://music.youtube.com/watch?v=${mediaMetadata.id}")
                             clipboard.setPrimaryClip(clip)
-                            android.widget.Toast.makeText(context, R.string.link_copied, android.widget.Toast.LENGTH_SHORT).show()
+                            context.toast(context.getString(R.string.link_copied))
                             onDismiss()
                         }
                     )
