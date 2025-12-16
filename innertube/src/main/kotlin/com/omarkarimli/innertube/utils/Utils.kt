@@ -71,7 +71,7 @@ fun parseCookieString(cookie: String): Map<String, String> =
         .mapNotNull { part ->
             val splitIndex = part.indexOf('=')
             if (splitIndex == -1) null
-            else part.substring(0, splitIndex) to part.substring(splitIndex + 1)
+            else part.take(splitIndex) to part.substring(splitIndex + 1)
         }
         .toMap()
 
@@ -85,11 +85,8 @@ fun String.parseTime(): Int? {
             return parts[0] * 3600 + parts[1] * 60 + parts[2]
         }
     } catch (e: Exception) {
+        e.printStackTrace()
         return null
     }
     return null
-}
-
-fun isPrivateId(browseId: String): Boolean {
-    return browseId.contains("privately")
 }

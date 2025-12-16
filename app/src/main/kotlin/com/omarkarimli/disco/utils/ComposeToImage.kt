@@ -11,6 +11,7 @@ import android.text.Layout
 import android.text.StaticLayout
 import android.text.TextPaint
 import androidx.annotation.RequiresApi
+import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import androidx.core.content.FileProvider
 import androidx.core.graphics.createBitmap
 import androidx.core.graphics.drawable.toBitmap
@@ -161,12 +162,12 @@ object ComposeToImage {
             lyricsLayout.draw(this)
         }
 
-        AppLogo(context, canvas, cardSize, padding, secondaryTxtColor, bgColor)
+        appLogo(context, canvas, cardSize, padding, secondaryTxtColor, bgColor)
 
         return@withContext bitmap
     }
 
-    private fun AppLogo(
+    private fun appLogo(
         context: Context,
         canvas: Canvas,
         cardSize: Int,
@@ -176,7 +177,7 @@ object ComposeToImage {
     ) {
         val logoSize = (cardSize * 0.05f).toInt()
 
-        val rawLogo = context.getDrawable(R.drawable.small_icon)?.toBitmap(logoSize, logoSize)
+        val rawLogo = getDrawable(context, R.drawable.small_icon)?.toBitmap(logoSize, logoSize)
         val logo = rawLogo?.let { source ->
             val colored = createBitmap(source.width, source.height)
             val canvasLogo = Canvas(colored)

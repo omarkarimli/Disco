@@ -30,7 +30,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -83,7 +82,6 @@ import com.omarkarimli.disco.ui.utils.ShowMediaInfo
 import com.omarkarimli.disco.viewmodels.CachePlaylistViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 @Composable
 fun SongMenu(
@@ -115,30 +113,20 @@ fun SongMenu(
         label = "",
     )
 
-    val orderedArtists by produceState(initialValue = emptyList(), song) {
-        withContext(Dispatchers.IO) {
-            val artistMaps = database.songArtistMap(song.id).sortedBy { it.position }
-            val sorted = artistMaps.mapNotNull { map ->
-                song.artists.firstOrNull { it.id == map.artistId }
-            }
-            value = sorted
-        }
-    }
-
     var showEditDialog by rememberSaveable {
         mutableStateOf(false)
     }
 
-    val TextFieldValueSaver: Saver<TextFieldValue, *> = Saver(
+    val textFieldValueSaver: Saver<TextFieldValue, *> = Saver(
         save = { it.text },
         restore = { text -> TextFieldValue(text, TextRange(text.length)) }
     )
 
-    var titleField by rememberSaveable(stateSaver = TextFieldValueSaver) {
+    var titleField by rememberSaveable(stateSaver = textFieldValueSaver) {
         mutableStateOf(TextFieldValue(song.song.title))
     }
 
-    var artistField by rememberSaveable(stateSaver = TextFieldValueSaver) {
+    var artistField by rememberSaveable(stateSaver = textFieldValueSaver) {
         mutableStateOf(TextFieldValue(song.artists.firstOrNull()?.name.orEmpty()))
     }
 

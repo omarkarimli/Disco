@@ -2,12 +2,8 @@ package com.omarkarimli.disco.lyrics
 
 import android.content.Context
 import android.util.LruCache
-import com.omarkarimli.disco.constants.PreferredLyricsProvider
-import com.omarkarimli.disco.constants.PreferredLyricsProviderKey
 import com.omarkarimli.disco.db.entities.LyricsEntity.Companion.LYRICS_NOT_FOUND
-import com.omarkarimli.disco.extensions.toEnum
 import com.omarkarimli.disco.models.MediaMetadata
-import com.omarkarimli.disco.utils.dataStore
 import com.omarkarimli.disco.utils.reportException
 import com.omarkarimli.disco.utils.NetworkConnectivityObserver
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -15,8 +11,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.async
 import javax.inject.Inject
@@ -35,30 +29,6 @@ constructor(
             YouTubeLyricsProvider
         )
 
-    val preferred =
-        context.dataStore.data
-            .map {
-                it[PreferredLyricsProviderKey].toEnum(PreferredLyricsProvider.LRCLIB)
-            }.distinctUntilChanged()
-            .map {
-                lyricsProviders =
-                    if (it == PreferredLyricsProvider.LRCLIB) {
-                        listOf(
-                            LrcLibLyricsProvider,
-                            KuGouLyricsProvider,
-                            YouTubeSubtitleLyricsProvider,
-                            YouTubeLyricsProvider
-                        )
-                    } else {
-                        listOf(
-                            KuGouLyricsProvider,
-                            LrcLibLyricsProvider,
-                            YouTubeSubtitleLyricsProvider,
-                            YouTubeLyricsProvider
-                        )
-                    }
-            }
-
     private val cache = LruCache<String, List<LyricsResult>>(MAX_CACHE_SIZE)
     private var currentLyricsJob: Job? = null
 
@@ -75,6 +45,7 @@ constructor(
         val isNetworkAvailable = try {
             networkConnectivity.isCurrentlyConnected()
         } catch (e: Exception) {
+            e.printStackTrace()
             // If network check fails, try to proceed anyway
             true
         }
@@ -136,6 +107,7 @@ constructor(
         val isNetworkAvailable = try {
             networkConnectivity.isCurrentlyConnected()
         } catch (e: Exception) {
+            e.printStackTrace()
             // If network check fails, try to proceed anyway
             true
         }
@@ -165,11 +137,6 @@ constructor(
         }
 
         currentLyricsJob?.join()
-    }
-
-    fun cancelCurrentLyricsJob() {
-        currentLyricsJob?.cancel()
-        currentLyricsJob = null
     }
 
     companion object {

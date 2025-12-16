@@ -37,23 +37,4 @@ class ChartsViewModel @Inject constructor() : ViewModel() {
             _isLoading.value = false
         }
     }
-
-    fun loadMore() {
-        viewModelScope.launch {
-            _chartsPage.value?.continuation?.let { continuation ->
-                _isLoading.value = true
-                YouTube.getChartsPage(continuation)
-                    .onSuccess { newPage ->
-                        _chartsPage.value = _chartsPage.value?.copy(
-                            sections = _chartsPage.value?.sections.orEmpty() + newPage.sections,
-                            continuation = newPage.continuation
-                        )
-                    }
-                    .onFailure { e ->
-                        _error.value = "Failed to load more: ${e.message}"
-                    }
-                _isLoading.value = false
-            }
-        }
-    }
 }

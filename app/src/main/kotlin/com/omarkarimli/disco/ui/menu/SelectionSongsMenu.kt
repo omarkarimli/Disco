@@ -117,10 +117,6 @@ fun SelectionSongMenu(
         mutableStateOf(false)
     }
 
-    val notAddedList by remember {
-        mutableStateOf(mutableListOf<Song>())
-    }
-
     AddToPlaylistDialog(
         isVisible = showChoosePlaylistDialog,
         onGetSong = { playlist ->
@@ -429,7 +425,7 @@ fun SelectionSongMenu(
                 }
             )
         }
-        if (songPosition?.size != 0) {
+        if (songPosition?.isNotEmpty() == true) {
             item {
                 ListItem(
                     headlineContent = { Text(text = stringResource(R.string.delete)) },
@@ -443,7 +439,7 @@ fun SelectionSongMenu(
                         onDismiss()
                         var i = 0
                         database.query {
-                            songPosition?.forEach { cur ->
+                            songPosition.forEach { cur ->
                                 move(cur.playlistId, cur.position - i, Int.MAX_VALUE)
                                 delete(cur.copy(position = Int.MAX_VALUE))
                                 i++
@@ -468,7 +464,6 @@ fun SelectionMediaMetadataMenu(
     val context = LocalContext.current
     val database = LocalDatabase.current
     val downloadUtil = LocalDownloadUtil.current
-    val coroutineScope = rememberCoroutineScope()
     val playerConnection = LocalPlayerConnection.current ?: return
 
     val allLiked by remember(songSelection) {
@@ -477,10 +472,6 @@ fun SelectionMediaMetadataMenu(
 
     var showChoosePlaylistDialog by rememberSaveable {
         mutableStateOf(false)
-    }
-
-    val notAddedList by remember {
-        mutableStateOf(mutableListOf<Song>())
     }
 
     AddToPlaylistDialog(

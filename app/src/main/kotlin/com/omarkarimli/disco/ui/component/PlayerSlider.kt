@@ -95,7 +95,7 @@ private fun DrawScope.drawTrack(
         StrokeCap.Round
     )
     for (tick in tickFractions) {
-        val outsideFraction = tick > activeRangeEnd || tick < activeRangeStart
+        val outsideFraction = tick !in activeRangeStart..activeRangeEnd
         drawCircle(
             color = if (outsideFraction) inactiveTickColor else activeTickColor,
             center = Offset(lerp(sliderStart, sliderEnd, tick).x, center.y),

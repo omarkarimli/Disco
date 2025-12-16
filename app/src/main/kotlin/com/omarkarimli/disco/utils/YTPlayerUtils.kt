@@ -3,7 +3,7 @@ package com.omarkarimli.disco.utils
 import android.net.ConnectivityManager
 import androidx.media3.common.PlaybackException
 import com.omarkarimli.disco.constants.AudioQuality
-import com.omarkarimli.innertube.NewPipeUtils
+import com.omarkarimli.innertube.pages.NewPipeUtils
 import com.omarkarimli.innertube.YouTube
 import com.omarkarimli.innertube.models.YouTubeClient
 import com.omarkarimli.innertube.models.YouTubeClient.Companion.ANDROID_CREATOR

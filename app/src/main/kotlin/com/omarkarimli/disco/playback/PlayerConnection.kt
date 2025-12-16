@@ -1,6 +1,5 @@
 package com.omarkarimli.disco.playback
 
-import android.content.Context
 import androidx.media3.common.MediaItem
 import androidx.media3.common.PlaybackException
 import androidx.media3.common.Player
@@ -28,7 +27,6 @@ import kotlinx.coroutines.flow.stateIn
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class PlayerConnection(
-    context: Context,
     binder: MusicBinder,
     val database: MusicDatabase,
     scope: CoroutineScope,
@@ -54,10 +52,6 @@ class PlayerConnection(
     val currentLyrics = mediaMetadata.flatMapLatest { mediaMetadata ->
         database.lyrics(mediaMetadata?.id)
     }
-    val currentFormat =
-        mediaMetadata.flatMapLatest { mediaMetadata ->
-            database.format(mediaMetadata?.id)
-        }
 
     val queueTitle = MutableStateFlow<String?>(null)
     val queueWindows = MutableStateFlow<List<Timeline.Window>>(emptyList())
@@ -71,7 +65,6 @@ class PlayerConnection(
     val canSkipNext = MutableStateFlow(true)
 
     val error = MutableStateFlow<PlaybackException?>(null)
-    val waitingForNetworkConnection = service.waitingForNetworkConnection
 
     init {
         player.addListener(this)

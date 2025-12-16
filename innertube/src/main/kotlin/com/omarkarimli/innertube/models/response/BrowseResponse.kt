@@ -125,7 +125,7 @@ data class BrowseResponse(
         )
         @Serializable
         data class MusicThumbnailRenderer(
-            val musicThumbnailRenderer: MusicThumbnailRenderer,
+            val musicThumbnailRenderer: MusicThumbnailRenderer?,
             val thumbnails: List<MusicThumbnail>?,
         )
     }

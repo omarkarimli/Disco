@@ -198,7 +198,7 @@ fun NavGraphBuilder.navigationBuilder(
             },
         ),
     ) {
-        OnlinePlaylistScreen(navController, scrollBehavior)
+        OnlinePlaylistScreen(navController)
     }
     composable(
         route = "local_playlist/{playlistId}",
@@ -209,7 +209,7 @@ fun NavGraphBuilder.navigationBuilder(
             },
         ),
     ) {
-        LocalPlaylistScreen(navController, scrollBehavior)
+        LocalPlaylistScreen(navController)
     }
     composable(
         route = "auto_playlist/{playlist}",
@@ -297,7 +297,7 @@ fun NavGraphBuilder.navigationBuilder(
         DiscordLoginScreen(navController)
     }
     composable("settings/updater") {
-        UpdaterScreen(navController, scrollBehavior)
+        UpdaterScreen(navController)
     }
     composable("settings/about") {
         AboutScreen(navController)

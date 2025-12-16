@@ -193,23 +193,6 @@ data class YouTubeClient(
         )
 
         /**
-         * Internal YT client for an unreleased YT client. May stop working at any time.
-         */
-        val VISIONOS = YouTubeClient(
-            clientName = "VISIONOS",
-            clientVersion = "0.1",
-            clientId = "101",
-            userAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Safari/605.1.15",
-            osName = "visionOS",
-            osVersion = "1.3.21O771",
-            deviceMake = "Apple",
-            deviceModel = "RealityDevice14,1",
-            friendlyName = "visionOS",
-            loginSupported = false,
-            useSignatureTimestamp = false
-        )
-
-        /**
          * The device machine id for the iPad 6th Gen (iPad7,6).
          * AV1 hardware decoding is not supported.
          * See [this GitHub Gist](https://gist.github.com/adamawolf/3048717) for more information.

@@ -1,5 +1,6 @@
-package com.omarkarimli.innertube
+package com.omarkarimli.innertube.pages
 
+import com.omarkarimli.innertube.YouTube
 import com.omarkarimli.innertube.models.YouTubeClient
 import com.omarkarimli.innertube.models.response.PlayerResponse
 import io.ktor.http.URLBuilder
@@ -61,16 +62,16 @@ private class NewPipeDownloaderImpl(proxy: Proxy?, proxyAuth: String?) : Downloa
             throw ReCaptchaException("reCaptcha Challenge requested", url)
         }
 
-        val responseBodyToReturn = response.body?.string()
+        val responseBodyToReturn = response.body.string()
 
         val latestUrl = response.request.url.toString()
-        return Response(response.code, response.message, response.headers.toMultimap(), responseBodyToReturn, responseBodyToReturn?.toByteArray(), latestUrl)
+        return Response(response.code, response.message, response.headers.toMultimap(), responseBodyToReturn,
+            responseBodyToReturn.toByteArray(), latestUrl)
     }
 
     override fun executeAsync(request: Request, callback: AsyncCallback?): CancellableCall {
         TODO("Placeholder")
     }
-
 }
 
 object NewPipeUtils {

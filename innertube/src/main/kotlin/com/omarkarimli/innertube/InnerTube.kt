@@ -2,6 +2,7 @@ package com.omarkarimli.innertube
 
 import com.omarkarimli.innertube.models.Context
 import com.omarkarimli.innertube.models.MediaInfo
+import com.omarkarimli.innertube.models.PlaylistDeleteBody
 import com.omarkarimli.innertube.models.ReturnYouTubeDislikeResponse
 import com.omarkarimli.innertube.models.YouTubeClient
 import com.omarkarimli.innertube.models.YouTubeLocale

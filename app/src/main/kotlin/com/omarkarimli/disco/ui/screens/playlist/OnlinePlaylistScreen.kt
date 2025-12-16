@@ -39,7 +39,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -116,7 +115,6 @@ import com.omarkarimli.disco.viewmodels.OnlinePlaylistViewModel
 @Composable
 fun OnlinePlaylistScreen(
     navController: NavController,
-    scrollBehavior: TopAppBarScrollBehavior,
     viewModel: OnlinePlaylistViewModel = hiltViewModel(),
 ) {
     val menuState = LocalMenuState.current
@@ -457,7 +455,7 @@ fun OnlinePlaylistScreen(
                         }
                     }
 
-                    if (songs.isEmpty() && !isLoading && error == null) {
+                    if (songs.isEmpty() && error == null) {
                         // Show empty playlist message when playlist is loaded but has no songs
                         item(key = "empty_playlist") {
                             Column(

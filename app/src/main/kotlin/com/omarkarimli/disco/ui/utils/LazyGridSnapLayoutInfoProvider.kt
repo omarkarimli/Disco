@@ -6,6 +6,7 @@ import androidx.compose.foundation.gestures.snapping.SnapLayoutInfoProvider
 import androidx.compose.foundation.lazy.grid.LazyGridItemInfo
 import androidx.compose.foundation.lazy.grid.LazyGridLayoutInfo
 import androidx.compose.foundation.lazy.grid.LazyGridState
+import kotlin.collections.forEach
 
 @ExperimentalFoundationApi
 fun SnapLayoutInfoProvider(
@@ -39,7 +40,7 @@ fun SnapLayoutInfoProvider(
                 lowerBoundOffset = offset
             }
 
-            if (offset >= 0 && offset < upperBoundOffset) {
+            if (offset in 0.0..<upperBoundOffset.toDouble()) {
                 upperBoundOffset = offset
             }
         }

@@ -36,10 +36,8 @@ class CoilBitmapLoader(
                 .allowHardware(false)
                 .build()
 
-            val result = context.imageLoader.execute(request)
-
             // In case of error, returns an empty bitmap
-            when (result) {
+            when (val result = context.imageLoader.execute(request)) {
                 is ErrorResult -> {
                     createBitmap(64, 64)
                 }
@@ -47,6 +45,7 @@ class CoilBitmapLoader(
                     try {
                         result.image.toBitmap()
                     } catch (e: Exception) {
+                        e.printStackTrace()
                         createBitmap(64, 64)
                     }
                 }

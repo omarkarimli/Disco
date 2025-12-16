@@ -1,6 +1,5 @@
 package com.omarkarimli.disco.viewmodels
 
-import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -38,7 +37,6 @@ constructor(
     val isNetworkAvailable: StateFlow<Boolean> = _isNetworkAvailable.asStateFlow()
 
     private val _currentSong = mutableStateOf<Song?>(null)
-    val currentSong: State<Song?> = _currentSong
 
     init {
         viewModelScope.launch {
@@ -50,12 +48,9 @@ constructor(
         _isNetworkAvailable.value = try {
             networkConnectivity.isCurrentlyConnected()
         } catch (e: Exception) {
+            e.printStackTrace()
             true // Assume connected as fallback
         }
-    }
-
-    fun setCurrentSong(song: Song) {
-        _currentSong.value = song
     }
 
     fun search(

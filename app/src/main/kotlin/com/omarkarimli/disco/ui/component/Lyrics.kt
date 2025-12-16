@@ -473,19 +473,6 @@ fun Lyrics(
     }
 
     LaunchedEffect(currentLineIndex, lastPreviewTime, initialScrollDone) {
-
-        /**
-         * Calculate the lyric offset Based on how many lines (\n chars)
-         */
-        fun calculateOffset() = with(density) {
-            if (currentLineIndex < 0 || currentLineIndex >= lines.size) return@with 0
-            val currentItem = lines[currentLineIndex]
-            val totalNewLines = currentItem.text.count { it == '\n' }
-
-            val dpValue = if (landscapeOffset) 16.dp else 20.dp
-            dpValue.toPx().toInt() * totalNewLines
-        }
-
         if (!isSynced) return@LaunchedEffect
         
         // Smooth page animation without sudden jumps - direct animation to center
@@ -1187,12 +1174,6 @@ fun Lyrics(
         } // إغلاق else block
     }
 }
-
-// Professional page animation constants inspired by Disco design - slower for smoothness
-private const val AUTO_SCROLL_DURATION = 1500L // Much slower auto-scroll for smooth transitions
-private const val INITIAL_SCROLL_DURATION = 1000L // Slower initial positioning
-private const val SEEK_DURATION = 800L // Slower user interaction
-private const val FAST_SEEK_DURATION = 600L // Less aggressive seeking
 
 // Lyrics constants
 val LyricsPreviewTime = 2.seconds

@@ -2,7 +2,6 @@ package com.omarkarimli.disco.ui.screens
 
 import android.annotation.SuppressLint
 import android.webkit.CookieManager
-import android.webkit.JavascriptInterface
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.activity.compose.BackHandler
@@ -84,20 +83,6 @@ fun LoginScreen(
                     builtInZoomControls = true
                     displayZoomControls = false
                 }
-                addJavascriptInterface(object {
-                    @JavascriptInterface
-                    fun onRetrieveVisitorData(newVisitorData: String?) {
-                        if (newVisitorData != null) {
-                            visitorData = newVisitorData
-                        }
-                    }
-                    @JavascriptInterface
-                    fun onRetrieveDataSyncId(newDataSyncId: String?) {
-                        if (newDataSyncId != null) {
-                            dataSyncId = newDataSyncId.substringBefore("||")
-                        }
-                    }
-                }, "Android")
                 webView = this
                 loadUrl("https://accounts.google.com/ServiceLogin?continue=https%3A%2F%2Fmusic.youtube.com")
             }

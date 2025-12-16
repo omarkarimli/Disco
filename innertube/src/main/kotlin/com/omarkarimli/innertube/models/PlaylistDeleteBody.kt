@@ -1,6 +1,5 @@
-package com.omarkarimli.innertube.models.body
+package com.omarkarimli.innertube.models
 
-import com.omarkarimli.innertube.models.Context
 import kotlinx.serialization.Serializable
 
 @Serializable

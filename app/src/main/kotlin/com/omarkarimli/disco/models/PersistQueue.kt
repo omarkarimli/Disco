@@ -7,15 +7,26 @@ data class PersistQueue(
     val items: List<MediaMetadata>,
     val mediaItemIndex: Int,
     val position: Long,
-    val queueType: QueueType = QueueType.LIST,
+    val queueType: QueueType = QueueType.List,
     val queueData: QueueData? = null,
 ) : Serializable
 
 sealed class QueueType : Serializable {
-    object LIST : QueueType()
-    object YOUTUBE : QueueType()
-    object YOUTUBE_ALBUM_RADIO : QueueType()
-    object LOCAL_ALBUM_RADIO : QueueType()
+    object List : QueueType() {
+        private fun readResolve(): Any = List
+    }
+
+    object Youtube : QueueType() {
+        private fun readResolve(): Any = Youtube
+    }
+
+    object YoutubeAlbumRadio : QueueType() {
+        private fun readResolve(): Any = YoutubeAlbumRadio
+    }
+
+    object LocalAlbumRadio : QueueType() {
+        private fun readResolve(): Any = LocalAlbumRadio
+    }
 }
 
 sealed class QueueData : Serializable {

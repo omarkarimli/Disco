@@ -2,29 +2,28 @@ package com.omarkarimli.disco.ui.screens.playlist
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.net.Uri
 import android.content.Intent
 import android.graphics.Bitmap
+import android.net.Uri
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -33,10 +32,10 @@ import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
-import com.omarkarimli.disco.ui.component.ActionPromptDialog
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -54,7 +53,6 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -90,13 +88,12 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.core.content.FileProvider
-import com.yalantis.ucrop.UCrop
-import com.omarkarimli.disco.ui.component.OverlayEditButton
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.util.fastAny
 import androidx.compose.ui.util.fastForEachIndexed
 import androidx.compose.ui.util.fastSumBy
+import androidx.core.content.ContextCompat.getString
+import androidx.core.content.FileProvider
 import androidx.core.net.toUri
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.viewModelScope
@@ -106,15 +103,10 @@ import androidx.media3.exoplayer.offline.DownloadService
 import androidx.navigation.NavController
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
-import com.omarkarimli.innertube.YouTube
-import com.omarkarimli.innertube.models.SongItem
-import com.omarkarimli.innertube.utils.completed
-import kotlinx.coroutines.launch
 import com.omarkarimli.disco.LocalDatabase
 import com.omarkarimli.disco.LocalDownloadUtil
 import com.omarkarimli.disco.LocalPlayerAwareWindowInsets
 import com.omarkarimli.disco.LocalPlayerConnection
-import com.omarkarimli.disco.LocalSyncUtils
 import com.omarkarimli.disco.R
 import com.omarkarimli.disco.constants.AlbumThumbnailSize
 import com.omarkarimli.disco.constants.DarkModeKey
@@ -129,10 +121,11 @@ import com.omarkarimli.disco.db.entities.PlaylistSong
 import com.omarkarimli.disco.db.entities.PlaylistSongMap
 import com.omarkarimli.disco.extensions.move
 import com.omarkarimli.disco.extensions.toMediaItem
-import com.omarkarimli.disco.models.toMediaMetadata
 import com.omarkarimli.disco.extensions.togglePlayPause
+import com.omarkarimli.disco.models.toMediaMetadata
 import com.omarkarimli.disco.playback.ExoDownloadService
 import com.omarkarimli.disco.playback.queues.ListQueue
+import com.omarkarimli.disco.ui.component.ActionPromptDialog
 import com.omarkarimli.disco.ui.component.AutoResizeText
 import com.omarkarimli.disco.ui.component.DefaultDialog
 import com.omarkarimli.disco.ui.component.DraggableScrollbar
@@ -140,6 +133,7 @@ import com.omarkarimli.disco.ui.component.EmptyPlaceholder
 import com.omarkarimli.disco.ui.component.FontSizeRange
 import com.omarkarimli.disco.ui.component.IconButton
 import com.omarkarimli.disco.ui.component.LocalMenuState
+import com.omarkarimli.disco.ui.component.OverlayEditButton
 import com.omarkarimli.disco.ui.component.SongListItem
 import com.omarkarimli.disco.ui.component.SortHeader
 import com.omarkarimli.disco.ui.component.TextFieldDialog
@@ -154,8 +148,13 @@ import com.omarkarimli.disco.utils.rememberEnumPreference
 import com.omarkarimli.disco.utils.rememberPreference
 import com.omarkarimli.disco.utils.reportException
 import com.omarkarimli.disco.viewmodels.LocalPlaylistViewModel
+import com.omarkarimli.innertube.YouTube
+import com.omarkarimli.innertube.models.SongItem
+import com.omarkarimli.innertube.utils.completed
+import com.yalantis.ucrop.UCrop
 import io.ktor.client.plugins.ClientRequestException
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import sh.calvin.reorderable.ReorderableItem
 import sh.calvin.reorderable.rememberReorderableLazyListState
@@ -166,7 +165,6 @@ import java.time.LocalDateTime
 @Composable
 fun LocalPlaylistScreen(
     navController: NavController,
-    scrollBehavior: TopAppBarScrollBehavior,
     viewModel: LocalPlaylistViewModel = hiltViewModel(),
 ) {
     val context = LocalContext.current
@@ -180,10 +178,6 @@ fun LocalPlaylistScreen(
     val playlist by viewModel.playlist.collectAsState()
     val songs by viewModel.playlistSongs.collectAsState()
     val mutableSongs = remember { mutableStateListOf<PlaylistSong>() }
-    val playlistLength =
-        remember(songs) {
-            songs.fastSumBy { it.song.song.duration }
-        }
     val (sortType, onSortTypeChange) = rememberEnumPreference(
         PlaylistSongSortTypeKey,
         PlaylistSongSortType.CUSTOM
@@ -245,7 +239,7 @@ fun LocalPlaylistScreen(
 
     val downloadUtil = LocalDownloadUtil.current
     var downloadState by remember {
-        mutableStateOf(Download.STATE_STOPPED)
+        mutableIntStateOf(Download.STATE_STOPPED)
     }
 
     val editable: Boolean = playlist?.playlist?.isEditable == true
@@ -540,10 +534,10 @@ fun LocalPlaylistScreen(
                             database.transaction {
                                 coroutineScope.launch {
                                     playlist?.playlist?.browseId?.let { it1 ->
-                                        var setVideoId = getSetVideoId(currentItem.map.songId)
+                                        val setVideoId = getSetVideoId(currentItem.map.songId)
                                         if (setVideoId?.setVideoId != null) {
                                             YouTube.removeFromPlaylist(
-                                                it1, currentItem.map.songId, setVideoId.setVideoId!!
+                                                it1, currentItem.map.songId, setVideoId.setVideoId
                                             )
                                         }
                                     }
@@ -947,7 +941,6 @@ fun LocalPlaylistHeader(
     val context = LocalContext.current
     val database = LocalDatabase.current
     val menuState = LocalMenuState.current
-    val syncUtils = LocalSyncUtils.current
     val scope = rememberCoroutineScope()
 
     val playlistLength =
@@ -1000,7 +993,9 @@ fun LocalPlaylistHeader(
                 setCompressionFormat(Bitmap.CompressFormat.JPEG)
                 setCompressionQuality(90)
                 setHideBottomControls(true)
-                setToolbarTitle(context.getString(R.string.edit_playlist_cover))
+                setToolbarTitle(
+                    getString(context, R.string.edit_playlist_cover)
+                )
                 
                 setStatusBarLight(!darkTheme)
 
@@ -1169,7 +1164,7 @@ fun LocalPlaylistHeader(
                                                             }
                                                             else -> {
                                                                 scope.launch(Dispatchers.IO) {
-                                                                    YouTube.removeThumbnailPlaylist(playlist.playlist.browseId).onSuccess { newThumbnailUrl -> newThumbnailUrl
+                                                                    YouTube.removeThumbnailPlaylist(playlist.playlist.browseId).onSuccess { newThumbnailUrl ->
                                                                         overrideThumbnail.value = newThumbnailUrl
 
                                                                         // Update the database to remove the custom thumbnail
@@ -1247,7 +1242,7 @@ fun LocalPlaylistHeader(
                                                             }
                                                             else -> {
                                                                 scope.launch(Dispatchers.IO) {
-                                                                    YouTube.removeThumbnailPlaylist(playlist.playlist.browseId).onSuccess { newThumbnailUrl -> newThumbnailUrl
+                                                                    YouTube.removeThumbnailPlaylist(playlist.playlist.browseId).onSuccess { newThumbnailUrl ->
                                                                         overrideThumbnail.value = newThumbnailUrl
 
                                                                         // Update the database to remove the custom thumbnail
@@ -1383,7 +1378,9 @@ fun LocalPlaylistHeader(
                                     }
                                 }
                                 scope.launch(Dispatchers.Main) {
-                                    snackbarHostState.showSnackbar(context.getString(R.string.playlist_synced))
+                                    snackbarHostState.showSnackbar(
+                                        getString(context, R.string.playlist_synced)
+                                    )
                                 }
                             },
                             modifier = Modifier.size(40.dp)

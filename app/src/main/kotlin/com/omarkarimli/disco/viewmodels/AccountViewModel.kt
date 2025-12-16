@@ -30,8 +30,9 @@ class AccountViewModel @Inject constructor() : ViewModel() {
     init {
         viewModelScope.launch {
             YouTube.library("FEmusic_liked_playlists").completed().onSuccess {
-                playlists.value = it.items.filterIsInstance<PlaylistItem>()
-                    .filterNot { it.id == "SE" }
+                playlists.value = it.items
+                    .filterIsInstance<PlaylistItem>()
+                    .filterNot { item -> item.id == "SE" }
             }.onFailure {
                 reportException(it)
             }

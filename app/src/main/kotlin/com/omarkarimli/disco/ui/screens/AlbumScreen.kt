@@ -38,9 +38,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
@@ -112,8 +112,6 @@ fun AlbumScreen(
     val haptic = LocalHapticFeedback.current
     val playerConnection = LocalPlayerConnection.current ?: return
 
-    val scope = rememberCoroutineScope()
-
     val isPlaying by playerConnection.isPlaying.collectAsState()
     val mediaMetadata by playerConnection.mediaMetadata.collectAsState()
 
@@ -141,9 +139,7 @@ fun AlbumScreen(
     }
 
     val downloadUtil = LocalDownloadUtil.current
-    var downloadState by remember {
-        mutableStateOf(Download.STATE_STOPPED)
-    }
+    var downloadState by remember { mutableIntStateOf(Download.STATE_STOPPED) }
 
     LaunchedEffect(albumWithSongs) {
         val songs = albumWithSongs?.songs?.map { it.id }
@@ -152,16 +148,14 @@ fun AlbumScreen(
             downloadState =
                 if (songs.all { downloads[it]?.state == Download.STATE_COMPLETED }) {
                     Download.STATE_COMPLETED
-                } else if (songs.all {
-                        downloads[it]?.state == Download.STATE_QUEUED ||
-                                downloads[it]?.state == Download.STATE_DOWNLOADING ||
-                                downloads[it]?.state == Download.STATE_COMPLETED
+                } else if (
+                    songs.all {
+                        downloads[it]?.state == Download.STATE_QUEUED
+                                || downloads[it]?.state == Download.STATE_DOWNLOADING
+                                || downloads[it]?.state == Download.STATE_COMPLETED
                     }
-                ) {
-                    Download.STATE_DOWNLOADING
-                } else {
-                    Download.STATE_STOPPED
-                }
+                ) Download.STATE_DOWNLOADING
+                else Download.STATE_STOPPED
         }
     }
 

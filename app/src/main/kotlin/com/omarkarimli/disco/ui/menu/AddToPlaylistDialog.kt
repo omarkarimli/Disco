@@ -21,10 +21,8 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import com.omarkarimli.innertube.utils.parseCookieString
 import com.omarkarimli.disco.LocalDatabase
 import com.omarkarimli.disco.R
-import com.omarkarimli.disco.constants.InnerTubeCookieKey
 import com.omarkarimli.disco.constants.ListThumbnailSize
 import com.omarkarimli.disco.db.entities.Playlist
 import com.omarkarimli.disco.ui.component.CreatePlaylistDialog
@@ -32,7 +30,6 @@ import com.omarkarimli.disco.ui.component.DefaultDialog
 import com.omarkarimli.disco.ui.component.ListDialog
 import com.omarkarimli.disco.ui.component.ListItem
 import com.omarkarimli.disco.ui.component.PlaylistListItem
-import com.omarkarimli.disco.utils.rememberPreference
 import com.omarkarimli.innertube.YouTube
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -49,10 +46,6 @@ fun AddToPlaylistDialog(
     val coroutineScope = rememberCoroutineScope()
     var playlists by remember {
         mutableStateOf(emptyList<Playlist>())
-    }
-    val (innerTubeCookie) = rememberPreference(InnerTubeCookieKey, "")
-    val isLoggedIn = remember(innerTubeCookie) {
-        "SAPISID" in parseCookieString(innerTubeCookie)
     }
     var showCreatePlaylistDialog by rememberSaveable {
         mutableStateOf(false)

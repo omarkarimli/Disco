@@ -319,38 +319,6 @@ object LyricsUtils {
         MACEDONIAN
     } */
 
-    fun katakanaToRomaji(katakana: String?): String {
-        if (katakana.isNullOrEmpty()) return ""
-
-        val romajiBuilder = StringBuilder(katakana.length)
-        var i = 0
-        val n = katakana.length
-        while (i < n) {
-            var consumed = false
-            if (i + 1 < n) {
-                val twoCharCandidate = katakana.substring(i, i + 2)
-                val mappedTwoChar = KANA_ROMAJI_MAP[twoCharCandidate]
-                if (mappedTwoChar != null) {
-                    romajiBuilder.append(mappedTwoChar)
-                    i += 2
-                    consumed = true
-                }
-            }
-
-            if (!consumed) {
-                val oneCharCandidate = katakana[i].toString()
-                val mappedOneChar = KANA_ROMAJI_MAP[oneCharCandidate]
-                if (mappedOneChar != null) {
-                    romajiBuilder.append(mappedOneChar)
-                } else {
-                    romajiBuilder.append(oneCharCandidate)
-                }
-                i += 1
-            }
-        }
-        return romajiBuilder.toString().lowercase()
-    }
-
     suspend fun romanizeJapanese(text: String): String = withContext(Dispatchers.Default) {
         val tokens = kuromojiTokenizer.tokenize(text)
         val romanizedTokens = tokens.mapIndexed { index, token ->
@@ -535,18 +503,23 @@ object LyricsUtils {
 
                     if (charIndex > 0 && word[charIndex - 1].isLetter() && !isCyrillicVowel(word[charIndex - 1])) {
                         // Check if the current character is Ю or Я and is preceded by a consonant
-                        if (charStr == "Ю") {
-                            romajiBuilder.append("Iu")
-                            processed = true
-                        } else if (charStr == "ю") {
-                            romajiBuilder.append("iu")
-                            processed = true
-                        } else if (charStr == "Я") {
-                            romajiBuilder.append("Ia")
-                            processed = true
-                        } else if (charStr == "я") {
-                            romajiBuilder.append("ia")
-                            processed = true
+                        when (charStr) {
+                            "Ю" -> {
+                                romajiBuilder.append("Iu")
+                                processed = true
+                            }
+                            "ю" -> {
+                                romajiBuilder.append("iu")
+                                processed = true
+                            }
+                            "Я" -> {
+                                romajiBuilder.append("Ia")
+                                processed = true
+                            }
+                            "я" -> {
+                                romajiBuilder.append("ia")
+                                processed = true
+                            }
                         }
                     }
 

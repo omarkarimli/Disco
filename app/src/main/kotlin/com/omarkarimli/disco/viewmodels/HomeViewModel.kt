@@ -97,7 +97,9 @@ class HomeViewModel @Inject constructor(
 
         if (YouTube.cookie != null) {
             YouTube.library("FEmusic_liked_playlists").completed().onSuccess {
-                accountPlaylists.value = it.items.filterIsInstance<PlaylistItem>().filterNot { it.id == "SE" }
+                accountPlaylists.value = it.items
+                    .filterIsInstance<PlaylistItem>()
+                    .filterNot { item -> item.id == "SE" }
             }.onFailure {
                 reportException(it)
             }
@@ -199,7 +201,7 @@ class HomeViewModel @Inject constructor(
 
         viewModelScope.launch(Dispatchers.IO) {
             val hideExplicit = context.dataStore.get(HideExplicitKey, false)
-            val nextSections = YouTube.home(params = chip?.endpoint?.params).getOrNull() ?: return@launch
+            val nextSections = YouTube.home(params = chip.endpoint?.params).getOrNull() ?: return@launch
 
             homePage.value = nextSections.copy(
                 chips = homePage.value?.chips,
