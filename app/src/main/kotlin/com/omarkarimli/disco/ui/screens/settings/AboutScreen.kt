@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsetsSides
@@ -15,7 +16,6 @@ import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
@@ -74,12 +74,19 @@ sealed class DevSocialMedias(
         icon = R.drawable.linktree
     )
 
+    object PrivacyPolicy : DevSocialMedias(
+        title = "Privacy Policy",
+        url = "https://github.com/omarkarimli/Disco/blob/main/PRIVACYPOLICY.md",
+        icon = R.drawable.policy
+    )
+
     companion object {
         val ALL_ITEMS = listOf(
             GitHub,
             Instagram,
             LinkedIn,
-            Linktree
+            Linktree,
+            PrivacyPolicy
         )
     }
 }
@@ -127,16 +134,12 @@ fun AboutScreen(
                 .clickable { },
         )
 
-        Row(
-            verticalAlignment = Alignment.Top,
-        ) {
-            Text(
-                text = "Disco",
-                style = MaterialTheme.typography.headlineSmall,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(top = 8.dp, bottom = 4.dp),
-            )
-        }
+        Text(
+            text = "Disco",
+            style = MaterialTheme.typography.headlineSmall,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.padding(top = 8.dp, bottom = 4.dp),
+        )
 
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
@@ -206,8 +209,8 @@ fun AboutScreen(
 
         Spacer(Modifier.height(8.dp))
 
-        LazyRow {
-            items(mediaItems.size) { index ->
+        FlowRow {
+            repeat(mediaItems.size) { index ->
                 val item = mediaItems[index]
 
                 IconButton(
