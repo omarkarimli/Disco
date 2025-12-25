@@ -1,6 +1,6 @@
 # Privacy Policy for Disco
 
-**Last updated:** July 1, 2024
+**Last updated:** December 25, 2025
 
 OMAR ("we," "us," or "our") operates the Disco mobile application (the "Service").
 
@@ -61,4 +61,4 @@ You are advised to review this Privacy Policy periodically for any changes. Chan
 
 If you have any questions about this Privacy Policy, please contact us:
 
-*   By email: [Your Email Address]
+*   By email: omarkarimli.361@gmail.com
