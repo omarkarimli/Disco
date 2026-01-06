@@ -1,0 +1,28 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:viewportWidth="512"
+    android:viewportHeight="512"
+    android:width="24dp"
+    android:height="24dp">
+
+    <path
+        android:pathData="M116.5 16L395.5 16L414.5 20L434.5 28Q454.6 38.9 469 55.5Q481.4 69.6 489 88.5L496 116.5L496 395.5L492 414.5L485 432.5Q473.9 453.9 456.5 469Q443.2 480.7 425.5 488L414.5 492L395.5 496L116.5 496Q68.3 487.7 43 456.5Q31.3 443.2 24 425.5L20 414.5L16 395.5L16 116.5L20 97.5L27 79.5Q38.1 58.1 55.5 43L79.5 27L97.5 20L116.5 16ZM131 48L130 49L114 50L101 54Q87 59 78 68Q62 81 54 101L49 119L49 131L48 132L48 381L49 382L49 394L54 412Q59 425 68 435Q81 450 101 458L119 463L130 463L131 464L382 464L383 463L399 462L412 458Q425 453 435 444Q450 431 458 412L462 399L463 382L464 381L464 132L463 131L462 114L458 101Q453 87 444 78Q426 56 394 49L383 49L382 48L131 48Z"
+        android:fillColor="#FFFFFF"
+        android:fillAlpha="0.9843137"
+        android:strokeColor="#FFFFFF"
+        android:strokeAlpha="0.9843137"
+        android:strokeWidth="1" />
+    <path
+        android:pathData="M170.5 176Q185.9 173.6 190 182.5L192 186.5L192 255.5L193 256.5L193 265.5Q197 285.5 210.5 296L224.5 303L239.5 303Q253.3 298.7 261 288.5Q268.3 279.3 271 265.5L271 256.5L272 255.5L272 186.5L278.5 178Q283.2 174.2 293.5 176L302 182.5L304 186.5L304 269.5Q297.7 303.2 275.5 321Q265.6 329.6 251.5 334L243.5 336L220.5 336Q192.7 329.8 178 310.5Q164.5 294.5 160 269.5L160 186.5L166.5 178L170.5 176Z"
+        android:fillColor="#FFFFFF"
+        android:fillAlpha="0.9843137"
+        android:strokeColor="#FFFFFF"
+        android:strokeAlpha="0.9843137"
+        android:strokeWidth="1" />
+    <path
+        android:pathData="M330.5 176Q345.9 173.6 350 182.5L352 186.5L352 325.5L345.5 334Q340.8 337.8 330.5 336L322 329.5L320 325.5L320 186.5L326.5 178L330.5 176Z"
+        android:fillColor="#FFFFFF"
+        android:fillAlpha="0.9843137"
+        android:strokeColor="#FFFFFF"
+        android:strokeAlpha="0.9843137"
+        android:strokeWidth="1" />
+</vector>
