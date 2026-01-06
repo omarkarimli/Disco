@@ -12,10 +12,10 @@ If you're in a region where YouTube Music is not supported, you won't be able to
 <h1>Showcase</h1>
 
 <img width="30%" alt="1" src="assets/1.jpeg" />
-<img width="30%" alt="1" src="assets/2.jpeg" />
-<img width="30%" alt="1" src="assets/3.jpeg" />
-<img width="30%" alt="1" src="assets/4.jpeg" />
-<img width="30%" alt="1" src="assets/5.jpeg" />
+<img width="30%" alt="2" src="assets/2.jpeg" />
+<img width="30%" alt="3" src="assets/3.jpeg" />
+<img width="30%" alt="4" src="assets/4.jpeg" />
+<img width="30%" alt="5" src="assets/5.jpeg" />
 
 <h1>Features</h1>
 
