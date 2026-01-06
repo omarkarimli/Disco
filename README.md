@@ -1,5 +1,5 @@
 <div align="center">
-<img src="https://github.com/user-attachments/assets/80ddbe2f-d1f1-4d94-bf36-fe48bbe3f942" alt="Disco" width="160" height="160" style="display: block; margin: 0 auto"/>
+<img src="assets/0.jpeg" alt="Disco" width="160" height="160" style="display: block; margin: 0 auto"/>
 <h1>Disco</h1>
 <p>YouTube Music client for Android</p>
 </div>
