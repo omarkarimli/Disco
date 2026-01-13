@@ -76,7 +76,7 @@ sealed class DevSocialMedias(
 
     object PrivacyPolicy : DevSocialMedias(
         title = "Privacy Policy",
-        url = "https://github.com/omarkarimli/Disco/blob/main/PRIVACYPOLICY.md",
+        url = "https://github.com/omarkarimli/Disco/blob/master/PRIVACYPOLICY.md",
         icon = R.drawable.policy
     )
 

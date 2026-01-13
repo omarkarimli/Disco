@@ -16,8 +16,8 @@ android {
         applicationId = "com.omarkarimli.disco"
         minSdk = 26
         targetSdk = 36
-        versionCode = 6
-        versionName = "0.0.6"
+        versionCode = 8
+        versionName = "0.0.8"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
