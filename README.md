@@ -1,12 +1,7 @@
 <div align="center">
 <img src="assets/0.jpeg" alt="Disco" width="160" height="160" style="display: block; margin: 0 auto"/>
 <h1>Disco</h1>
-<p>YouTube Music client for Android</p>
-</div>
-
-<div style="padding: 16px; margin: 16px 0; background-color: #FFFBE5; border-left: 6px solid #FFC107; border-radius: 4px;">
-<h2 style="margin: 0;"><strong>⚠Warning</strong></h2>
-If you're in a region where YouTube Music is not supported, you won't be able to use this app <strong>unless</strong> you have a proxy or VPN to connect to a YTM-supported region.
+<p>Music App for Android by One & Co</p>
 </div>
 
 <h1>Showcase</h1>
@@ -19,14 +14,14 @@ If you're in a region where YouTube Music is not supported, you won't be able to
 
 <h1>Features</h1>
 
-- Play any song or video from YT Music
+- Play any song
 - Background playback 
 - Personalized quick picks 
 - Library management 
 - Download and cache songs for offline playback
 - Search for songs, albums, artists, videos and playlists
 - Live lyrics 
-- YouTube Music account login support
+- Login & Sign up
 - Syncing of songs, artists, albums and playlists, from and to your account
 - Skip silence 
 - Import playlists 
@@ -66,8 +61,4 @@ This project uses GitHub Secrets to securely store API keys for building release
 
 **Note:** These secrets are automatically injected into the build process via GitHub Actions and are not visible in the source code.
 
-This project and its contents are not affiliated with, funded, authorized, endorsed by, or in any way associated with YouTube, Google LLC or any of its affiliates and subsidiaries.
-
-Any trademark, service mark, trade name, or other intellectual property rights used in this project are owned by the respective owners.
-
-**Made with ❤️ by [Omar](https://github.com/omarkarimli)**
+**Made by One & Co - [Omar](https://github.com/omarkarimli)**
